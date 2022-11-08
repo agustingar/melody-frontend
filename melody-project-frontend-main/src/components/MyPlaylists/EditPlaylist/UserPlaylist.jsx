@@ -5,7 +5,10 @@ import EditPlaylistModal from "./EditPlaylistModal";
 import { Box } from "@mui/system";
 import convertDuration from "../../../functions/ConvertDuration";
 import SuggestSong from "./SuggestSong";
-import { useGetAllSongsQuery } from "../../../redux/services/melodyApi";
+import {
+  useGetAllSongsQuery,
+  useGetPlaylistQuery,
+} from "../../../redux/services/melodyApi";
 import "../../Favorites/Favorites";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -15,19 +18,8 @@ import { useParams } from "react-router-dom";
 function PlaylistViewSongs() {
   const token = localStorage.getItem("userToken") || null;
 
-  const [userPlaylists, setUserPlaylists] = useState();
-  const [lastPlaylist, setLastPlaylistCreated] = useState({});
   const [randomSongs, setRandomSongs] = useState([]);
-
-  const [serverMsg, setServerMsg] = React.useState("");
-  const [isSongAdd, setIsSongAdd] = React.useState(false);
-
-  const [ErrorMsg, setErrorMsg] = React.useState("");
-  const [serverError, setSeverError] = React.useState(false);
-
   const [playlistInfo, setPlaylistInfo] = React.useState({});
-
-  const [isTrackDefined, setIsTrackDefined] = React.useState();
   const [track, setTrack] = React.useState([
     {
       title: "",
@@ -36,37 +28,16 @@ function PlaylistViewSongs() {
       ur: "",
     },
   ]);
- 
+
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const { data, isFetching, error } = useGetAllSongsQuery();
+  const {
+    data: playlistAll,
+    isFetching: playlistFetching,
+    playlistError,
+  } = useGetPlaylistQuery();
 
   const { id: playlistId } = useParams();
-  console.log(playlistId);
-
-  // const fetchPlaylist = async () => {
-  //   const response = await fetch(
-  //     //https://melodystream.herokuapp.com/playlist/${playlistID}
-  //     `https://melodystream.herokuapp.com/playlist/user/playlist`,
-  //     {
-  //       headers: {
-  //         auth_token: token,
-  //       },
-  //     }
-  //   );
-
-  //   try {
-  //     const data = await response.json();
-  //     const lastPlaylistCreated = Object.values(data.data).pop();
-  //     setUserPlaylists(data.data);
-  //     setLastPlaylistCreated(lastPlaylistCreated);
-  //     // console.log(lastPlaylistCreated._id);
-  //     getPlaylistById(lastPlaylistCreated._id);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // fetchPlaylist().catch(console.error);
 
   useEffect(() => {
     const getPlaylistById = async () => {
@@ -82,10 +53,8 @@ function PlaylistViewSongs() {
 
       try {
         const data = await response.json();
-        console.log(data);
         setPlaylistInfo(data.playlistInfo);
         setTrack(data.songs);
-        setIsTrackDefined(true);
       } catch (error) {
         console.log(error);
       }
@@ -93,7 +62,13 @@ function PlaylistViewSongs() {
     getPlaylistById();
   }, []);
 
-  if (isFetching) return <div>Loading...</div>;
+  if (isFetching)
+    return (
+      <div className="loading-box">
+        <div className="loading_bar"></div>
+        <p className="loading_text">...Loading</p>
+      </div>
+    );
   if (error) return <div>Error</div>;
 
   function randomIndex(count) {
@@ -117,9 +92,8 @@ function PlaylistViewSongs() {
   const playlistSongs = track.map((song, i) => (
     <Songs
       key={song._id}
+      playlists={playlistAll}
       song={song}
-      lastPlaylist={lastPlaylist}
-      userPlaylists={userPlaylists}
       isPlaying={isPlaying}
       activeSong={activeSong}
       data={data}
@@ -127,14 +101,12 @@ function PlaylistViewSongs() {
       convertDuration={convertDuration}
     />
   ));
-  console.log(playlistSongs);
 
   const suggestionSongs = randomSongs.map((song, i) => (
     <SuggestSong
       key={song._id}
       song={song}
-      lastPlaylist={lastPlaylist}
-      userPlaylists={userPlaylists}
+      playlistId={playlistId}
       isPlaying={isPlaying}
       activeSong={activeSong}
       data={data}
@@ -142,8 +114,6 @@ function PlaylistViewSongs() {
       convertDuration={convertDuration}
     />
   ));
-
-  console.log(playlistInfo);
 
   return (
     <>
@@ -166,7 +136,7 @@ function PlaylistViewSongs() {
           </section>
         </div>
         <div>
-          <EditPlaylistModal playlist={lastPlaylist} />
+          <EditPlaylistModal playlist={playlistInfo} />
         </div>
         <Typography sx={{ color: "#f3f3f3", mt: 2, fontSize: 22 }}>
           Songs

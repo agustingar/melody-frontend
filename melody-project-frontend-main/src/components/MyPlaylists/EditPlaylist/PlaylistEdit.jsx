@@ -12,14 +12,10 @@ import Button from "@mui/material/Button";
 import Songs from "./Songs";
 
 function PlaylistViewSongs() {
-
   const [userPlaylists, setUserPlaylists] = useState();
   const [lastPlaylist, setLastPlaylistCreated] = useState({});
   const [randomSongs, setRandomSongs] = useState([]);
 
-
-
-  const [isTrackDefined, setIsTrackDefined] = React.useState();
   const [track, setTrack] = React.useState([
     {
       title: "",
@@ -75,7 +71,6 @@ function PlaylistViewSongs() {
         const data = await response.json();
         console.log(data);
         setTrack(data.songs);
-        setIsTrackDefined(true);
       } catch (error) {
         console.log(error);
       }

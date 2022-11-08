@@ -13,8 +13,6 @@ function Home() {
   const { data, isFetching, error } = useGetPlaylistQuery();
   const token = localStorage.getItem("userToken");
 
-  console.log(data);
-
   const isDesktop = useMediaQuery({
     query: "(min-width: 1200px)",
   });
@@ -40,8 +38,6 @@ function Home() {
   useEffect(() => {
     fetchRandom();
   }, []);
-
-  console.log(random);
 
   if (isFetching) return <Loader />;
 

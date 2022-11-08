@@ -12,6 +12,7 @@ import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
+// const { playlistData, playError } = useGetPlaylistQuery();
 
 function SuggestSong({
   song,
@@ -35,18 +36,13 @@ function SuggestSong({
   const [open, setOpen] = React.useState(true);
   const [openError, setOpenError] = React.useState(true);
 
-  const [trackDetails, setTrackDetails] = React.useState();
-  const [track, setTrack] = React.useState([
-    {
-      title: "",
-      artist: "",
-      duration: "",
-      ur: "",
-    },
-  ]);
-  const [isTrackDefined, setIsTrackDefined] = React.useState();
-
   const dispatch = useDispatch();
+
+  const handleClose = () => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 5000);
+  };
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -59,11 +55,12 @@ function SuggestSong({
 
   const addSuggestSong = async (e, songId) => {
     e.preventDefault();
-    const playlistId = lastPlaylist?._id;
+    const playId = playlistId;
     const songsId = songId;
 
     const options = {
-      url: `https://melodystream.herokuapp.com/playlist/add-song/${playlistId}`,
+      //url: `https://melodystream.herokuapp.com/playlist/add-song/${playId}`,
+      url: `http://localhost:4000/playlist/add-song/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -169,6 +166,7 @@ function SuggestSong({
           <div>
             <button
               onClick={(e) => {
+                handleClose();
                 addSuggestSong(e, song._id);
               }}
             >

@@ -1,21 +1,21 @@
 html {
-    height: 100%;
-    font-family: "Poppins", sans-serif;
+  height: 100%;
+  font-family: "Roboto", "Poppins", sans-serif;
 }
 
 body {
-    margin: 0;
-    background: linear-gradient(180deg, #2B2C55 0%, #6667AE 100%);
-    background-attachment: fixed;
+  margin: 0;
+  background: linear-gradient(180deg, #2b2c55 0%, #6667ae 100%);
+  background-attachment: fixed;
 }
 
 .mobile-topside {
-    position: absolute;
-    width: 1067px;
-    height: 482.24px;
-    left: -130px;
-    top: 259.24px;
+  position: absolute;
+  width: 1067px;
+  height: 482.24px;
+  left: -130px;
+  top: 259.24px;
 
-    background: #FFFFFF;
-    transform: matrix(1, 0, 0, -1, 0, 0);
+  background: #ffffff;
+  transform: matrix(1, 0, 0, -1, 0, 0);
 }

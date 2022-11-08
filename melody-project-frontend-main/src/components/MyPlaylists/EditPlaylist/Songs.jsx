@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import PlayPause from "../../SongCard/PlayPause";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
@@ -9,11 +9,11 @@ import Popover from "@mui/material/Popover";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import LikedSongs from "../../LikedSongs/LikedSongs";
+import axios from "axios";
 
 function Songs({
   song,
-  lastPlaylist,
-  userPlaylists,
+  playlists,
   isPlaying,
   activeSong,
   data,
@@ -21,8 +21,15 @@ function Songs({
   convertDuration,
   playlistId,
 }) {
-  // const [open, setOpen] = React.useState(true);
-  // const [openError, setOpenError] = React.useState(true);
+  const token = localStorage.getItem("userToken") || null;
+
+  const [successMsg, setSuccessMsg] = React.useState("");
+  const [isSongAdd, setIsSongAdd] = React.useState(false);
+
+  const [errorMsg, setErrorMsg] = React.useState("");
+  const [hasServerError, hasSeverError] = React.useState(false);
+
+  const [openError, setOpenError] = React.useState(true);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
@@ -47,14 +54,62 @@ function Songs({
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  //? Popover button add song to any playlist
-  // const showUserPlaylists = userPlaylists.map((playlist) => {
-  //   return (
-  //     <div key={playlist?._id}>
-  //       <Typography sx={{ p: 2 }}>{playlist?.name}</Typography>
-  //     </div>
-  //   );
-  // });
+  const addSuggestSong = async (e, songId, playlistId) => {
+    e.preventDefault();
+    const playId = playlistId;
+    const songsId = songId;
+
+    const options = {
+      //url: `https://melodystream.herokuapp.com/playlist/add-song/${playId}`,
+      url: `http://localhost:4000/playlist/add-song/${playId}`,
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        auth_token: token,
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      data: {
+        song_id: songsId,
+      },
+    };
+
+    try {
+      const result = await axios(options);
+      console.log(result.data.msg);
+      setSuccessMsg(result.data.msg);
+      setIsSongAdd(true);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.msg);
+        setErrorMsg(error.response.data.msg);
+        hasSeverError(true);
+      }
+    }
+  };
+
+  const allUserPlaylists = playlists?.data.map((playlist) => {
+    return (
+      <>
+        <div
+          key={playlist?._id}
+          className="addToPlaylist_box"
+          onClick={(e) => addSuggestSong(e, song?._id, playlist?._id)}
+        >
+          <div className="addToPlaylist_img">
+            <img src={playlist?.thumbnail}></img>
+          </div>
+          <div className="addToPlaylist_list">
+            <p>
+              <b>{playlist?.name}</b>
+            </p>
+            <p className="addToPlaylist_list__numbersOfSong">
+              {playlist?.tracks.length} songs
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  });
 
   return (
     <div className="container-song">
@@ -99,7 +154,35 @@ function Songs({
               horizontal: "left",
             }}
           >
-            <Typography sx={{ p: 2 }}>Insert playlist name</Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                pl: 3,
+                pt: 2,
+                pb: 2,
+                borderBottom: "1px solid grey",
+                fontWeight: "600",
+              }}
+            >
+              Add to playlist
+              <Button>
+                <CloseIcon />
+              </Button>
+            </Typography>
+            <Typography
+              sx={{
+                pl: 3,
+                mt: 2,
+                fontWeight: "400",
+              }}
+            >
+              All playlist
+            </Typography>
+            <Box sx={{ mt: 0, pt: 0, p: 2 }}>
+              <Typography component={"span"} variant={"body2"}>
+                {allUserPlaylists}
+              </Typography>
+            </Box>
           </Popover>
         </div>
       </Box>

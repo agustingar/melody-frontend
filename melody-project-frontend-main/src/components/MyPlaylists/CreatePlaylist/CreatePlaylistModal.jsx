@@ -36,7 +36,6 @@ export default function CreatePlaylistModal() {
     description: "",
     publicAccessible: false,
   });
-  console.log(playlist);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -76,7 +75,7 @@ export default function CreatePlaylistModal() {
           }
         );
         const data = await response.json();
-    console.log(data);
+        console.log(data);
       };
 
       fetchData().catch(console.error);
