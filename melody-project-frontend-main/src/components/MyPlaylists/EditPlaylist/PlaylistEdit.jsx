@@ -77,7 +77,13 @@ function PlaylistViewSongs() {
     };
   }, []);
 
-  if (isFetching) return <div>Loading...</div>;
+  if (isFetching)
+    return (
+      <div className="loading-box">
+        <div className="loading_bar"></div>
+        <p className="loading_text">Loading</p>
+      </div>
+    );
   if (error) return <div>Error</div>;
 
   function randomIndex(count) {

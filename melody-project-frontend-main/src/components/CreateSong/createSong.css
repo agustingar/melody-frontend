@@ -20,47 +20,85 @@
   height: 3rem;
   margin-left: 0.5rem;
 }
-.inputs{
-   color: transparent;
+.inputs {
+  color: transparent;
 }
-.buttonFile{
-    padding: 0.5rem 4rem !important ;
+.buttonFile {
+  padding: 0.5rem 4rem !important ;
 }
-.butDiv{
+.butDiv {
   flex-direction: column;
   display: flex;
   justify-content: center;
-align-items: center;
-   
+  align-items: center;
 }
-.inputDiv{
-display: flex;
-justify-content: center;
-align-items: center;
-    margin: 1rem;
+.inputDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
 }
-.inputText{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 0 0 0;
+.inputText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0 0 0;
 }
 .inputArtist {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.inputSubmit{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 0rem;
+.inputSubmit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
 }
-.inputImg{
+.inputImg {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem 0rem;
   justify-content: center;
+}
 
+.loading-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loading_bar {
+  width: 45px;
+  aspect-ratio: 1;
+  --c: no-repeat linear-gradient(rgb(244, 237, 237) 0 0);
+  background: var(--c) 0% 100%, var(--c) 50% 100%, var(--c) 100% 100%;
+  animation: b2 1s infinite linear;
+  margin-bottom: 1rem;
+}
+
+.loading_text {
+  color: #f3f3f3;
+  font-size: 1.4rem;
+}
+@keyframes b2 {
+  0% {
+    background-size: 20% 100%, 20% 100%, 20% 100%;
+  }
+  20% {
+    background-size: 20% 60%, 20% 100%, 20% 100%;
+  }
+  40% {
+    background-size: 20% 80%, 20% 60%, 20% 100%;
+  }
+  60% {
+    background-size: 20% 100%, 20% 80%, 20% 60%;
+  }
+  80% {
+    background-size: 20% 100%, 20% 100%, 20% 80%;
+  }
+  100% {
+    background-size: 20% 100%, 20% 100%, 20% 100%;
+  }
 }

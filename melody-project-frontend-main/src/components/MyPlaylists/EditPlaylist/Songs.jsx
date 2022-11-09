@@ -3,6 +3,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import PlayPause from "../../SongCard/PlayPause";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { playPause, setActiveSong } from "../../../redux/features/playerSlice";
 import Box from "@mui/material/Box";
 import Popover from "@mui/material/Popover";
@@ -54,14 +56,26 @@ function Songs({
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const addSuggestSong = async (e, songId, playlistId) => {
+  const updateSong = async (e, songId, playlist_Id) => {
     e.preventDefault();
-    const playId = playlistId;
+    const playId = playlist_Id;
     const songsId = songId;
+    let endPoint;
+
+    //change endpoint dynamically based onClick button
+    const map = e.currentTarget.dataset;
+    const obj = { ...map };
+
+    if (obj.testId === "add-song") {
+      endPoint = obj.testId;
+    }
+    if (obj.testId === "remove-song") {
+      endPoint = obj.testId;
+    }
 
     const options = {
       //url: `https://melodystream.herokuapp.com/playlist/add-song/${playId}`,
-      url: `http://localhost:4000/playlist/add-song/${playId}`,
+      url: `http://localhost:4000/playlist/${endPoint}/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -69,7 +83,7 @@ function Songs({
         "Content-Type": "application/json;charset=UTF-8",
       },
       data: {
-        song_id: songsId,
+        songsId,
       },
     };
 
@@ -87,13 +101,15 @@ function Songs({
     }
   };
 
+  //Render all user playlists in add to playlist button
   const allUserPlaylists = playlists?.data.map((playlist) => {
     return (
       <>
         <div
           key={playlist?._id}
+          data-test-id="add-song"
           className="addToPlaylist_box"
-          onClick={(e) => addSuggestSong(e, song?._id, playlist?._id)}
+          onClick={(e) => updateSong(e, song?._id, playlist?._id)}
         >
           <div className="addToPlaylist_img">
             <img src={playlist?.thumbnail}></img>
@@ -136,6 +152,30 @@ function Songs({
             {convertDuration(song.duration)}
           </Typography>
         </div>
+        {/* vertical dots */}
+        <div>
+          <Button
+            aria-describedby={"options"}
+            style={{ color: "black" }}
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </Button>
+          <Popover
+            id={"options"}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            TEXT
+          </Popover>
+        </div>
+
+        {/* ADD */}
         <div>
           <Button
             aria-describedby={id}
@@ -143,6 +183,7 @@ function Songs({
             onClick={handleClick}
           >
             <PlaylistAddIcon />
+            <Typography sx={{ fontSize: "10px" }}>Add to playlist</Typography>
           </Button>
           <Popover
             id={id}
@@ -184,6 +225,20 @@ function Songs({
               </Typography>
             </Box>
           </Popover>
+        </div>
+
+        {/* REMOVE */}
+
+        <div
+          data-test-id="remove-song"
+          onClick={(e) => updateSong(e, song?._id, playlistId)}
+        >
+          <Button style={{ color: "black" }}>
+            <DeleteIcon />
+            <Typography sx={{ fontSize: "10px" }}>
+              Remove from playlist
+            </Typography>
+          </Button>
         </div>
       </Box>
     </div>

@@ -43,7 +43,7 @@ function PlaylistViewSongs() {
     const getPlaylistById = async () => {
       const response = await fetch(
         //https://melodystream.herokuapp.com/playlist/${playlistID}
-        `https://melodystream.herokuapp.com/playlist/${playlistId}`,
+        `http://localhost:4000/playlist/${playlistId}`,
         {
           headers: {
             auth_token: token,
@@ -66,7 +66,7 @@ function PlaylistViewSongs() {
     return (
       <div className="loading-box">
         <div className="loading_bar"></div>
-        <p className="loading_text">...Loading</p>
+        <p className="loading_text">Loading</p>
       </div>
     );
   if (error) return <div>Error</div>;
@@ -93,6 +93,7 @@ function PlaylistViewSongs() {
     <Songs
       key={song._id}
       playlists={playlistAll}
+      playlistId={playlistInfo.id}
       song={song}
       isPlaying={isPlaying}
       activeSong={activeSong}
@@ -125,9 +126,9 @@ function PlaylistViewSongs() {
             alt="thumbnail"
           />
           <section className="flex flex-col justify-center grow ml-5 text-white">
-            <h1 className=" not-italic text-6xl font-black whitespace-nowrap text-ellipsis leading-80">
+            <h2 className=" not-italic text-6xl font-black whitespace-nowrap text-ellipsis leading-80">
               {playlistInfo.name}
-            </h1>
+            </h2>
             <p>{playlistInfo.description}</p>
             <div className="playlist-description">
               <p>{!playlistInfo.publicAccessible ? "Private" : "Public"}</p>
