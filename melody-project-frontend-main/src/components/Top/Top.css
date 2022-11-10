@@ -86,10 +86,18 @@
 }
 @media (min-width: 1200px) {
   .top-songs-container {
-    width: 25%;
-    margin-left: 74%;
-    margin-top: -35%;
+    width: auto;
+    margin-left: 14%;
     overflow-x: hidden;
+  }
+}
+@media (max-width: 1200px) {
+  .top-songs-container {
+ position:absolute;
+ top: 95vh;
+left: 10%;
+width: 70%;    
+    
   }
 }
 

@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import SideMenu from "../SideMenu/SideMenu";
 import Top from "../Top/Top";
 import AlbumCarrousel from "../Albums/AlbumCarrousel";
-import MobileHeader from "../MobileHeader/MobileHeader";
 import HomeHeader from "./HomeHeader/HomeHeader";
 import { useGetPlaylistQuery } from "../../redux/services/melodyApi";
 import Loader from "../Loader/Loader";
 import Error from "../Error/Error";
+import { Grid } from "@mui/material";
 
 function Home() {
   const { data, isFetching, error } = useGetPlaylistQuery();
   const token = localStorage.getItem("userToken");
 
-  const isDesktop = useMediaQuery({
-    query: "(min-width: 1200px)",
-  });
 
-  const isPhone = useMediaQuery({
-    query: "(max-width: 450px)",
-  });
+
 
   const [random, setRandom] = useState([]);
   const fetchRandom = async () => {
@@ -45,20 +39,14 @@ function Home() {
 
   return (
     <>
-      {isDesktop && (
-        <>
-          <HomeHeader />
-          <AlbumCarrousel data={data.data} random={random.data} />
-          <Top />
-        </>
-      )}
-      {isPhone && (
-        <>
-          <MobileHeader />
-          <AlbumCarrousel data={data.data} random={random.data} />
-          <Top />
-        </>
-      )}
+     
+     <Grid container spacing={2}>
+ <HomeHeader />
+         <Grid  xs={8}> <AlbumCarrousel data={data.data} random={random.data} /></Grid>
+         <Grid  xs={4}> <Top /></Grid>
+        </Grid>
+   
+    
     </>
   );
 }

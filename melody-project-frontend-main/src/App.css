@@ -5,7 +5,7 @@ html {
 
 body {
   margin: 0;
-  background: linear-gradient(180deg, #2b2c55 0%, #6667ae 100%);
+  background: rgb(28, 27, 27);
   background-attachment: fixed;
 }
 

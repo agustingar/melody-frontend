@@ -37,9 +37,9 @@ export default function RouterApp() {
               <Route
                 path="/home"
                 element={
-                  <>
-                    <SideMenu /> <Home />
-                  </>
+                  <div >
+                    <SideMenu  /> <Home />
+                  </div>
                 }
               />
               <Route

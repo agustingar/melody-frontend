@@ -112,7 +112,7 @@ function Songs({
           onClick={(e) => updateSong(e, song?._id, playlist?._id)}
         >
           <div className="addToPlaylist_img">
-            <img src={playlist?.thumbnail}></img>
+            <img src={playlist?.thumbnail}/>
           </div>
           <div className="addToPlaylist_list">
             <p>
@@ -207,7 +207,7 @@ function Songs({
             >
               Add to playlist
               <Button>
-                <CloseIcon />
+                <CloseIcon onClick={handleClose} />
               </Button>
             </Typography>
             <Typography
