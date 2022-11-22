@@ -7,13 +7,11 @@ import { useGetPlaylistQuery } from "../../redux/services/melodyApi";
 import Loader from "../Loader/Loader";
 import Error from "../Error/Error";
 import { Grid } from "@mui/material";
+import ExplorerSongs from "../Explorer/Explorer";
 
 function Home() {
   const { data, isFetching, error } = useGetPlaylistQuery();
   const token = localStorage.getItem("userToken");
-
-
-
 
   const [random, setRandom] = useState([]);
   const fetchRandom = async () => {
@@ -39,14 +37,18 @@ function Home() {
 
   return (
     <>
-     
-     <Grid container spacing={2}>
- <HomeHeader />
-         <Grid  xs={8}> <AlbumCarrousel data={data.data} random={random.data} /></Grid>
-         <Grid  xs={4}> <Top /></Grid>
+      <Grid container spacing={2}>
+        <HomeHeader />
+        <Grid xs={8}>
+          {" "}
+          <AlbumCarrousel data={data.data} random={random.data} />
         </Grid>
-   
-    
+        <Grid xs={4}>
+          {" "}
+          <ExplorerSongs />
+          <Top />
+        </Grid>
+      </Grid>
     </>
   );
 }

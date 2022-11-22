@@ -2,6 +2,10 @@
   color: #fff;
 }
 
+.all_songs__container {
+  margin-bottom: 2rem;
+}
+
 .container-song {
   position: relative;
   display: flex;
@@ -87,17 +91,16 @@
 @media (min-width: 1200px) {
   .top-songs-container {
     width: auto;
-    margin-left: 14%;
+    margin-left: 5%;
     overflow-x: hidden;
   }
 }
 @media (max-width: 1200px) {
   .top-songs-container {
- position:absolute;
- top: 95vh;
-left: 10%;
-width: 70%;    
-    
+    position: absolute;
+    top: 95vh;
+    left: 15%;
+    width: 70%;
   }
 }
 

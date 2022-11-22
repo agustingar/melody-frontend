@@ -1,70 +1,93 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./HomeHeader.css";
-import { styled, alpha } from "@mui/material/styles";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
+import { Clear, SearchRounded } from "@mui/icons-material";
 import { IconButton, Badge } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import UserAvatar from "../../AppBar/UserAvatar";
+import { useNavigate } from "react-router-dom";
 
 function HomeHeader() {
-  const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.35),
-    },
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
-  }));
+  const [inputTrack, setInputTrack] = useState("");
+  console.log(inputTrack);
+  const [allSongs, setAllSongs] = useState("");
+  console.log(allSongs);
+  const [artistSongs, setArtistSongs] = useState({});
+  console.log(artistSongs);
 
-  const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }));
+  const navigate = useNavigate();
 
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    "& .MuiInputBase-input": {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        width: "50ch",
-      },
-    },
-  }));
+  useEffect(() => {
+    const getAllSongs = async () => {
+      const res = await fetch(
+        // "https://melodystream.herokuapp.com/song/all-songs"
+        "http://localhost:4000/song/all-songs"
+      );
+      const songs = await res.json();
+      setAllSongs(songs);
+    };
+    getAllSongs();
+  }, []);
+
+  const handleSearch = (event) => {
+    setInputTrack(event.target.value);
+    allSongs.songs
+      .filter((song) => {
+        if (inputTrack === "") {
+          return;
+        } else if (
+          song.artist.toLowerCase().includes(inputTrack.toLowerCase())
+        ) {
+          return song;
+        }
+      })
+      .map((song, i) => setArtistSongs(song));
+  };
+
+  function handleSearchClear(e) {
+    setInputTrack("");
+  }
+
+  const handleClick = () => {
+    if (Object.keys(artistSongs).length === 0) {
+      return;
+    } else navigate("/explorer", { replace: true, state: { artistSongs } });
+  };
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      handleClick();
+    } else return;
+  };
 
   const searchBar = (
-    <Search className="searchbar-home">
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search a song…"
-        inputProps={{ "aria-label": "search" }}
-      />
-    </Search>
+    <div className="container" onKeyPress={(e) => handleEnter(e)}>
+      <div className="search_input_container">
+        <IconButton onClick={handleClick}>
+          <SearchRounded />
+        </IconButton>
+        <input
+          type="text"
+          placeholder="Explorer"
+          name="songTitle"
+          onChange={handleSearch}
+          value={inputTrack}
+        />
+        <IconButton onClick={handleSearchClear}>
+          <Clear />
+        </IconButton>
+      </div>
+    </div>
   );
 
   return (
     <div className="header-container-home">
-      <h1>
-        <strong>Hello</strong> User!
-      </h1>
+      <div>
+        <h1>
+          <strong>Hello</strong> User!
+        </h1>
+      </div>
+
       {searchBar}
       <div className="settings-container">
         <IconButton className="classes.settings">
