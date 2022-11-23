@@ -42,8 +42,7 @@ function PlaylistViewSongs() {
   useEffect(() => {
     const getPlaylistById = async () => {
       const response = await fetch(
-        //https://melodystream.herokuapp.com/playlist/${playlistID}
-        `http://localhost:4000/playlist/${playlistId}`,
+        `https://melodystream.herokuapp.com/playlist/${playlistId}`,
         {
           headers: {
             auth_token: token,
@@ -126,7 +125,7 @@ function PlaylistViewSongs() {
             alt="thumbnail"
           />
           <section className="flex flex-col justify-center grow ml-5 text-white">
-            <h2 className=" not-italic text-6xl font-black whitespace-nowrap text-ellipsis leading-80">
+            <h2 className=" not-italic text-3xl  font-black whitespace-nowrap text-ellipsis leading-80">
               {playlistInfo.name}
             </h2>
             <p>{playlistInfo.description}</p>

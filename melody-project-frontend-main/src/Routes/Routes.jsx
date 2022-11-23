@@ -24,6 +24,7 @@ import PlaylistEdit from "../components/MyPlaylists/EditPlaylist/PlaylistEdit";
 import SideMenu from "../components/SideMenu/SideMenu";
 import UserPlaylist from "../components/MyPlaylists/EditPlaylist/UserPlaylist";
 import Explorer from "../components/Explorer/Explorer";
+import PublicPlaylist from "../components/Home/melodyPlaylists/PublicPlaylist";
 
 export default function RouterApp() {
   const { activeSong } = useSelector((state) => state.player);
@@ -117,6 +118,15 @@ export default function RouterApp() {
                   <>
                     <SideMenu />
                     <PlaylistEdit />
+                  </>
+                }
+              />
+              <Route
+                path="/playlist/public/:id"
+                element={
+                  <>
+                    <SideMenu />
+                    <PublicPlaylist />
                   </>
                 }
               />

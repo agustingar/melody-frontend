@@ -53,25 +53,27 @@ function Playlists() {
           </div>
         </div>
         {playlists.map((playlist) => (
-          <div
-            key={playlist._id}
-            className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"
-          >
-            <div className="relative w-full h-56 group">
-              <img
-                alt="song_img"
-                src={playlist.thumbnail}
-                className="w-full h-full rounded-lg"
-                onClick={() => getId(playlist._id)}
-              />
-            </div>
+          <>
+            <div
+              key={playlist._id}
+              className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"
+            >
+              <div className="relative w-full h-56 group">
+                <img
+                  alt="song_img"
+                  src={playlist.thumbnail}
+                  className="w-full h-full rounded-lg"
+                  onClick={() => getId(playlist._id)}
+                />
+              </div>
 
-            <div className="mt-4 flex flex-col">
-              <p className="font-semibold text-lg text-white truncate">
-                {playlist.name}
-              </p>
+              <div className="mt-4 flex flex-col">
+                <p className="font-semibold text-lg text-white truncate">
+                  {playlist.name}
+                </p>
+              </div>
             </div>
-          </div>
+          </>
         ))}
       </div>
     </div>

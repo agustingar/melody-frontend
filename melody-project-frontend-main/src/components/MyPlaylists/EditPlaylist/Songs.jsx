@@ -74,8 +74,7 @@ function Songs({
     }
 
     const options = {
-      //url: `https://melodystream.herokuapp.com/playlist/add-song/${playId}`,
-      url: `http://localhost:4000/playlist/${endPoint}/${playId}`,
+      url: `https://melodystream.herokuapp.com/playlist/${endPoint}/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -112,7 +111,7 @@ function Songs({
           onClick={(e) => updateSong(e, song?._id, playlist?._id)}
         >
           <div className="addToPlaylist_img">
-            <img src={playlist?.thumbnail}/>
+            <img src={playlist?.thumbnail} />
           </div>
           <div className="addToPlaylist_list">
             <p>
@@ -227,7 +226,7 @@ function Songs({
           </Popover>
         </div>
 
-        {/* REMOVE */}
+        {/* REMOVE SECTION */}
 
         <div
           data-test-id="remove-song"

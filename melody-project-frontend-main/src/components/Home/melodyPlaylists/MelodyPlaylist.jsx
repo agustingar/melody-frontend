@@ -1,26 +1,12 @@
 import React from "react";
-import { useGetPlaylistQuery } from "../../../redux/services/melodyApi";
+import { useGetAllPlaylistQuery } from "../../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
 
-function AllPlaylists() {
-  const { data, isFetching, error } = useGetPlaylistQuery();
-  const navigate = useNavigate();
+export const MelodyPlaylist = () => {
+  const { data, isFetching, error } = useGetAllPlaylistQuery();
   const playlists = data?.data;
-  const token = localStorage.getItem("userToken");
+  const navigate = useNavigate();
 
-  //This section navigate to clicked playlist
-  function getPlaylistId(id) {
-    const playlistId = id;
-
-    const fetchPlaylist = async (id) =>
-      await fetch(`https://melodystream.herokuapp.com/playlist/${playlistId}`, {
-        method: "GET",
-        headers: { auth_token: token },
-        id: playlistId,
-      });
-    fetchPlaylist();
-    navigate(`/playlist/${playlistId}`);
-  }
   if (isFetching)
     return (
       <div className="loading-box">
@@ -36,7 +22,7 @@ function AllPlaylists() {
       <header className="flex h-44 mb-1">
         <section className="flex flex-col justify-center grow ml-5">
           <h className=" not-italic text-2xl font-black whitespace-nowrap text-ellipsis leading-80">
-            Your Playlists
+            Melody playlists
           </h>
           <div>{playlists.length} Playlists</div>
         </section>
@@ -52,7 +38,7 @@ function AllPlaylists() {
                 alt="song_img"
                 src={playlist.thumbnail}
                 className="w-full h-full rounded-sm"
-                onClick={() => getPlaylistId(playlist._id)}
+                onClick={() => navigate(`/playlist/public/${playlist._id}`)}
               />
             </div>
 
@@ -66,6 +52,4 @@ function AllPlaylists() {
       </div>
     </div>
   );
-}
-
-export default AllPlaylists;
+};

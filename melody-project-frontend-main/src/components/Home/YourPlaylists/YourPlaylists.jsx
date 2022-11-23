@@ -1,28 +1,26 @@
 import React from "react";
-import { useGetAllPlaylistQuery } from "../../../redux/services/melodyApi";
+import { useGetPlaylistQuery } from "../../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
 
-export const RandomPlaylist = () => {
-  // const token = localStorage.getItem("userToken");
-  const { data, isFetching, error } = useGetAllPlaylistQuery();
-  const playlists = data?.data;
+function AllPlaylists() {
+  const { data, isFetching, error } = useGetPlaylistQuery();
   const navigate = useNavigate();
+  const playlists = data?.data;
+  // const token = localStorage.getItem("userToken");
 
-  function getPlaylistId(id) {
-    const playlistId = id;
-    console.log(playlistId);
+  //This section navigate to clicked playlist
+  // function getPlaylistId(id) {
+  //   const playlistId = id;
 
-    const fetchPlaylist = async (id) =>
-      await fetch(
-        `https://melodystream.herokuapp.com/playlist/public/${playlistId}`,
-        {
-          method: "GET",
-          id: playlistId,
-        }
-      );
-    fetchPlaylist();
-    navigate(`/playlist/${playlistId}`);
-  }
+  //   const fetchPlaylist = async (id) =>
+  //     await fetch(`https://melodystream.herokuapp.com/playlist/${playlistId}`, {
+  //       method: "GET",
+  //       headers: { auth_token: token },
+  //       id: playlistId,
+  //     });
+  //   fetchPlaylist();
+  //   navigate(`/playlist/${playlistId}`);
+  // }
   if (isFetching)
     return (
       <div className="loading-box">
@@ -38,7 +36,7 @@ export const RandomPlaylist = () => {
       <header className="flex h-44 mb-1">
         <section className="flex flex-col justify-center grow ml-5">
           <h className=" not-italic text-2xl font-black whitespace-nowrap text-ellipsis leading-80">
-            Melody playlists
+            Your Playlists
           </h>
           <div>{playlists.length} Playlists</div>
         </section>
@@ -54,7 +52,7 @@ export const RandomPlaylist = () => {
                 alt="song_img"
                 src={playlist.thumbnail}
                 className="w-full h-full rounded-sm"
-                onClick={() => getPlaylistId(playlist._id)}
+                onClick={() => navigate(`/playlist/${playlist._id}`)}
               />
             </div>
 
@@ -68,4 +66,6 @@ export const RandomPlaylist = () => {
       </div>
     </div>
   );
-};
+}
+
+export default AllPlaylists;

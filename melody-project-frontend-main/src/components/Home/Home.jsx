@@ -2,9 +2,9 @@ import React from "react";
 import Top from "../Top/Top";
 import ExplorerSongs from "../Explorer/Explorer";
 import HomeHeader from "./HomeHeader/HomeHeader";
-import AllPlaylists from "./allPlaylist/AllPlaylists";
-import "./allPlaylist/allplaylist.css";
-import { RandomPlaylist } from "./randomPlaylists/RandomPlaylist";
+import YourPlaylists from "./YourPlaylists/YourPlaylists";
+import "./home.css";
+import { MelodyPlaylist } from "./melodyPlaylists/MelodyPlaylist";
 
 function Home() {
   return (
@@ -15,10 +15,10 @@ function Home() {
       <div className="home_container">
         <div className="home_playlist">
           <div className="home_playlist__allPlaylist">
-            <AllPlaylists />
+            <YourPlaylists />
           </div>
           <div className="home_playlist__randomPlaylist">
-            <RandomPlaylist />
+            <MelodyPlaylist />
           </div>
         </div>
         <aside className="home_aside">
