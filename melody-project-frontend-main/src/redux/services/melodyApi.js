@@ -4,7 +4,6 @@ export const melodyApi = createApi({
   reducerPath: "melodyApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://melodystream.herokuapp.com",
-    // baseUrl: "https://melodystream.herokuapp.com",
     prepareHeaders: (headers) => {
       headers.set(
         "auth_token",
@@ -17,7 +16,7 @@ export const melodyApi = createApi({
   endpoints: (builder) => ({
     getAllSongs: builder.query({ query: () => "/song/all-songs" }),
     getPlaylist: builder.query({ query: () => "/playlist/user/playlist" }),
-    getAllPlaylist: builder.query({ query: () => "/playlist/random/music" }),
+    getAllPlaylist: builder.query({ query: () => "/playlist/public" }),
     getPlaylistSongs: builder.query({
       query: (playlist) => `/playlist/${playlist}`,
     }),

@@ -3,22 +3,23 @@ import { useGetAllPlaylistQuery } from "../../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
 
 export const RandomPlaylist = () => {
-  const token = localStorage.getItem("userToken");
+  // const token = localStorage.getItem("userToken");
   const { data, isFetching, error } = useGetAllPlaylistQuery();
   const playlists = data?.data;
   const navigate = useNavigate();
 
-  //This section navigate to clicked playlist
   function getPlaylistId(id) {
     const playlistId = id;
     console.log(playlistId);
 
     const fetchPlaylist = async (id) =>
-      await fetch(`https://melodystream.herokuapp.com/playlist/${playlistId}`, {
-        method: "GET",
-        headers: { auth_token: token },
-        id: playlistId,
-      });
+      await fetch(
+        `https://melodystream.herokuapp.com/playlist/public/${playlistId}`,
+        {
+          method: "GET",
+          id: playlistId,
+        }
+      );
     fetchPlaylist();
     navigate(`/playlist/${playlistId}`);
   }
