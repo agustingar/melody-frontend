@@ -1,0 +1,28 @@
+.home_header {
+  margin-bottom: 0px;
+}
+
+.home_container {
+  display: flex;
+}
+.home_playlist {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 200px;
+}
+
+.home_playlist__allPlaylist {
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+.home_playlist__randomPlaylist {
+  grid-column: 1 / 2;
+  grid-row: 2;
+}
+
+.home_aside {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}

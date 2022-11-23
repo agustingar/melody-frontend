@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "../Top/Top.css";
-import {
-  useGetAllSongsQuery,
-  useGetLikedSongsQuery,
-} from "../../redux/services/melodyApi";
+import { useGetAllSongsQuery } from "../../redux/services/melodyApi";
 import SongCart from "../Top/SongCart";
 import { Link } from "react-router-dom";
 import convertDuration from "../../functions/ConvertDuration";
@@ -14,6 +11,10 @@ function ExplorerSongs() {
   const { data, isFetching, error } = useGetAllSongsQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [randomSongs, setRandomSongs] = useState([]);
+
+  // useEffect(() => {
+  //   getRandomSongs();
+  // }, []);
 
   if (isFetching)
     return (
@@ -34,7 +35,7 @@ function ExplorerSongs() {
     const songs = data.songs;
     const count = songs.length;
     const randomIndexes = new Set();
-    while (randomIndexes.size < 8) {
+    while (randomIndexes.size < 7) {
       randomIndexes.add(randomIndex(count));
     }
     for (let index of randomIndexes) {
@@ -49,21 +50,19 @@ function ExplorerSongs() {
         Suggestions
       </h1>
       <section>
-        {data?.songs.length > 0
-          ? randomSongs.map((song, i) => {
-              return (
-                <SongCart
-                  key={song._id}
-                  song={song}
-                  isPlaying={isPlaying}
-                  activeSong={activeSong}
-                  data={data}
-                  i={i}
-                  convertDuration={convertDuration}
-                />
-              );
-            })
-          : null}
+        {randomSongs.map((song, i) => {
+          return (
+            <SongCart
+              key={song._id}
+              song={song}
+              isPlaying={isPlaying}
+              activeSong={activeSong}
+              data={data}
+              i={i}
+              convertDuration={convertDuration}
+            />
+          );
+        })}
         <Button
           sx={{
             color: "white",

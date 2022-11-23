@@ -1,16 +1,15 @@
 import React from "react";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import { useGetPlaylistQuery } from "../../redux/services/melodyApi";
-import CreatePlaylistModal from "./CreatePlaylist/CreatePlaylistModal";
+import { useGetPlaylistQuery } from "../../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
 
-function Playlists() {
+function AllPlaylists() {
   const { data, isFetching, error } = useGetPlaylistQuery();
   const navigate = useNavigate();
   const playlists = data?.data;
   const token = localStorage.getItem("userToken");
 
-  function getId(id) {
+  //This section navigate to clicked playlist
+  function getPlaylistId(id) {
     const playlistId = id;
 
     const fetchPlaylist = async (id) =>
@@ -36,38 +35,29 @@ function Playlists() {
     <div className="flex flex-col ml-80 font-mons text-white h-full">
       <header className="flex h-44 mb-1">
         <section className="flex flex-col justify-center grow ml-5">
-          <h1 className=" not-italic text-6xl font-black whitespace-nowrap text-ellipsis leading-80">
+          <h className=" not-italic text-2xl font-black whitespace-nowrap text-ellipsis leading-80">
             Your Playlists
-          </h1>
+          </h>
           <div>{playlists.length} Playlists</div>
         </section>
       </header>
-      <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        <div className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer">
-          <div className="relative w-full h-56 group">
-            <PlaylistAddIcon sx={{ fontSize: "230px", marginTop: "-8%" }} />
-          </div>
-
-          <div className="mt-4 flex flex-col">
-            <CreatePlaylistModal />
-          </div>
-        </div>
+      <div className="flex flex-wrap sm:justify-start justify-center gap-5">
         {playlists.map((playlist) => (
           <div
             key={playlist._id}
-            className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"
+            className="flex flex-col w-[150px] h-[180px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"
           >
             <div className="relative w-full h-56 group">
               <img
                 alt="song_img"
                 src={playlist.thumbnail}
-                className="w-full h-full rounded-lg"
-                onClick={() => getId(playlist._id)}
+                className="w-full h-full rounded-sm"
+                onClick={() => getPlaylistId(playlist._id)}
               />
             </div>
 
             <div className="mt-4 flex flex-col">
-              <p className="font-semibold text-lg text-white truncate">
+              <p className="font-semibold text-sm text-white truncate">
                 {playlist.name}
               </p>
             </div>
@@ -78,4 +68,4 @@ function Playlists() {
   );
 }
 
-export default Playlists;
+export default AllPlaylists;

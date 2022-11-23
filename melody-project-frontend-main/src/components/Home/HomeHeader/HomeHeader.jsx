@@ -6,14 +6,12 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import UserAvatar from "../../AppBar/UserAvatar";
 import { useNavigate } from "react-router-dom";
+import SongCart from "../../Top/SongCart";
 
 function HomeHeader() {
   const [inputTrack, setInputTrack] = useState("");
-  console.log(inputTrack);
   const [allSongs, setAllSongs] = useState("");
-  console.log(allSongs);
   const [artistSongs, setArtistSongs] = useState({});
-  console.log(artistSongs);
 
   const navigate = useNavigate();
 
@@ -48,10 +46,11 @@ function HomeHeader() {
     setInputTrack("");
   }
 
+  //!click search icon do nothing here
   const handleClick = () => {
     if (Object.keys(artistSongs).length === 0) {
       return;
-    } else navigate("/explorer", { replace: true, state: { artistSongs } });
+    } else return;
   };
 
   const handleEnter = (e) => {
@@ -61,7 +60,7 @@ function HomeHeader() {
   };
 
   const searchBar = (
-    <div className="container" onKeyPress={(e) => handleEnter(e)}>
+    <div className="search_container" onKeyPress={(e) => handleEnter(e)}>
       <div className="search_input_container">
         <IconButton onClick={handleClick}>
           <SearchRounded />
