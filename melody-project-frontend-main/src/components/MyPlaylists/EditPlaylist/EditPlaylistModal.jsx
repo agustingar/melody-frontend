@@ -25,13 +25,14 @@ const style = {
 };
 
 export default function PlaylistModal({
-  playlist: { name, description, thumbnail, publicAccessible },
+  playlist: { id, name, description, thumbnail, publicAccessible },
 }) {
   const token = localStorage.getItem("userToken") || null;
   const [open, setOpen] = React.useState(false);
+  const [successMsg, setSuccessMsg] = React.useState("");
+  const [isUpdate, setIsUpdate] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
-
-  // console.log(name, description, thumbnail, publicAccessible);
+  const [hasError, setHasError] = React.useState(false);
 
   const [playlist, setPlaylist] = React.useState({
     name: name,
@@ -52,10 +53,9 @@ export default function PlaylistModal({
     });
   };
 
-  const editPlaylist = async (e) => {
-    e.preventDefault();
+  const editPlaylist = async () => {
     const options = {
-      url: `https://melodystream.herokuapp.com/playlist/edit`,
+      url: `https://melodystream.herokuapp.com/playlist/edit/${id}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -67,22 +67,12 @@ export default function PlaylistModal({
 
     try {
       const result = await axios(options);
-      const fetchData = async () => {
-        const response = await fetch(
-          "https://melodystream.herokuapp.com/user",
-          {
-            headers: {
-              auth_token: token,
-            },
-          }
-        );
-        const data = await response.json();
-        console.log(data);
-      };
-
-      fetchData().catch(console.error);
+      setIsUpdate(true);
+      setSuccessMsg(result.data.msg);
+      window.location.reload(true);
     } catch (error) {
       if (error.response) {
+        setHasError(true);
         setErrorMsg(error.response.data.msg);
       }
     }

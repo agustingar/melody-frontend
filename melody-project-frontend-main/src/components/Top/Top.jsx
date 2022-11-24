@@ -20,8 +20,6 @@ function Top() {
 
   if (error) return <div>Error</div>;
 
-  console.log(data);
-
   return (
     <div className="top-songs-container">
       <h1 className="mb-3 not-italic font-bold font-mons text-xl text-white">

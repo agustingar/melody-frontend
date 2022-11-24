@@ -1,6 +1,6 @@
 import React from "react";
 import "./SideMenu.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -35,46 +35,48 @@ function SideMenu() {
       <Toolbar />
       <Divider />
       <List>
-        {["Home", "Playlists", "Favorites", "Upload song"].map((text, index) => (
-          <Link
-            key={index + 1}
-            to={
-              text === "Home"
-                ? "/home"
-                : text === "Favorites"
-                ? "/favorites"
-                : text === "Favorites"
-                ? "/favorites"
-                : text === "Playlists"
-                ? "/playlists"
-                : text === "Albums"
-                ? "/albums"
-                
-                : text === "Upload song"
-                ? "/songs"
-                : ""
-                
-            }
-            style={{ textDecoration: "none", color: "black" }}
-          >
+        {["Home", "Playlists", "Favorites", "Upload song"].map(
+          (text, index) => (
+            <Link
+              key={index + 1}
+              to={
+                text === "Home"
+                  ? "/home"
+                  : text === "Favorites"
+                  ? "/favorites"
+                  : text === "Playlists"
+                  ? "/playlists"
+                  : text === "Upload song"
+                  ? "/songs"
+                  : ""
+              }
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+            >
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          )
+        )}
+      </List>
+      <Divider />
+      <Link to="/">
+        {" "}
+        <List>
+          {["Logout"].map((text) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
-          </Link>
-        ))}
-      </List>
-      <Divider />
-      <Link to="/"> <List>
-        {["Logout"].map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List></Link>
+          ))}
+        </List>
+      </Link>
     </div>
   );
 

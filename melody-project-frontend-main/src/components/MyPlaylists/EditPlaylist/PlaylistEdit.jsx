@@ -33,7 +33,6 @@ function PlaylistViewSongs() {
 
     const fetchPlaylist = async () => {
       const response = await fetch(
-        //https://melodystream.herokuapp.com/playlist/${playlistID}
         `https://melodystream.herokuapp.com/playlist/user/playlist`,
         {
           headers: {
@@ -199,7 +198,7 @@ function PlaylistViewSongs() {
             variant="outlined"
             onClick={getRandomSongs}
           >
-            SUGGEST SONGS
+            GET SUGGEST SONGS
           </Button>
         )}
       </div>
