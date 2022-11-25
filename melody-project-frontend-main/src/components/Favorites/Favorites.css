@@ -30,7 +30,7 @@ header .info h1 {
   margin: 0;
   font-style: normal;
   font-weight: 900;
-  font-size: 64px;
+  font-size: 2.5rem;
   line-height: 80px;
 }
 
@@ -38,7 +38,7 @@ header .info h6 {
   margin-bottom: 0;
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 1.2rem;
   line-height: 16px;
 }
 
@@ -89,6 +89,14 @@ header .info p {
   top: 0;
   z-index: 9999;
   padding: 0 30px;
+}
+
+.favorites_list {
+  border-bottom: 1px rgba(124, 124, 124, 0.613) solid;
+}
+
+.favorites_list > td {
+  padding: 0.8rem;
 }
 
 /********************* Mobile view *********************/

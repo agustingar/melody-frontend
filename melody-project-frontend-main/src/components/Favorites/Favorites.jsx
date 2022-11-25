@@ -63,18 +63,18 @@ function Favorites() {
               </div>
             </div>
           </header>
-          <table className="favorites-table animate-slideup">
+          <table className="favorites-table animate-slideup ">
             <thead>
               <tr>
+                <th></th>
                 <th>Title</th>
                 <th>Artist</th>
                 <th>Genre</th>
                 <th id="duration-header">Duration</th>
                 <th></th>
-                <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="favorites_line__bottom">
               {data.songs
                 .filter((song) => {
                   if (inputTrack === "") {

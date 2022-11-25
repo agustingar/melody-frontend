@@ -6,21 +6,7 @@ function AllPlaylists() {
   const { data, isFetching, error } = useGetPlaylistQuery();
   const navigate = useNavigate();
   const playlists = data?.data;
-  // const token = localStorage.getItem("userToken");
 
-  //This section navigate to clicked playlist
-  // function getPlaylistId(id) {
-  //   const playlistId = id;
-
-  //   const fetchPlaylist = async (id) =>
-  //     await fetch(`https://melodystream.herokuapp.com/playlist/${playlistId}`, {
-  //       method: "GET",
-  //       headers: { auth_token: token },
-  //       id: playlistId,
-  //     });
-  //   fetchPlaylist();
-  //   navigate(`/playlist/${playlistId}`);
-  // }
   if (isFetching)
     return (
       <div className="loading-box">

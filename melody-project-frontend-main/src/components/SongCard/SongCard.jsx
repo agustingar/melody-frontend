@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../../redux/features/playerSlice";
@@ -24,17 +23,7 @@ const SongCard = ({
   };
 
   return (
-    <tr key={song._id}>
-      <td>
-        <p>{song.title}</p>
-      </td>
-      <td>
-        <p>{song.artist}</p>
-      </td>
-      <td>
-        <p>{song.genre}</p>
-      </td>
-      <td className="duration-field">{convertDuration(song.duration)}</td>
+    <tr key={song._id} className="favorites_list">
       <td>
         <PlayPause
           className="play"
@@ -45,6 +34,17 @@ const SongCard = ({
           handlePlay={handlePlayClick}
         />
       </td>
+      <td>
+        <p>{song.title}</p>
+      </td>
+      <td>
+        <p>{song.artist}</p>
+      </td>
+      <td>
+        <p>{song.genre}</p>
+      </td>
+      <td className="duration-field">{convertDuration(song.duration)}</td>
+
       <td>
         <LikedSongs key={song._id} song={song} />
       </td>
