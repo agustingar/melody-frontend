@@ -1,6 +1,6 @@
 import React from "react";
 import Top from "../Top/Top";
-import ExplorerSongs from "../Explorer/Explorer";
+import ExplorerSongs from "./DiscoverSong/DiscoverSongs";
 import HomeHeader from "./HomeHeader/HomeHeader";
 import YourPlaylists from "./YourPlaylists/YourPlaylists";
 import "./home.css";
@@ -22,11 +22,11 @@ function Home() {
           </div>
         </div>
         <aside className="home_aside">
-          <div className="home_aside__explorerSongs">
-            <ExplorerSongs />
-          </div>
           <div className="home_aside__top">
             <Top />
+          </div>
+          <div className="home_aside__explorerSongs">
+            <ExplorerSongs />
           </div>
         </aside>
       </div>

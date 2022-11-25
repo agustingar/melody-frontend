@@ -2,7 +2,6 @@ import React from "react";
 import "./Favorites.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import convertDuration from "../../functions/ConvertDuration";
 

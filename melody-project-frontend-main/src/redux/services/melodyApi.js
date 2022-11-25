@@ -20,9 +20,10 @@ export const melodyApi = createApi({
     getPlaylistSongs: builder.query({
       query: (playlist) => `/playlist/${playlist}`,
     }),
-    getLikedSongs: builder.query({ query: () => "/song/like" }),
     getSong: builder.query({ query: (id) => `/song/${id}` }),
+    getLikedSongs: builder.query({ query: () => "/song/like" }),
     getUserSongs: builder.query({ query: () => "/song/all-user-songs" }),
+    getUser: builder.query({ query: () => "/user" }),
   }),
 });
 
@@ -33,4 +34,5 @@ export const {
   useGetLikedSongsQuery,
   useGetSongQuery,
   useGetUserSongsQuery,
+  useGetUserQuery,
 } = melodyApi;

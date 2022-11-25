@@ -23,7 +23,6 @@ import Playlists from "../components/MyPlaylists/Playlists";
 import PlaylistEdit from "../components/MyPlaylists/EditPlaylist/PlaylistEdit";
 import SideMenu from "../components/SideMenu/SideMenu";
 import UserPlaylist from "../components/MyPlaylists/EditPlaylist/UserPlaylist";
-import Explorer from "../components/Explorer/Explorer";
 import PublicPlaylist from "../components/Home/melodyPlaylists/PublicPlaylist";
 
 export default function RouterApp() {
@@ -59,15 +58,6 @@ export default function RouterApp() {
                   <>
                     <SideMenu />
                     <Profile />{" "}
-                  </>
-                }
-              />
-              <Route
-                path="/explorer"
-                element={
-                  <>
-                    <SideMenu />
-                    <Explorer />
                   </>
                 }
               />

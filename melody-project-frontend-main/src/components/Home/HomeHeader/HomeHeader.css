@@ -2,8 +2,8 @@
   display: grid;
   align-content: space-around;
   align-items: center;
-  grid-template-columns: 2fr 4fr 2fr;
-  margin-left: 15%;
+  grid-template-columns: 1fr 4fr 3fr;
+  margin-left: 19%;
   max-width: 1300px;
   width: 100%;
   height: 100px;
@@ -20,6 +20,10 @@
   color: #fff;
 }
 
+.header-user--name {
+  font-size: 1.6rem;
+}
+
 .settings-container {
   display: flex;
   flex-direction: row;
@@ -28,9 +32,28 @@
 
 .search_input_container {
   position: relative;
+  color: black;
+}
+.btn-search--icon {
+  cursor: pointer;
 }
 
-.search_query__song {
+.query-song {
   position: absolute;
-  color: #fff;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 3fr 4fr;
+  font-size: 0.9rem;
+  padding: 0.3rem;
+  color: white;
+  width: 38rem;
+  border-radius: 0.5rem;
+  background-color: rgb(59, 59, 59);
+}
+.listen-songs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
+  margin-left: 5rem;
 }

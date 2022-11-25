@@ -13,9 +13,6 @@ const SongCard = ({
   convertDuration,
 }) => {
   const dispatch = useDispatch();
-  const [favorite, setFavorite] = useState([]);
-
-  // const token = localStorage.getItem("userToken");
 
   const handlePauseClick = () => {
     dispatch(playPause(false));

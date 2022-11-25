@@ -1,30 +1,15 @@
-import React, { useEffect, useState } from "react";
+import "../../Top/Top.css";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import "../Top/Top.css";
-import { useGetAllSongsQuery } from "../../redux/services/melodyApi";
-import SongCart from "../Top/SongCart";
-import { Link } from "react-router-dom";
-import convertDuration from "../../functions/ConvertDuration";
+import { useGetAllSongsQuery } from "../../../redux/services/melodyApi";
+import SongCart from "../../Top/SongCart";
+import convertDuration from "../../../functions/ConvertDuration";
 import Button from "@mui/material/Button";
 
-function ExplorerSongs() {
+function DiscoverSongs() {
   const { data, isFetching, error } = useGetAllSongsQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [randomSongs, setRandomSongs] = useState([]);
-
-  // useEffect(() => {
-  //   getRandomSongs();
-  // }, []);
-
-  if (isFetching)
-    return (
-      <div className="loading-box">
-        <div className="loading_bar"></div>
-        <p className="loading_text">Loading</p>
-      </div>
-    );
-
-  if (error) return <div>Error</div>;
 
   function randomIndex(count) {
     return Math.floor(Math.random() * count);
@@ -44,10 +29,20 @@ function ExplorerSongs() {
     setRandomSongs(randomSongs);
   }
 
+  if (isFetching)
+    return (
+      <div className="loading-box">
+        <div className="loading_bar"></div>
+        <p className="loading_text">Loading</p>
+      </div>
+    );
+
+  if (error) return <div>Error</div>;
+
   return (
     <div className="top-songs-container all_songs__container">
       <h1 className="mb-3 not-italic font-bold font-mons text-xl text-white">
-        Suggestions
+        Discover new songs
       </h1>
       <section>
         {randomSongs.map((song, i) => {
@@ -64,22 +59,23 @@ function ExplorerSongs() {
           );
         })}
         <Button
+          className="btn-home--getSongs"
           sx={{
-            color: "white",
-            borderColor: "white",
+            color: "black",
+            backgroundColor: "#fefefe",
             m: 2,
-            p: 1,
+            p: 0.5,
             pl: 3,
             pr: 3,
           }}
           variant="outlined"
           onClick={getRandomSongs}
         >
-          GET SONGS
+          Get songs
         </Button>
       </section>
     </div>
   );
 }
 
-export default ExplorerSongs;
+export default DiscoverSongs;
