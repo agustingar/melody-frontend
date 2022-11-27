@@ -5,10 +5,12 @@ import HomeHeader from "./HomeHeader/HomeHeader";
 import YourPlaylists from "./YourPlaylists/YourPlaylists";
 import "./home.css";
 import { MelodyPlaylist } from "./melodyPlaylists/MelodyPlaylist";
+import SideMenu from "../SideMenu/SideMenu";
 
 function Home() {
   return (
     <>
+      <SideMenu />
       <header className="home_header">
         <HomeHeader />
       </header>

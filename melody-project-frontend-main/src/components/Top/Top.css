@@ -74,7 +74,6 @@
   right: 125px;
   min-width: 45px;
   margin: 0;
-  font-size: 0.8rem;
   color: #444444;
 }
 
@@ -87,27 +86,6 @@
 .iPtRTz,
 .favoriteIcon {
   opacity: 100%;
-}
-@media (min-width: 1200px) {
-  .top-songs-container {
-    width: auto;
-    margin-left: 5%;
-    overflow-x: hidden;
-  }
-}
-@media (max-width: 1200px) {
-  .top-songs-container {
-    position: absolute;
-    top: 95vh;
-    left: 15%;
-    width: 70%;
-  }
-}
-
-@media (max-width: 432px) {
-  .container-song .duration {
-    display: none;
-  }
 }
 
 .loading-box {

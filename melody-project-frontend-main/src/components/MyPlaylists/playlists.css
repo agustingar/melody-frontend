@@ -83,10 +83,18 @@
   }
 }
 
+.home_playlist_container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rem;
+  color: white;
+  height: 100%;
+}
 .playlist-container {
   display: flex;
   flex-direction: column;
 }
+
 .playlist-thumbnail {
   border: 2px solid black;
 }
@@ -196,4 +204,10 @@
   > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.css-3bmhjh-MuiPaper-root-MuiPopover-paper
   > p.MuiTypography-root.MuiTypography-body1.css-1c0nrw5-MuiTypography-root {
   padding-top: 0;
+}
+
+@media (max-width: 1199px) {
+  .home_playlist_container {
+    margin-left: 2rem;
+  }
 }

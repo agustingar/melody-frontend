@@ -17,7 +17,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useMediaQuery } from "react-responsive";
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 function SideMenu() {
   const [value, setValue] = React.useState(0);
@@ -102,6 +102,7 @@ function SideMenu() {
 
   return (
     <>
+      {isPhone && mobileMenu}
       {isDesktop && (
         <>
           <Drawer
@@ -120,7 +121,6 @@ function SideMenu() {
           </Drawer>
         </>
       )}
-      {isPhone && mobileMenu}
     </>
   );
 }

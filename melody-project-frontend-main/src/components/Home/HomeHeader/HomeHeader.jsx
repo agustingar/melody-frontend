@@ -58,7 +58,7 @@ function HomeHeader() {
   function handleSearchClear(e) {
     setInputTrack("");
     setHasQuery(false);
-    setDisplayPlayer(false);
+    // setDisplayPlayer(false);
   }
 
   const handleClick = () => {
@@ -94,8 +94,8 @@ function HomeHeader() {
       </div>
       {hasQuery && (
         <div className="query-container">
-          <div className="query-song">
-            <SearchRounded className="btn-search--icon" onClick={handleClick} />
+          <div className="query-song" onClick={handleClick}>
+            <SearchRounded className="btn-search--icon" />
             <p>{querySong.song.artist}</p>
             <p>{querySong.song.title}</p>
           </div>
@@ -116,14 +116,14 @@ function HomeHeader() {
 
   return (
     <div className="header-container-home">
-      <p className="header-user--name">
+      <div className="header-user--name">
         <b>Hello</b> {user?.user.name}!
-      </p>
+      </div>
       <div>{searchBar}</div>
       {displayPlayer && (
         <div className="listen-songs-container">
           <div>
-            <HeadsetIcon sx={{ marginRight: 1 }} />
+            <HeadsetIcon sx={{ marginRight: 2 }} />
           </div>
           <section>
             <SongCart

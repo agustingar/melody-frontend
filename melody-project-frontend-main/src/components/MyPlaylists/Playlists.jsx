@@ -55,7 +55,7 @@ function Playlists() {
   if (error) return <div>Error</div>;
 
   return (
-    <div className="flex flex-col ml-80 font-mons text-white h-full">
+    <div className="home_playlist_container">
       <header className="flex h-44 mb-1">
         <section className="flex flex-col justify-center grow ml-5">
           <h1 className=" not-italic text-3xl font-black whitespace-nowrap text-ellipsis leading-80">

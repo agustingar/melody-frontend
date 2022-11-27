@@ -34,7 +34,7 @@ export default function RouterApp() {
                 path="/home"
                 element={
                   <div>
-                    <SideMenu /> <Home />
+                    <Home />
                   </div>
                 }
               />
