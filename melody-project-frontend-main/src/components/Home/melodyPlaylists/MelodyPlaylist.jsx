@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const MelodyPlaylist = () => {
   const { data, isFetching, error } = useGetAllPlaylistQuery();
+  console.log(data);
   const playlists = data?.data;
   const navigate = useNavigate();
 

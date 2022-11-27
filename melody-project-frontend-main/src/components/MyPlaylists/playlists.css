@@ -157,6 +157,9 @@
   border: 0.5px solid silver;
 }
 
+.editModal-albumCover--img {
+  width: 5rem;
+}
 /** ADD TO PLAYLIST SECTION **/
 
 .addToPlaylist_box {

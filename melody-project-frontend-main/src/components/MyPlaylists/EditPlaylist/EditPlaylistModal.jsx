@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
@@ -7,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Typography from "@mui/material/Typography";
 import NativeSelect from "@mui/material/NativeSelect";
+import PhotoAlbumIcon from "@mui/icons-material/PhotoAlbum";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 
 import "../playlists.css";
@@ -24,28 +26,29 @@ const style = {
   p: 4,
 };
 
-export default function PlaylistModal({
-  playlist: { id, name, description, thumbnail, publicAccessible },
-}) {
-  const token = localStorage.getItem("userToken") || null;
-  const [open, setOpen] = React.useState(false);
-  const [successMsg, setSuccessMsg] = React.useState("");
-  const [isUpdate, setIsUpdate] = React.useState(false);
-  const [errorMsg, setErrorMsg] = React.useState("");
-  const [hasError, setHasError] = React.useState(false);
-
-  const [playlist, setPlaylist] = React.useState({
-    name: name,
-    description: description,
-    publicAccessible: publicAccessible,
-    thumbnail: thumbnail,
+export default function EditPlaylistModal(id) {
+  const [playlist, setPlaylistInfo] = useState({
+    name: "",
+    description: "",
+    publicAccessible: "",
+    thumbnail: "",
   });
+
+  console.log(playlist);
+
+  const token = localStorage.getItem("userToken") || null;
+  const [open, setOpen] = useState(false);
+
+  //API states
+  const [hasAlbumCoverImg, setHasAlbumCoverImg] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [hasError, setHasError] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPlaylist((prevText) => {
+    setPlaylistInfo((prevText) => {
       return {
         ...prevText,
         [name]: value,
@@ -53,9 +56,47 @@ export default function PlaylistModal({
     });
   };
 
-  const editPlaylist = async () => {
+  const handleSelectedFile = (fileUpload) => {
+    submitSelectFileToCloudinary(fileUpload);
+  };
+
+  const submitSelectFileToCloudinary = async (fileUpload) => {
+    const formData = new FormData();
+    formData.append("thumbnail", fileUpload);
+
     const options = {
-      url: `https://melodystream.herokuapp.com/playlist/edit/${id}`,
+      // url: `https://melodystream.herokuapp.com/cloud/uploadthumbnail`,
+      url: `http://localhost:4000/cloud/uploadthumbnail`,
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+    };
+
+    try {
+      const result = await axios(options);
+      console.log(result);
+      setPlaylistInfo((prevText) => {
+        return {
+          ...prevText,
+          thumbnail: result.data.image,
+        };
+      });
+      setHasAlbumCoverImg(true);
+    } catch (error) {
+      if (error.response) {
+        console.log(error);
+        setErrorMsg(error.response.data.msg);
+      }
+    }
+  };
+
+  const editPlaylist = async () => {
+    const playlistId = id.id;
+    const options = {
+      // url: `https://melodystream.herokuapp.com/playlist/edit/${playlistId}`,
+      url: `http://localhost:4000/playlist/edit/${playlistId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -67,8 +108,7 @@ export default function PlaylistModal({
 
     try {
       const result = await axios(options);
-      setIsUpdate(true);
-      setSuccessMsg(result.data.msg);
+      console.log(result);
       window.location.reload(true);
     } catch (error) {
       if (error.response) {
@@ -103,7 +143,7 @@ export default function PlaylistModal({
         aria-describedby="modal-modal-description"
       >
         <Box component="form" noValidate autoComplete="off" sx={style}>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
               id="modal-modal-title"
               variant="h6"
@@ -112,6 +152,23 @@ export default function PlaylistModal({
             >
               Edit Playlist
             </Typography>
+            {hasAlbumCoverImg ? (
+              <img
+                src={playlist.thumbnail}
+                className="editModal-albumCover--img"
+                alt="album cover"
+              />
+            ) : (
+              <Button variant="contained" component="label">
+                <PhotoAlbumIcon sx={{ fontSize: 40 }} />
+                Album cover
+                <input
+                  type="file"
+                  hidden
+                  onChange={(e) => handleSelectedFile(e.target.files[0])}
+                />
+              </Button>
+            )}
           </Box>
           <FormControl
             variant="standard"
@@ -140,9 +197,6 @@ export default function PlaylistModal({
           {/* Privacy */}
           <Box sx={{ maxWidth: 100 }}>
             <FormControl fullWidth>
-              <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Privacy
-              </InputLabel>
               <NativeSelect
                 onChange={handleChange}
                 value={playlist.publicAccessible}

@@ -74,6 +74,8 @@ function PublicPlaylist() {
     />
   ));
 
+  console.log(playlistInfo);
+
   return (
     <>
       <div className="flex flex-col ml-80 font-mons h-full">

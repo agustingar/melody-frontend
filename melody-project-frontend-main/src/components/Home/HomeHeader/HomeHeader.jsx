@@ -3,7 +3,7 @@ import "../../Top/Top.css";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Clear, SearchRounded } from "@mui/icons-material";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import {
   useGetAllSongsQuery,
   useGetUserQuery,
@@ -19,7 +19,6 @@ function HomeHeader() {
     isFetching: userFetching,
     error: userError,
   } = useGetUserQuery();
-  console.log(user);
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   //Handle Search explorer feature
@@ -28,7 +27,6 @@ function HomeHeader() {
     song: "",
     i: "",
   });
-  console.log(querySong);
   const [hasQuery, setHasQuery] = useState(false);
   const [displayPlayer, setDisplayPlayer] = useState(false);
 

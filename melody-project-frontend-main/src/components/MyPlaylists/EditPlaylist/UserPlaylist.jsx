@@ -115,6 +115,8 @@ function PlaylistViewSongs() {
     />
   ));
 
+  console.log(playlistInfo);
+
   return (
     <>
       <div className="flex flex-col ml-80 font-mons h-full">
@@ -136,7 +138,7 @@ function PlaylistViewSongs() {
           </section>
         </div>
         <div>
-          <EditPlaylistModal playlist={playlistInfo} />
+          <EditPlaylistModal {...playlistInfo} />
         </div>
         <Typography sx={{ color: "#f3f3f3", mt: 2, fontSize: 22 }}>
           Songs
