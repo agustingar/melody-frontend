@@ -6,6 +6,8 @@ import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import convertDuration from "../../functions/ConvertDuration";
 
 import { IconButton } from "@mui/material";
+import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+
 import { Clear, SearchRounded } from "@mui/icons-material";
 import SongCard from "../SongCard/SongCard";
 import { useGetLikedSongsQuery } from "../../redux/services/melodyApi";
@@ -38,7 +40,9 @@ function Favorites() {
           <header>
             <section className="info">
               <h6>Your songs</h6>
-              <h1>Favorites</h1>
+              <h1>
+                Favorites <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
+              </h1>
               <div className="details">
                 <p>{data.songs.length} Songs</p>
                 <p id="dot">&bull;</p>

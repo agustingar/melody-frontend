@@ -42,7 +42,7 @@ function PlaylistViewSongs() {
   useEffect(() => {
     const getPlaylistById = async () => {
       const response = await fetch(
-        `https://melodystream.herokuapp.com/playlist/${playlistId}`,
+        `https://melody-music-stream-production.up.railway.app/playlist/${playlistId}`,
         {
           headers: {
             auth_token: token,

@@ -1,5 +1,6 @@
 .container {
-  margin: 2rem;
+  width: 80%;
+  margin-left: 16rem;
 }
 .head {
   display: flex;
@@ -101,4 +102,62 @@
   100% {
     background-size: 20% 100%, 20% 100%, 20% 100%;
   }
+}
+
+.container-right {
+  grid-area: main;
+  padding: 0 40px;
+  margin-left: 16%;
+  font-family: "Montserrat";
+}
+
+header {
+  display: flex;
+  margin-bottom: 50px;
+  max-height: 180px;
+  color: #fff;
+}
+
+header .info {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+header .info h1 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 2.5rem;
+  line-height: 80px;
+}
+
+header .info h6 {
+  margin-bottom: 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 16px;
+}
+
+header .info .details {
+  display: flex;
+}
+
+header .info p {
+  margin: 2px;
+  font-size: 0.9rem;
+}
+
+#dot {
+  margin: auto 8px;
+}
+
+.btn_icon__delete:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }

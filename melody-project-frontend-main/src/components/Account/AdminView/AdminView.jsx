@@ -9,7 +9,7 @@ export default function AdminView() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "https://melodystream.herokuapp.com/admin/users",
+        "https://melody-music-stream-production.up.railway.app/admin/users",
         {
           headers: {
             auth_token: token,
@@ -25,7 +25,7 @@ export default function AdminView() {
   }, [token]);
 
   return (
-    <TableContainer >
+    <TableContainer>
       <UsersTable products={data} />
     </TableContainer>
   );

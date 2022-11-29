@@ -9,7 +9,7 @@ function LikedSongs({ song }) {
     console.log(id);
     try {
       const data = await axios.put(
-        `https://melodystream.herokuapp.com/song/like/${id}`,
+        `https://melody-music-stream-production.up.railway.app/song/like/${id}`,
 
         {
           id: song._id,

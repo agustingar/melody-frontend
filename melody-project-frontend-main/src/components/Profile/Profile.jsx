@@ -15,18 +15,20 @@ import {
 import "./Profile.css";
 import axios from "axios";
 
-
 function Profile() {
   const [data, setData] = useState([]);
   const token = localStorage.getItem("userToken");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://melodystream.herokuapp.com/user", {
-        headers: {
-          auth_token: token,
-        },
-      });
+      const response = await fetch(
+        "https://melody-music-stream-production.up.railway.app/user",
+        {
+          headers: {
+            auth_token: token,
+          },
+        }
+      );
       const data = await response.json();
       const user = data.user;
 
@@ -39,23 +41,18 @@ function Profile() {
   const deleteUser = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.delete("https://melodystream.herokuapp.com/user",
-      {
-        headers: {
-          auth_token: token,
-        },
-      }
-    ); const response = await data.json();
-
-  } 
-
-  catch (error){ 
-    (console.log (error))
-   }
-
-
- 
-
+      const data = await axios.delete(
+        "https://melody-music-stream-production.up.railway.app/user",
+        {
+          headers: {
+            auth_token: token,
+          },
+        }
+      );
+      const response = await data.json();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="flex items-center justify-center h-fit ml-[18%] text-white">

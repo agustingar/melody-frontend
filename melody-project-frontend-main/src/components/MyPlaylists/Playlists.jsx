@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useGetPlaylistQuery } from "../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +23,7 @@ function Playlists() {
 
   const deletePlaylist = async (playlistId) => {
     const result = await fetch(
-      `https://melodystream.herokuapp.com/playlist/${playlistId}`,
+      `https://melody-music-stream-production.up.railway.app/playlist/${playlistId}`,
       {
         method: "DELETE",
         headers: { auth_token: token },
@@ -36,11 +37,14 @@ function Playlists() {
   };
 
   const getPlaylist = async (playlistId) => {
-    await fetch(`https://melodystream.herokuapp.com/playlist/${playlistId}`, {
-      method: "GET",
-      headers: { auth_token: token },
-      id: playlistId,
-    });
+    await fetch(
+      `https://melody-music-stream-production.up.railway.app/playlist/${playlistId}`,
+      {
+        method: "GET",
+        headers: { auth_token: token },
+        id: playlistId,
+      }
+    );
     navigate(`/playlist/${playlistId}`);
   };
 
@@ -59,7 +63,7 @@ function Playlists() {
       <header className="flex h-44 mb-1">
         <section className="flex flex-col justify-center grow ml-5">
           <h1 className=" not-italic text-3xl font-black whitespace-nowrap text-ellipsis leading-80">
-            Your Playlists
+            Your Playlists <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
           </h1>
           <div>{playlists.length} Playlists</div>
         </section>

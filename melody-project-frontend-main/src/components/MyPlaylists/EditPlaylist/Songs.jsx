@@ -74,7 +74,7 @@ function Songs({
     }
 
     const options = {
-      url: `https://melodystream.herokuapp.com/playlist/${endPoint}/${playId}`,
+      url: `https://melody-music-stream-production.up.railway.app/playlist/${endPoint}/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",

@@ -2,13 +2,21 @@ import axios from "axios";
 import React from "react";
 import "./SignIn.css";
 import { useState } from "react";
-import { Box, Button, FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-
 const SignIn = () => {
-
-
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   let [email, setEmail] = useState("");
@@ -25,7 +33,8 @@ const SignIn = () => {
     }
 
     try {
-      const data = await axios.post("https://melodystream.herokuapp.com/user/register",
+      const data = await axios.post(
+        "https://melody-music-stream-production.up.railway.app/user/register",
         {
           name: name,
           lastName: lastName,
@@ -33,8 +42,9 @@ const SignIn = () => {
           password: password,
           birthday: birthday,
           gender: gender,
-        })
-      navigate("/home")
+        }
+      );
+      navigate("/home");
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -43,28 +53,38 @@ const SignIn = () => {
 
   return (
     <div>
-
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <Grid className="background"
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <Grid className="background" item xs={false} sm={4} md={7} />
+        <Grid
           item
-          xs={false}
-          sm={4}
-          md={7}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} className="formBackground" elevation={6} square>
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          className="formBackground"
+          elevation={6}
+          square
+        >
           <Box
             sx={{
               my: 8,
               mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: '1em',
-              margin: '3em',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "1em",
+              margin: "3em",
             }}
           >
-            <Box className="formSign" onSubmit={submitHandler} component="form" sx={{ mt: 1 }} >
-              <Typography component="h1" variant="h4" className="register" >Register</Typography>
+            <Box
+              className="formSign"
+              onSubmit={submitHandler}
+              component="form"
+              sx={{ mt: 1 }}
+            >
+              <Typography component="h1" variant="h4" className="register">
+                Register
+              </Typography>
 
               <TextField
                 margin="normal"
@@ -136,9 +156,8 @@ const SignIn = () => {
                 }}
               />
 
-
               <FormControl className="radio">
-                <Typography >Gender</Typography>
+                <Typography>Gender</Typography>
                 <RadioGroup
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
@@ -164,7 +183,6 @@ const SignIn = () => {
                     label="Male"
                   />
 
-
                   <FormControlLabel
                     control={<Radio />}
                     id="gender"
@@ -180,7 +198,6 @@ const SignIn = () => {
               <Button className="registerButton" type="submit">
                 Register
               </Button>
-
             </Box>
           </Box>
         </Grid>

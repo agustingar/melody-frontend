@@ -37,7 +37,7 @@ function PublicPlaylist() {
   useEffect(() => {
     const getPlaylistById = async () => {
       const response = await fetch(
-        `https://melodystream.herokuapp.com/playlist/public/${playlistId}`
+        `https://melody-music-stream-production.up.railway.app/playlist/public/${playlistId}`
       );
 
       try {

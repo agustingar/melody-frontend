@@ -19,10 +19,13 @@ export default function FileUpload(image) {
     const formData = new FormData();
     formData.append("thumbnail", selectedFile);
 
-    fetch("https://melodystream.herokuapp.com/cloud/uploadthumbnail", {
-      method: "POST",
-      body: formData,
-    })
+    fetch(
+      "https://melody-music-stream-production.up.railway.app/cloud/uploadthumbnail",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);

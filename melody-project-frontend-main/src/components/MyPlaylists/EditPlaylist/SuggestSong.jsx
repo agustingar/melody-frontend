@@ -59,8 +59,7 @@ function SuggestSong({
     const songsId = songId;
 
     const options = {
-      //url: `https://melodystream.herokuapp.com/playlist/add-song/${playId}`,
-      url: `http://localhost:4000/playlist/add-song/${playId}`,
+      url: `https://melody-music-stream-production.up.railway.app/playlist/add-song/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",

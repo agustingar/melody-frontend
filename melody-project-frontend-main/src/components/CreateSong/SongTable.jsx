@@ -1,77 +1,88 @@
-import AddIcon from "@mui/icons-material/Add";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import "./createSong.css";
-import {
-  Box,
-  Button,
-  IconButton,
-  Modal,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-} from "@mui/material";
-import { Delete } from "@mui/icons-material";
-import { useState } from "react";
-import { MusicNoteOutlined } from "@mui/icons-material";
+import "../Favorites/Favorites.css";
 import axios from "axios";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+
 import { useGetUserSongsQuery } from "../../redux/services/melodyApi";
+import convertDuration from "../../functions/ConvertDuration";
+import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
+import SongCard from "../SongCard/SongCard";
+
+//Material UI
+import { MusicNoteOutlined } from "@mui/icons-material";
+import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Box, Button, Modal, Paper, TextField } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 const Songs = () => {
+  const token = localStorage.getItem("userToken");
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { data, isFetching, error } = useGetUserSongsQuery();
+  const { activeSong, isPlaying } = useSelector((state) => state.player);
+
+  const [name, setName] = useState("");
+  const [artist, setArtist] = useState("");
+  const [songUrl, setSongUrl] = useState("");
+  const [submitMsg, setSubmitMsg] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        light: "#757ce8",
+        main: "#3f50b5",
+        dark: "#002884",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#ff7961",
+        main: "#f44336",
+        dark: "#ba000d",
+        contrastText: "#000",
+      },
+    },
+  });
+
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: "background.paper",
+    bgcolor: "#303030",
     border: "2px solid #000",
+    borderRadius: "8px",
     boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
+    p: 4,
   };
 
-  const [name, setName] = useState("");
-  const [artist, setArtist] = useState("");
-  const [audio, setAudio] = useState("");
-  const [url, setUrl] = useState("");
-  const [hasSong, setHasSong] = useState(false);
-  const [song, setSong] = useState("");
-  const [success, setSuccess] = useState("");
-  const { data, isFetching, error } = useGetUserSongsQuery();
-  const [submitMsg, setsubmitMsg] = useState("");
-  const token = localStorage.getItem("userToken");
-
-  const changeHandler = (event) => {
-    setAudio(event.target.files[0]);
-    setUrl(true);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handleSubmission = async () => {
+  const handleSelectFile = (fileSelect) => {
+    submitSelectFileToCloudinary(fileSelect);
+  };
+
+  const submitSelectFileToCloudinary = async (fileUpload) => {
     const formData = new FormData();
-    formData.append("song", audio);
+    formData.append("song", fileUpload);
 
-    await fetch("https://melodystream.herokuapp.com/cloud/uploadsong", {
-      method: "POST",
-      body: formData,
-    })
+    await fetch(
+      "https://melody-music-stream-production.up.railway.app/cloud/uploadsong",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
       .then((response) => response.json())
       .then((result) => {
-        console.log("Success:", result);
-        setSong(result);
-        setHasSong(true);
+        setSongUrl(result);
         setSuccess("File successfully upload");
       })
       .catch((error) => {
@@ -83,13 +94,13 @@ const Songs = () => {
     e.preventDefault();
     try {
       const data = await axios.post(
-        "https://melodystream.herokuapp.com/song",
+        "https://melody-music-stream-production.up.railway.app/song",
         {
           title: name,
           artist: artist,
           genre: "Pop",
-          url: song.url,
-          duration: song.duration,
+          url: songUrl.url,
+          duration: songUrl.duration,
         },
         {
           headers: {
@@ -99,7 +110,7 @@ const Songs = () => {
       );
 
       handleClose();
-      setsubmitMsg("Song successfully upload");
+      setSubmitMsg("Song successfully upload");
       console.log(data);
       window.location.reload();
     } catch (error) {
@@ -110,7 +121,7 @@ const Songs = () => {
   const deleteSong = async (id) => {
     try {
       const response = await axios.delete(
-        `https://melodystream.herokuapp.com/song/${id}`,
+        `https://melody-music-stream-production.up.railway.app/song/${id}`,
         {
           headers: {
             auth_token: token,
@@ -118,6 +129,7 @@ const Songs = () => {
         }
       );
       const result = await response.json;
+      console.log(result);
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -134,16 +146,26 @@ const Songs = () => {
 
   if (error) return <div>Error</div>;
 
+  const totalDuration = data.songs.map((song) => song.duration);
+
   return (
     <div className="container">
-      <div className="head">
-        <h1 style={{ color: "white" }}>
-          Songs <MusicNoteIcon />
-        </h1>
+      <header className="head">
+        <section className="info">
+          <h1 style={{ color: "white" }}>
+            Your upload songs
+            <LibraryMusicIcon />
+          </h1>
+          <div className="details">
+            <p>{data.songs.length} Songs</p>
+            <p id="dot">&bull;</p>
+            <p>{convertDurationPlaylist(totalDuration)}</p>
+          </div>
+        </section>
         <h3>{submitMsg}</h3>
         <Button
           onClick={handleOpen}
-          startIcon={<AddIcon style={{ color: "white" }} />}
+          startIcon={<AddCircleOutlineIcon style={{ color: "white" }} />}
           label="Add New Song"
         />
         <Modal
@@ -178,7 +200,6 @@ const Songs = () => {
                       component="label"
                       className="buttonFile"
                     >
-                      {" "}
                       {<MusicNoteOutlined />}
                       <input
                         className="inputs"
@@ -186,21 +207,11 @@ const Songs = () => {
                         type="file"
                         accept="audio/*"
                         name="song"
-                        onChange={changeHandler}
-                      ></input>
+                        onChange={(e) => handleSelectFile(e.target.files[0])}
+                        hidden
+                      />
+                      Add song
                     </Button>
-                  </div>
-                  <div>
-                    {url ? (
-                      <div className="butDiv">
-                        <Button variant="outlined" onClick={handleSubmission}>
-                          Add song{" "}
-                        </Button>{" "}
-                        <h4 style={{ textAlign: "center" }}> {audio.name}</h4>
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}{" "}
                   </div>
                 </div>
 
@@ -217,40 +228,22 @@ const Songs = () => {
             </Paper>
           </Box>
         </Modal>
-      </div>
-
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Song Name</TableCell>
-              <TableCell align="center">Artist</TableCell>
-              <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {data.songs.map((song) => (
-              <TableRow key={song._id}>
-                <TableCell align="center">{song.title}</TableCell>
-                <TableCell align="center">{song.artist}</TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={() => deleteSong(song._id)}>
-                    <Delete />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-
-            <TableRow>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-
-              <TableCell align="center"></TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      </header>
+      <table className="favorites-table ">
+        <tbody className="favorites_line__bottom">
+          {data.songs.map((song, i) => (
+            <SongCard
+              key={song._id}
+              song={song}
+              isPlaying={isPlaying}
+              activeSong={activeSong}
+              data={data}
+              i={i}
+              convertDuration={convertDuration}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

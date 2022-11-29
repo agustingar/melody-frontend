@@ -38,11 +38,14 @@ function UserAvatar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://melodystream.herokuapp.com/user", {
-        headers: {
-          auth_token: token,
-        },
-      });
+      const response = await fetch(
+        "https://melody-music-stream-production.up.railway.app/user",
+        {
+          headers: {
+            auth_token: token,
+          },
+        }
+      );
       const data = await response.json();
 
       setIsAdmin(data.isAdmin);

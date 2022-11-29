@@ -56,8 +56,8 @@ export default function EditPlaylistModal(id) {
     });
   };
 
-  const handleSelectedFile = (fileUpload) => {
-    submitSelectFileToCloudinary(fileUpload);
+  const handleSelectedFile = (fileSelect) => {
+    submitSelectFileToCloudinary(fileSelect);
   };
 
   const submitSelectFileToCloudinary = async (fileUpload) => {
@@ -65,8 +65,7 @@ export default function EditPlaylistModal(id) {
     formData.append("thumbnail", fileUpload);
 
     const options = {
-      // url: `https://melodystream.herokuapp.com/cloud/uploadthumbnail`,
-      url: `http://localhost:4000/cloud/uploadthumbnail`,
+      url: `https://melody-music-stream-production.up.railway.app/cloud/uploadthumbnail`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -95,8 +94,7 @@ export default function EditPlaylistModal(id) {
   const editPlaylist = async () => {
     const playlistId = id.id;
     const options = {
-      // url: `https://melodystream.herokuapp.com/playlist/edit/${playlistId}`,
-      url: `http://localhost:4000/playlist/edit/${playlistId}`,
+      url: `https://melody-music-stream-production.up.railway.app/playlist/edit/${playlistId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",

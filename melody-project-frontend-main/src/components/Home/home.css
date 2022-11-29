@@ -57,8 +57,7 @@
   }
 }
 
-@media (max-width: 1999px) {
-  .home-playlist--container {
-    margin-left: 2rem;
+@media (max-width: 1199px) {
+  .home_container {
   }
 }

@@ -1,6 +1,8 @@
 import React from "react";
+import "./yourplaylist.css";
 import { useGetPlaylistQuery } from "../../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
+import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 
 function AllPlaylists() {
   const { data, isFetching, error } = useGetPlaylistQuery();
@@ -23,17 +25,14 @@ function AllPlaylists() {
       <header className="flex h-44 mb-1">
         <section className="flex flex-col justify-center grow ml-5">
           <h className=" not-italic text-2xl font-black whitespace-nowrap text-ellipsis leading-80">
-            Your Playlists
+            Your Playlists <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
           </h>
           <div>{playlists.length} Playlists</div>
         </section>
       </header>
-      <div className="flex flex-wrap sm:justify-start justify-center gap-5">
+      <div className="home_display_playlists">
         {playlists.map((playlist) => (
-          <div
-            key={playlist._id}
-            className="flex flex-col w-[150px] h-[180px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer "
-          >
+          <div key={playlist._id} className="playlist_album">
             <div className="relative w-full h-56 group">
               <img
                 alt="song_img"

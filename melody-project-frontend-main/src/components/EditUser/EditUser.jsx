@@ -27,12 +27,10 @@ const EditUser = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [birthday, setDate] = useState("");
   const [gender, setGender] = useState("");
- const [image, setImage] = useState('');
-  const [loading,setLoading] = useState(false)
+  const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("userToken");
   const navigate = useNavigate();
- 
-
 
   const submitImg = async (e) => {
     const files = e.target.files;
@@ -41,17 +39,17 @@ const EditUser = () => {
     data.append("upload_preset", "images");
     setLoading(true);
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dgrk2p8p3/image/upload",{
-          method: "POST",
-          body:data,
+      "https://api.cloudinary.com/v1_1/dgrk2p8p3/image/upload",
+      {
+        method: "POST",
+        body: data,
       }
-    )
-    const file= await res.json();
-    setImage(file.secure_url)
-    console.log(file.secure_url)
-    setLoading(false)
-    }
-
+    );
+    const file = await res.json();
+    setImage(file.secure_url);
+    console.log(file.secure_url);
+    setLoading(false);
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -65,9 +63,8 @@ const EditUser = () => {
       };
 
       const data = await axios.put(
-        "https://melodystream.herokuapp.com/user",
+        "https://melody-music-stream-production.up.railway.app/user",
         {
-        
           name: name,
           lastName: lastName,
           email: email,
@@ -75,14 +72,14 @@ const EditUser = () => {
           oldPassword: oldPassword,
           birthday: birthday,
           gender: gender,
-          avatar:image,
+          avatar: image,
         },
         {
           headers,
           "Access-Control-Allow-Origin": "*",
         }
       );
-  
+
       console.log(birthday);
       console.log(data);
       navigate("/");
@@ -124,9 +121,19 @@ const EditUser = () => {
                 Edit User
               </Typography>
               <div className="profile">
-            { <input type="file"  onChange={submitImg} className='inputFile' /> }
-            {loading ? <h3>Loading images </h3> : (<img src={image} alt="userAvatar" className='profileImg'/>)}
-        </div>
+                {
+                  <input
+                    type="file"
+                    onChange={submitImg}
+                    className="inputFile"
+                  />
+                }
+                {loading ? (
+                  <h3>Loading images </h3>
+                ) : (
+                  <img src={image} alt="userAvatar" className="profileImg" />
+                )}
+              </div>
               <TextField
                 margin="normal"
                 required
@@ -140,117 +147,116 @@ const EditUser = () => {
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value.toLowerCase())}
               ></TextField>
-< Grid container spacing={2} columns={12}>
-<Grid item xs={6}>
-              <TextField
-                label="Name"
-                placeholder="ej: John"
-                id="name"
-                onChange={(e) => setName(e.target.value)}
-                required
-              ></TextField>
-</Grid> <Grid item xs={6}>
-              <TextField
-
-                label="Last Name"
-                placeholder="ej: Smith"
-                id="lastName"
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              ></TextField>
+              <Grid container spacing={2} columns={12}>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Name"
+                    placeholder="ej: John"
+                    id="name"
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  ></TextField>
+                </Grid>{" "}
+                <Grid item xs={6}>
+                  <TextField
+                    label="Last Name"
+                    placeholder="ej: Smith"
+                    id="lastName"
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                  ></TextField>
+                </Grid>
               </Grid>
-  </Grid>
-  <Grid container spacing={6} columns={12}>
-<Grid item xs={6}>
-              <TextField
-                required
-                className="birthDate"
-                id="birthday"
-                label="Birthday"
-                type="date"
-                onChange={(e) => setDate(e.target.value)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-</Grid>
-<Grid item xs={6}>
-              <FormControl className="radio">
-                <Typography>Gender</Typography>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    control={<Radio />}
-                    id="gender"
-                    name="gender-selector"
-                    value="female"
-                    onChange={(e) => setGender(e.target.value)}
+              <Grid container spacing={6} columns={12}>
+                <Grid item xs={6}>
+                  <TextField
                     required
-                    label="Female"
+                    className="birthDate"
+                    id="birthday"
+                    label="Birthday"
+                    type="date"
+                    onChange={(e) => setDate(e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl className="radio">
+                    <Typography>Gender</Typography>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                    >
+                      <FormControlLabel
+                        control={<Radio />}
+                        id="gender"
+                        name="gender-selector"
+                        value="female"
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                        label="Female"
+                      />
 
-                  <FormControlLabel
-                    control={<Radio />}
-                    id="gender"
-                    name="gender-selector"
-                    value="male"
-                    onChange={(e) => setGender(e.target.value)}
-                    required
-                    label="Male"
-                  />
+                      <FormControlLabel
+                        control={<Radio />}
+                        id="gender"
+                        name="gender-selector"
+                        value="male"
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                        label="Male"
+                      />
 
-                  <FormControlLabel
-                    control={<Radio />}
-                    id="gender"
-                    name="gender-selector"
-                    value="no-binary"
-                    onChange={(e) => setGender(e.target.value)}
+                      <FormControlLabel
+                        control={<Radio />}
+                        id="gender"
+                        name="gender-selector"
+                        value="no-binary"
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                        label="No-Binary"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid container spacing={2} columns={12}>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Old Password"
+                    type="password"
+                    placeholder="Enter Old Password"
+                    id="oldPassword"
+                    onChange={(e) => setOldPassword(e.target.value)}
                     required
-                    label="No-Binary"
-                  />
-                </RadioGroup>
-              </FormControl>
-</Grid>
-</Grid>
-< Grid container spacing={2} columns={12}>
-<Grid item xs={12}>
-              <TextField
-                label="Old Password"
-                type="password"
-                placeholder="Enter Old Password"
-                id="oldPassword"
-                onChange={(e) => setOldPassword(e.target.value)}
-                required
-                fullWidth
-              ></TextField>
-</Grid>
-<Grid item xs={12}>
-              <TextField
-                label="New Password"
-                fullWidth
-                type="password"
-                placeholder="Password"
-                id="newPassword"
-                required
-                onChange={(e) => setNewPassword(e.target.value)}
-              ></TextField>
-             
-</Grid>
- <Grid item xs={12}>
-              <TextField
-                label="Confirm New Password"
-                fullWidth
-                type="password"
-                placeholder="Password"
-                id="confirmNewPassword"
-                onChange={(e) => setConfirmNewPassword(e.target.value)}
-                required
-              ></TextField>
-</Grid>
-</Grid>
+                    fullWidth
+                  ></TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="New Password"
+                    fullWidth
+                    type="password"
+                    placeholder="Password"
+                    id="newPassword"
+                    required
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  ></TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Confirm New Password"
+                    fullWidth
+                    type="password"
+                    placeholder="Password"
+                    id="confirmNewPassword"
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    required
+                  ></TextField>
+                </Grid>
+              </Grid>
               <Button className="registerButton" type="submit">
                 Edit User
               </Button>

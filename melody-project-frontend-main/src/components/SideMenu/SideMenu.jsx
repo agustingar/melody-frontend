@@ -23,7 +23,7 @@ function SideMenu() {
   const [value, setValue] = React.useState(0);
 
   const isDesktop = useMediaQuery({
-    query: "(min-width: 1200px)",
+    query: "(max-width: 1600px)",
   });
 
   const isPhone = useMediaQuery({
@@ -31,7 +31,7 @@ function SideMenu() {
   });
 
   const drawer = (
-    <div>
+    <div className="sideMenu">
       <Toolbar />
       <Divider />
       <List>
