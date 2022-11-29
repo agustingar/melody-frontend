@@ -1,6 +1,6 @@
 import React from "react";
 import "./SideMenu.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -9,68 +9,77 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import HomeIcon from "@mui/icons-material/Home";
-import SearchIcon from "@mui/icons-material/Search";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useMediaQuery } from "react-responsive";
+import { IconButton, Typography } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
+import logo from '../../utils/img/toolbar.png'
+import HomeIcon from '@mui/icons-material/Home';
+import SearchIcon from '@mui/icons-material/Search';
+import ListIcon from '@mui/icons-material/List';
+import AddIcon from '@mui/icons-material/Add';
+import LogoutIcon from '@mui/icons-material/Logout';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const drawerWidth = 220;
+const drawerWidth = 200;
 
-function SideMenu() {
+function SideMenu(props) {
   const [value, setValue] = React.useState(0);
 
-  const isDesktop = useMediaQuery({
-    query: "(max-width: 1600px)",
+  const responsive = useMediaQuery({
+    query: "(max-width: 750px)",
   });
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const isPhone = useMediaQuery({
-    query: "(max-width: 450px)",
-  });
-
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+  const logout = () => {
+    localStorage.clear();
+  }
+  const navItems = [
+  <Link to="/home">
+    <HomeIcon />Home
+  </Link>,
+  <Link to="/search">
+  <SearchIcon />Search
+</Link>,
+  <Link to="/playlists">
+    <ListIcon/>Playlists
+  </Link>,
+  <Link to="/favorites">
+    <FavoriteIcon/>Favorites
+  </Link>,
+  <Link to="/songs">
+    <AddIcon/> Upload song
+  </Link>
+  ];
   const drawer = (
-    <div className="sideMenu">
-      <Toolbar />
-      <Divider />
-      <List>
-        {["Home", "Playlists", "Favorites", "Upload song"].map(
-          (text, index) => (
-            <Link
-              key={index + 1}
-              to={
-                text === "Home"
-                  ? "/home"
-                  : text === "Favorites"
-                  ? "/favorites"
-                  : text === "Playlists"
-                  ? "/playlists"
-                  : text === "Upload song"
-                  ? "/songs"
-                  : ""
-              }
-              style={{
-                textDecoration: "none",
-                color: "black",
-              }}
-            >
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          )
-        )}
+    <div className="sideMenu" onClick={handleDrawerToggle}>
+      <Toolbar className="toolbar">
+        <img src={logo} alt="logo" width="900" height="50" />
+      </Toolbar>
+
+      <Divider sx={{ p: 1 }} />
+      <List >
+
+
+        {navItems.map((item) => (
+          <ListItem key={item} disablePadding >
+            <ListItemButton sx={{ textAlign: 'start' }}>
+              <ListItemText primary={item} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+
       </List>
       <Divider />
       <Link to="/">
         {" "}
         <List>
-          {["Logout"].map((text) => (
+          {[<><LogoutIcon/>"Logout"</>].map((text) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={logout}>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
@@ -79,49 +88,69 @@ function SideMenu() {
       </Link>
     </div>
   );
-
-  const mobileMenu = (
-    <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 1 }}>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <Link to="/home">
-          <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        </Link>
-        <BottomNavigationAction label="Search" icon={<SearchIcon />} />
-        <Link to="/favorites">
-          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        </Link>
-        <BottomNavigationAction label="Account" icon={<AccountCircleIcon />} />
-      </BottomNavigation>
-    </Box>
-  );
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <>
-      {isPhone && mobileMenu}
-      {isDesktop && (
-        <>
+    <Box sx={{ display: 'flex' }}>
+
+      {responsive ?
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon sx={{ zIndex: 999, color: 'grey' }} />
+          </IconButton>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
+          >
+            <Drawer
+            className="sideMenu"
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: '1', sm: 'block' }, zIndex: 1,
+                '& .MuiDrawer-paper': { boxSizing: 'border-box' , width: drawerWidth, },
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Typography>
+        </Toolbar>
+        :
+
+        <Box component="nav" >
           <Drawer
+            className="sideMenu"
+            container={container}
             variant="permanent"
-            sx={{
-              display: { xs: "1", sm: "block" },
-              "& .MuiDrawer-paper": {
-                boxSizing: "border-box",
-                width: drawerWidth,
-                zIndex: 1,
-              },
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
             }}
-            open
+            sx={{
+              display: { xs: '1', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
           >
             {drawer}
           </Drawer>
-        </>
-      )}
-    </>
+        </Box>
+
+      }
+    </Box>
+
   );
 }
 

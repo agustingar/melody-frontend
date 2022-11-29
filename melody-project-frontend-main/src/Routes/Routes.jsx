@@ -63,17 +63,7 @@ export default function RouterApp() {
                 path="/signup"
                 element={
                   <>
-                    <SideMenu />
                     <Signup />
-                  </>
-                }
-              />
-              <Route
-                path="/logout"
-                element={
-                  <>
-                    <SideMenu />
-                    <Logout />
                   </>
                 }
               />

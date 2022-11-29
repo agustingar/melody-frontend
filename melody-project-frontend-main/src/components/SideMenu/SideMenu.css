@@ -19,3 +19,14 @@
     width: 15%;
   }
 }
+.toolbar{
+  padding: 0 !important;
+  width: auto;
+  height: 120px;
+}
+.css-9dbtmb-MuiDivider-root{
+  padding: 0 !important;
+}
+.css-1isrj7i-MuiDrawer-docked .MuiDrawer-paper{
+  border-right: #1c1c1c !important;
+}
