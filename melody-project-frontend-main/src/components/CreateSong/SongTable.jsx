@@ -118,24 +118,6 @@ const Songs = () => {
     }
   };
 
-  const deleteSong = async (id) => {
-    try {
-      const response = await axios.delete(
-        `https://melody-music-stream-production.up.railway.app/song/${id}`,
-        {
-          headers: {
-            auth_token: token,
-          },
-        }
-      );
-      const result = await response.json;
-      console.log(result);
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   if (isFetching)
     return (
       <div className="loading-box">
