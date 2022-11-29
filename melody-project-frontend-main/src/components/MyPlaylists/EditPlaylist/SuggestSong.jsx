@@ -12,6 +12,8 @@ import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 // const { playlistData, playError } = useGetPlaylistQuery();
 
 function SuggestSong({
@@ -154,7 +156,7 @@ function SuggestSong({
           </Box>
         )}
         <button>
-          <FavoriteIcon className="favoriteIcon" />
+          <FavoriteBorderIcon className="favoriteIcon" />
         </button>
         <Box sx={{ display: "flex" }}>
           <div>

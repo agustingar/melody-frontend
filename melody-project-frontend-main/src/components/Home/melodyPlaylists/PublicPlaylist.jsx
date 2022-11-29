@@ -91,7 +91,7 @@ function PublicPlaylist() {
             </h2>
             <p>{playlistInfo.description}</p>
             <div className="playlist-description">
-              <p>{!playlistInfo.publicAccessible ? "Private" : "Public"}</p>
+              <p>{!playlistInfo.isPublic ? "Private" : "Public"}</p>
               <p>{playlistInfo.tracks?.length} songs</p>
             </div>
           </section>

@@ -1,10 +1,12 @@
 import { Favorite } from "@mui/icons-material";
 import axios from "axios";
 import React from "react";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useState } from "react";
 
 function LikedSongs({ song }) {
   const token = localStorage.getItem("userToken");
-
+const [isFav, setIsFav] = useState("")
   const favorite = async (id) => {
     console.log(id);
     try {
@@ -20,9 +22,8 @@ function LikedSongs({ song }) {
           },
         }
       );
-      window.location.reload();
-      const result = await data.json();
-      console.log(result);
+      console.log(data);
+      setIsFav(data)
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +31,7 @@ function LikedSongs({ song }) {
 
   return (
     <button onClick={() => favorite(song._id)}>
-      <Favorite className="favoriteIcon" />
+      {isFav ? <Favorite className="favoriteIcon" /> : <FavoriteBorderIcon className="favoriteIcon" /> }
     </button>
   );
 }

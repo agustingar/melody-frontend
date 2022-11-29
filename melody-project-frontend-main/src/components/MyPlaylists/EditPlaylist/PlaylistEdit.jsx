@@ -21,7 +21,7 @@ function PlaylistViewSongs() {
       title: "",
       artist: "",
       duration: "",
-      ur: "",
+      url: "",
     },
   ]);
 
@@ -146,7 +146,7 @@ function PlaylistViewSongs() {
             </h1>
             <p>{lastPlaylist?.description}</p>
             <div className="playlist-description">
-              <p>{!lastPlaylist?.publicAccessible ? "Private" : "Public"}</p>
+              <p>{!lastPlaylist?.isPublic ? "Private" : "Public"}</p>
               <p>{lastPlaylist?.tracks?.length} songs</p>
             </div>
           </section>

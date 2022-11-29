@@ -20,12 +20,13 @@ function PlaylistViewSongs() {
 
   const [randomSongs, setRandomSongs] = useState([]);
   const [playlistInfo, setPlaylistInfo] = React.useState({});
+  console.log(playlistInfo);
   const [track, setTrack] = React.useState([
     {
       title: "",
       artist: "",
       duration: "",
-      ur: "",
+      url: "",
     },
   ]);
 
@@ -132,7 +133,7 @@ function PlaylistViewSongs() {
             </h2>
             <p>{playlistInfo.description}</p>
             <div className="playlist-description">
-              <p>{!playlistInfo.publicAccessible ? "Private" : "Public"}</p>
+              <p>{!playlistInfo.isPublic ? "Private" : "Public"}</p>
               <p>{playlistInfo.tracks?.length} songs</p>
             </div>
           </section>
