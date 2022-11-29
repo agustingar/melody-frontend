@@ -55,7 +55,7 @@ export default function PlaylistModal({
 
   const editPlaylist = async () => {
     const options = {
-      url: `https://melodystream.herokuapp.com/playlist/edit/${id}`,
+      url: `https://melody-music-stream-production.up.railway.app/playlist/edit/${id}`,
       method: "PUT",
       headers: {
         Accept: "application/json",

@@ -63,7 +63,7 @@ const Songs = () => {
     const formData = new FormData();
     formData.append("song", audio);
 
-    await fetch("https://melodystream.herokuapp.com/cloud/uploadsong", {
+    await fetch("https://melody-music-stream-production.up.railway.app/cloud/uploadsong", {
       method: "POST",
       body: formData,
     })
@@ -83,7 +83,7 @@ const Songs = () => {
     e.preventDefault();
     try {
       const data = await axios.post(
-        "https://melodystream.herokuapp.com/song",
+        "https://melody-music-stream-production.up.railway.app/song",
         {
           title: name,
           artist: artist,
@@ -110,7 +110,7 @@ const Songs = () => {
   const deleteSong = async (id) => {
     try {
       const response = await axios.delete(
-        `https://melodystream.herokuapp.com/song/${id}`,
+        `https://melody-music-stream-production.up.railway.app/song/${id}`,
         {
           headers: {
             auth_token: token,

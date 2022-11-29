@@ -29,7 +29,7 @@ function Favorites() {
   if (error) return <Error />;
 
   const totalDuration = data.songs.map((song) => song.duration);
-
+ 
   return (
     <>
       (

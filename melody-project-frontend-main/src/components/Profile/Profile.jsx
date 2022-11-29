@@ -22,7 +22,7 @@ function Profile() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://melodystream.herokuapp.com/user", {
+      const response = await fetch("https://melody-music-stream-production.up.railway.app/user", {
         headers: {
           auth_token: token,
         },
@@ -39,7 +39,7 @@ function Profile() {
   const deleteUser = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.delete("https://melodystream.herokuapp.com/user",
+      const data = await axios.delete("https://melody-music-stream-production.up.railway.app/user",
       {
         headers: {
           auth_token: token,

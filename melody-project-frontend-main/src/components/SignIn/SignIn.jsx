@@ -25,7 +25,7 @@ const SignIn = () => {
     }
 
     try {
-      const data = await axios.post("https://melodystream.herokuapp.com/user/register",
+      const data = await axios.post("https://melody-music-stream-production.up.railway.app/user/register",
         {
           name: name,
           lastName: lastName,

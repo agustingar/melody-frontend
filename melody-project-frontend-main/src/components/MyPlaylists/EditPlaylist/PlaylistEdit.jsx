@@ -21,7 +21,7 @@ function PlaylistViewSongs() {
       title: "",
       artist: "",
       duration: "",
-      ur: "",
+      url: "",
     },
   ]);
 
@@ -33,7 +33,7 @@ function PlaylistViewSongs() {
 
     const fetchPlaylist = async () => {
       const response = await fetch(
-        `https://melodystream.herokuapp.com/playlist/user/playlist`,
+        `https://melody-music-stream-production.up.railway.app/playlist/user/playlist`,
         {
           headers: {
             auth_token: token,
@@ -58,7 +58,7 @@ function PlaylistViewSongs() {
     const getPlaylistById = async (id) => {
       const response = await fetch(
         //https://melodystream.herokuapp.com/playlist/${playlistID}
-        `https://melodystream.herokuapp.com/playlist/${id}`,
+        `https://melody-music-stream-production.up.railway.app/playlist/${id}`,
         {
           headers: {
             auth_token: token,
@@ -147,7 +147,7 @@ function PlaylistViewSongs() {
             </h1>
             <p>{lastPlaylist?.description}</p>
             <div className="playlist-description">
-              <p>{!lastPlaylist?.publicAccessible ? "Private" : "Public"}</p>
+              <p>{!lastPlaylist?.isPublic ? "Private" : "Public"}</p>
               <p>{lastPlaylist?.tracks?.length} songs</p>
             </div>
           </section>

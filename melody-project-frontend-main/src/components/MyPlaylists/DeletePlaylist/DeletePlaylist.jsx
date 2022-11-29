@@ -8,7 +8,7 @@ export const DeletePlaylist = (id) => {
 
   const deletePlaylist = async (playlistId) => {
     const result = await fetch(
-      `https://melodystream.herokuapp.com/playlist/${playlistId}`,
+      `https://melody-music-stream-production.up.railway.app/playlist/${playlistId}`,
       {
         method: "DELETE",
         headers: { auth_token: token },

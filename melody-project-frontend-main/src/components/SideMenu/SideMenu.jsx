@@ -23,7 +23,7 @@ function SideMenu() {
   const [value, setValue] = React.useState(0);
 
   const isDesktop = useMediaQuery({
-    query: "(min-width: 1200px)",
+    query: "(min-width: 450px)",
   });
 
   const isPhone = useMediaQuery({

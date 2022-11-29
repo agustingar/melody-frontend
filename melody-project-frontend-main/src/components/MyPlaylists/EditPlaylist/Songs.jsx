@@ -8,10 +8,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { playPause, setActiveSong } from "../../../redux/features/playerSlice";
 import Box from "@mui/material/Box";
 import Popover from "@mui/material/Popover";
-import { Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import LikedSongs from "../../LikedSongs/LikedSongs";
 import axios from "axios";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Songs({
   song,
@@ -36,6 +37,11 @@ function Songs({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
 
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleAccordion = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
@@ -74,7 +80,7 @@ function Songs({
     }
 
     const options = {
-      url: `https://melodystream.herokuapp.com/playlist/${endPoint}/${playId}`,
+      url: `https://melody-music-stream-production.up.railway.app/playlist/${endPoint}/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -146,99 +152,76 @@ function Songs({
       </div>
       <LikedSongs song={song} />
       <Box sx={{ display: "flex" }}>
-        <div>
-          <Typography sx={{ p: 1 }}>
-            {convertDuration(song.duration)}
-          </Typography>
-        </div>
+
+        <Typography sx={{ p: 1 }}>
+          {convertDuration(song.duration)}
+        </Typography>
+
         {/* vertical dots */}
-        <div>
-          <Button
-            aria-describedby={"options"}
-            style={{ color: "black" }}
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </Button>
-          <Popover
-            id={"options"}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-          >
-            TEXT
-          </Popover>
-        </div>
 
-        {/* ADD */}
-        <div>
-          <Button
-            aria-describedby={id}
-            style={{ color: "black" }}
-            onClick={handleClick}
-          >
-            <PlaylistAddIcon />
-            <Typography sx={{ fontSize: "10px" }}>Add to playlist</Typography>
-          </Button>
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-          >
-            <Typography
-              variant="h5"
-              sx={{
-                pl: 3,
-                pt: 2,
-                pb: 2,
-                borderBottom: "1px solid grey",
-                fontWeight: "600",
-              }}
-            >
-              Add to playlist
-              <Button>
-                <CloseIcon onClick={handleClose} />
-              </Button>
-            </Typography>
-            <Typography
-              sx={{
-                pl: 3,
-                mt: 2,
-                fontWeight: "400",
-              }}
-            >
-              All playlist
-            </Typography>
-            <Box sx={{ mt: 0, pt: 0, p: 2 }}>
-              <Typography component={"span"} variant={"body2"}>
-                {allUserPlaylists}
-              </Typography>
-            </Box>
-          </Popover>
-        </div>
-
-        {/* REMOVE SECTION */}
-
-        <div
-          data-test-id="remove-song"
-          onClick={(e) => updateSong(e, song?._id, playlistId)}
+        <Button
+          aria-describedby={"options"}
+          style={{ color: "black" }}
+          onClick={handleClick}
         >
-          <Button style={{ color: "black" }}>
-            <DeleteIcon />
-            <Typography sx={{ fontSize: "10px" }}>
-              Remove from playlist
-            </Typography>
-          </Button>
-        </div>
+          <MoreVertIcon />
+        </Button>
+
+        <Popover
+          id={"options"}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+
+        >
+          <div style={{ width: '300px' }}>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleAccordion('panel1')} >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>{<div style={{display:'flex'}}><PlaylistAddIcon/> <Typography>Add to playlist</Typography></div>}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box sx={{ mt: 0, pt: 0 }}>
+                  <Typography component={"span"} variant={"body2"}>
+                    {allUserPlaylists}
+                  </Typography>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel2'} onChange={handleAccordion('panel2')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography>{<div style={{display:'flex'}}> <DeleteIcon /> <Typography>Delete song</Typography></div>} </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  <div
+                    data-test-id="remove-song"
+                    onClick={(e) => updateSong(e, song?._id, playlistId)}
+                  >
+                    <Button style={{ color: "black" }}>
+                      <DeleteIcon />
+                      <Typography sx={{ fontSize: "10px" }}>
+                        Remove from playlist
+                      </Typography>
+                    </Button>
+                  </div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        </Popover>
+
       </Box>
     </div>
   );

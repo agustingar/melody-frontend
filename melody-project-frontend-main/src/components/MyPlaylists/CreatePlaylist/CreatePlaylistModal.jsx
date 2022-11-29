@@ -53,7 +53,7 @@ export default function CreatePlaylistModal() {
     e.preventDefault();
 
     const options = {
-      url: "https://melodystream.herokuapp.com/playlist/create",
+      url: "https://melody-music-stream-production.up.railway.app/playlist/create",
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -67,7 +67,7 @@ export default function CreatePlaylistModal() {
       const result = await axios(options);
       const fetchData = async () => {
         const response = await fetch(
-          "https://melodystream.herokuapp.com/user",
+          "https://melody-music-stream-production.up.railway.app/user",
           {
             headers: {
               auth_token: token,

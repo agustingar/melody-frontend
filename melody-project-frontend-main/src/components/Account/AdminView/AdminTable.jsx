@@ -22,7 +22,7 @@ export const UsersTable = (props) => {
   const adminUserDelete = async (id) => {
 console.log(id)
     try {
-      const data = await axios.delete(`https://melodystream.herokuapp.com/admin/users/${id}`,
+      const data = await axios.delete(`https://melody-music-stream-production.up.railway.app/admin/users/${id}`,
       {
         headers: {
           auth_token: token,

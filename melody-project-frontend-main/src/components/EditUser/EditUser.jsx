@@ -65,7 +65,7 @@ const EditUser = () => {
       };
 
       const data = await axios.put(
-        "https://melodystream.herokuapp.com/user",
+        "https://melody-music-stream-production.up.railway.app/user",
         {
         
           name: name,

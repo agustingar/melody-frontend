@@ -22,7 +22,7 @@ function Playlists() {
 
   const deletePlaylist = async (playlistId) => {
     const result = await fetch(
-      `https://melodystream.herokuapp.com/playlist/${playlistId}`,
+      `https://melody-music-stream-production.up.railway.app/playlist/${playlistId}`,
       {
         method: "DELETE",
         headers: { auth_token: token },
@@ -32,11 +32,11 @@ function Playlists() {
 
     console.log(result);
 
-    navigate(`/playlists`);
+    navigate('/playlists');
   };
 
   const getPlaylist = async (playlistId) => {
-    await fetch(`https://melodystream.herokuapp.com/playlist/${playlistId}`, {
+    await fetch(`https://melody-music-stream-production.up.railway.app/playlist/${playlistId}`, {
       method: "GET",
       headers: { auth_token: token },
       id: playlistId,
@@ -81,6 +81,7 @@ function Playlists() {
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
           >
+
             <div className="relative w-full h-56 group">
               <img
                 alt="song_img"
@@ -89,9 +90,9 @@ function Playlists() {
                 onClick={() => getPlaylist(playlist._id)}
               />
             </div>
-            {isHovering ? (
-              <DeleteIcon onClick={() => deletePlaylist(playlist._id)} />
-            ) : null}
+            {isHovering ? <DeleteIcon onClick={() => deletePlaylist(playlist._id)}
+              style={{ position: 'absolute', zIndex: 999, top: 1, right: 1 }} /> : ""}
+
             <div className="mt-4 flex flex-col">
               <p className="font-semibold text-sm text-white truncate">
                 {playlist.name}

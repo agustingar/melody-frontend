@@ -38,7 +38,7 @@ function UserAvatar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://melodystream.herokuapp.com/user", {
+      const response = await fetch("https://melody-music-stream-production.up.railway.app/user", {
         headers: {
           auth_token: token,
         },

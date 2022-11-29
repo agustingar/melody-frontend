@@ -37,7 +37,7 @@ function PublicPlaylist() {
   useEffect(() => {
     const getPlaylistById = async () => {
       const response = await fetch(
-        `https://melodystream.herokuapp.com/playlist/public/${playlistId}`
+        `https://melody-music-stream-production.up.railway.app/playlist/public/${playlistId}`
       );
 
       try {
@@ -89,7 +89,7 @@ function PublicPlaylist() {
             </h2>
             <p>{playlistInfo.description}</p>
             <div className="playlist-description">
-              <p>{!playlistInfo.publicAccessible ? "Private" : "Public"}</p>
+              <p>{!playlistInfo.isPublic ? "Private" : "Public"}</p>
               <p>{playlistInfo.tracks?.length} songs</p>
             </div>
           </section>
