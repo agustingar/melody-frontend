@@ -13,7 +13,14 @@ import SongCard from "../SongCard/SongCard";
 import { MusicNoteOutlined } from "@mui/icons-material";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Box, Button, Modal, Paper, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Modal,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
 const Songs = () => {
@@ -27,23 +34,6 @@ const Songs = () => {
   const [songUrl, setSongUrl] = useState("");
   const [submitMsg, setSubmitMsg] = useState("");
   const [success, setSuccess] = useState("");
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: "#757ce8",
-        main: "#3f50b5",
-        dark: "#002884",
-        contrastText: "#fff",
-      },
-      secondary: {
-        light: "#ff7961",
-        main: "#f44336",
-        dark: "#ba000d",
-        contrastText: "#000",
-      },
-    },
-  });
 
   const style = {
     position: "absolute",
@@ -211,6 +201,9 @@ const Songs = () => {
           </Box>
         </Modal>
       </header>
+      <Typography sx={{ color: "white", fontSize: "1.5em", ml: "1.5em" }}>
+        {data.songs.length === 0 && "You don't have any song uploaded!"}
+      </Typography>
       <table className="favorites-table ">
         <tbody className="favorites_line__bottom">
           {data.songs.map((song, i) => (

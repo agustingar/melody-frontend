@@ -17,11 +17,10 @@ function HomeHeader() {
   if (error) return <div>Error</div>;
 
   return (
-    <div className="header-container-home">
-      <div className="header-user--name">
-        <b>Hello</b> {data?.user.name}!
-      </div>
-    </div>
+    <header className="header-container-home">
+      <b>Hello</b>
+      <span>{data?.user.name}!</span>
+    </header>
   );
 }
 

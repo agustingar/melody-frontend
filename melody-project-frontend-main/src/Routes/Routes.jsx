@@ -11,7 +11,6 @@ import AdminView from "../components/Account/AdminView/AdminView";
 import Profile from "../components/Profile/Profile";
 import ResetPassword from "../components/ResetPassWord/ResetPassword";
 import Favorites from "../components/Favorites/Favorites";
-import Search from "../components/SearchBar/SearchBar";
 import MusicPlayer from "../components/MusicPlayer/index";
 import Songs from "../components/CreateSong/SongTable";
 import Playlists from "../components/MyPlaylists/Playlists";
@@ -19,6 +18,10 @@ import PlaylistEdit from "../components/MyPlaylists/EditPlaylist/PlaylistEdit";
 import SideMenu from "../components/SideMenu/SideMenu";
 import UserPlaylist from "../components/MyPlaylists/EditPlaylist/UserPlaylist";
 import PublicPlaylist from "../components/Home/melodyPlaylists/PublicPlaylist";
+import Search from "../components/SearchBar/Search";
+import Pop from "../pages/genres/Pop";
+import Classic from "../pages/genres/Classic";
+import Rock from "../pages/genres/Rock";
 
 export default function RouterApp() {
   const { activeSong } = useSelector((state) => state.player);
@@ -43,7 +46,34 @@ export default function RouterApp() {
                 element={
                   <>
                     <SideMenu />
-                    <Favorites />{" "}
+                    <Favorites />
+                  </>
+                }
+              />
+              <Route
+                path="/pop"
+                element={
+                  <>
+                    <SideMenu />
+                    <Pop />
+                  </>
+                }
+              />
+              <Route
+                path="/rock"
+                element={
+                  <>
+                    <SideMenu />
+                    <Rock />
+                  </>
+                }
+              />
+              <Route
+                path="/classic"
+                element={
+                  <>
+                    <SideMenu />
+                    <Classic />
                   </>
                 }
               />
@@ -52,7 +82,7 @@ export default function RouterApp() {
                 element={
                   <>
                     <SideMenu />
-                    <Profile />{" "}
+                    <Profile />
                   </>
                 }
               />
@@ -78,7 +108,6 @@ export default function RouterApp() {
                 }
               />
               <Route path="/edit" element={<EditUser />} />
-              <Route path="/search" element={<Search />} />
               <Route
                 path="/songs"
                 element={
@@ -103,6 +132,15 @@ export default function RouterApp() {
                   <>
                     <SideMenu />
                     <PlaylistEdit />
+                  </>
+                }
+              />
+              <Route
+                path="/search"
+                element={
+                  <>
+                    <SideMenu />
+                    <Search />
                   </>
                 }
               />

@@ -1,0 +1,27 @@
+.search_container {
+}
+
+.search_container {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
+
+.search_bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.search_input_container {
+  margin-bottom: 0px;
+}
+
+.top-result {
+  margin-bottom: 2em;
+  margin-right: 2em;
+  height: 0;
+}
+
+.browser-all {
+  margin-left: 20em;
+}

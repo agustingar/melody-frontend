@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 function DiscoverSongs() {
   const { data, isFetching, error } = useGetAllSongsQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
+  //!passing 8 songs to initial state but nothing is happens
   const [randomSongs, setRandomSongs] = useState([]);
 
   function randomIndex(count) {
@@ -29,15 +30,30 @@ function DiscoverSongs() {
     setRandomSongs(randomSongs);
   }
 
-  if (isFetching)
+  const allSongs = randomSongs.map((song, i) => {
     return (
-      <div className="loading-box">
-        <div className="loading_bar"></div>
-        <p className="loading_text">Loading</p>
-      </div>
+      <SongCart
+        key={song._id}
+        song={song}
+        isPlaying={isPlaying}
+        activeSong={activeSong}
+        data={data}
+        i={i}
+        convertDuration={convertDuration}
+      />
     );
+  });
 
-  if (error) return <div>Error</div>;
+  if (isFetching) {
+    <div className="loading-box">
+      <div className="loading_bar"></div>
+      <p className="loading_text">Loading</p>
+    </div>;
+  }
+
+  if (error) {
+    <div>Error</div>;
+  }
 
   return (
     <div className="top-songs-container all_songs__container">
@@ -45,19 +61,7 @@ function DiscoverSongs() {
         Discover new songs
       </h1>
       <section>
-        {randomSongs.map((song, i) => {
-          return (
-            <SongCart
-              key={song._id}
-              song={song}
-              isPlaying={isPlaying}
-              activeSong={activeSong}
-              data={data}
-              i={i}
-              convertDuration={convertDuration}
-            />
-          );
-        })}
+        {allSongs}
         <Button
           className="btn-home--getSongs"
           sx={{

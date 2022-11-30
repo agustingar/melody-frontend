@@ -1,24 +1,22 @@
-import "./HomeHeader.css";
-import "../../Top/Top.css";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Clear, SearchRounded } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import {
-  useGetAllSongsQuery,
-  useGetUserQuery,
-} from "../../../redux/services/melodyApi";
-import convertDuration from "../../../functions/ConvertDuration";
-import SongCart from "../../Top/SongCart";
 import HeadsetIcon from "@mui/icons-material/Headset";
 
-function Search() {
+//Components
+import { useGetAllSongsQuery } from "../../redux/services/melodyApi";
+import convertDuration from "../../functions/ConvertDuration";
+import DiscoverSongs from "../Home/DiscoverSong/DiscoverSongs";
+import SongCart from "../Top/SongCart";
+import BrowserAll from "./BrowserAll";
+
+import "./SearchBar.css";
+import "./search.css";
+
+export default function Search() {
+  //Handle player
   const { data, isFetching, error } = useGetAllSongsQuery();
-  const {
-    data: user,
-    isFetching: userFetching,
-    error: userError,
-  } = useGetUserQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   //Handle Search explorer feature
@@ -27,8 +25,6 @@ function Search() {
     song: "",
     i: "",
   });
-  const [hasQuery, setHasQuery] = useState(false);
-  const [displayPlayer, setDisplayPlayer] = useState(false);
 
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
@@ -44,7 +40,6 @@ function Search() {
         }
       })
       .map((song, i) => {
-        setHasQuery(true);
         setQuerySong((prevSong) => {
           return {
             ...prevSong,
@@ -57,15 +52,12 @@ function Search() {
 
   function handleSearchClear(e) {
     setInputTrack("");
-    setHasQuery(false);
-    // setDisplayPlayer(false);
   }
 
   const handleClick = () => {
     if (Object.keys(querySong).length === 0) {
       return;
     } else {
-      setDisplayPlayer(true);
     }
   };
 
@@ -76,31 +68,20 @@ function Search() {
   };
 
   const searchBar = (
-    <div className="search_explorer__bar">
-      <div className="search_container" onKeyPress={(e) => handleEnter(e)}>
-        <div className="search_input_container">
-          <SearchRounded sx={{ marginRight: 2 }} />
-          <input
-            type="text"
-            placeholder="Explorer"
-            name="songTitle"
-            onChange={handleSearch}
-            value={inputTrack}
-          />
-          <IconButton onClick={handleSearchClear}>
-            <Clear />
-          </IconButton>
-        </div>
+    <div onKeyPress={(e) => handleEnter(e)}>
+      <div className="search_input_container">
+        <SearchRounded sx={{ marginRight: 2 }} />
+        <input
+          type="text"
+          placeholder="Explorer"
+          name="songTitle"
+          onChange={handleSearch}
+          value={inputTrack}
+        />
+        <IconButton onClick={handleSearchClear}>
+          <Clear />
+        </IconButton>
       </div>
-      {hasQuery && (
-        <div className="query-container">
-          <div className="query-song" onClick={handleClick}>
-            <SearchRounded className="btn-search--icon" />
-            <p>{querySong.song.artist}</p>
-            <p>{querySong.song.title}</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 
@@ -114,30 +95,42 @@ function Search() {
 
   if (error) return <div>Error</div>;
 
+  console.log(data);
+
   return (
-    <div className="header-container-home">
-      <div className="header-user--name">
-        <b>Hello</b> {user?.user.name}!
-      </div>
-      <div>{searchBar}</div>
-      {displayPlayer && (
-        <div className="listen-songs-container">
+    <main>
+      <header className="search_bar">{searchBar}</header>
+      <div className="search_container">
+        <aside className="browser-all">
+          <h1 className="mb-3 not-italic font-bold font-mons text-xl text-white">
+            Browser all
+          </h1>
           <div>
-            <HeadsetIcon sx={{ marginRight: 2 }} />
+            <BrowserAll />
           </div>
-          <section>
-            <SongCart
-              key={querySong.song._id}
-              song={querySong.song}
-              isPlaying={isPlaying}
-              activeSong={activeSong}
-              data={data}
-              i={querySong.i}
-              convertDuration={convertDuration}
-            />
-          </section>
+        </aside>
+        <div className="top-result">
+          {Object.keys(querySong.song).length > 0 ? (
+            <>
+              <h2 className="mb-3 not-italic font-bold font-mons text-xl text-white">
+                Top result <HeadsetIcon sx={{ fontSize: "2rem" }} />
+              </h2>
+
+              <div className="top-result">
+                <SongCart
+                  key={querySong.song._id}
+                  song={querySong.song}
+                  isPlaying={isPlaying}
+                  activeSong={activeSong}
+                  data={data}
+                  i={querySong.i}
+                  convertDuration={convertDuration}
+                />
+              </div>
+            </>
+          ) : null}
         </div>
-      )}
-    </div>
+      </div>
+    </main>
   );
 }

@@ -49,7 +49,6 @@ function Top() {
         class="text-black bg-white font-medium rounded-lg text-sm ml-2.5 mt-4
         px-5 py-2.5 text-center inline-flex items-center btn-home--seeAll"
       >
-        {" "}
         See all
         <svg
           aria-hidden="true"

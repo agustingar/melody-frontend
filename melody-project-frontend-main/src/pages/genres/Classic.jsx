@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import "./Favorites.css";
+import "./genres.css";
 import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import { Clear, SearchRounded } from "@mui/icons-material";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 
 //Components
-import SongCard from "../SongCard/SongCard";
-import Loader from "../Loader/Loader";
-import Error from "../Error/Error";
-import { useGetLikedSongsQuery } from "../../redux/services/melodyApi";
+import SongCard from "../../components/SongCard/SongCard";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/Error/Error";
+import { useGetAllSongsQuery } from "../../redux/services/melodyApi";
 import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import convertDuration from "../../functions/ConvertDuration";
 
-function Favorites() {
-  const { data, isFetching, error } = useGetLikedSongsQuery();
+function Classic() {
+  const { data, isFetching, error } = useGetAllSongsQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [inputTrack, setInputTrack] = useState("");
+
+  const songs = data.songs.filter((music) => music.genre === "70s");
 
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
@@ -29,7 +31,7 @@ function Favorites() {
 
   if (error) return <Error />;
 
-  const totalDuration = data.songs.map((song) => song.duration);
+  const totalDuration = songs.map((song) => song.duration);
 
   return (
     <>
@@ -38,12 +40,12 @@ function Favorites() {
         <div className="container-right">
           <header>
             <section className="info">
-              <h6>Your songs</h6>
+              <h6>Melody</h6>
               <h1>
-                Favorites <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
+                Classic <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
               </h1>
               <div className="details">
-                <p>{data.songs.length} Songs</p>
+                <p>{songs.length} Songs</p>
                 <p id="dot">&bull;</p>
                 <p>{convertDurationPlaylist(totalDuration)}</p>
               </div>
@@ -68,7 +70,7 @@ function Favorites() {
           </header>
           <table className="favorites-table animate-slideup ">
             <tbody className="favorites_line__bottom">
-              {data.songs
+              {songs
                 .filter((song) => {
                   if (inputTrack === "") {
                     return song;
@@ -98,4 +100,4 @@ function Favorites() {
   );
 }
 
-export default Favorites;
+export default Classic;
