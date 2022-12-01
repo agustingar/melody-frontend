@@ -62,14 +62,14 @@ function PlaylistViewSongs() {
     getPlaylistById();
   }, []);
 
-  if (isFetching)
+  if (isFetching || playlistFetching)
     return (
       <div className="loading-box">
         <div className="loading_bar"></div>
         <p className="loading_text">Loading</p>
       </div>
     );
-  if (error) return <div>Error</div>;
+  if (error || playlistError) return <div>Error</div>;
 
   function randomIndex(count) {
     return Math.floor(Math.random() * count);
@@ -116,7 +116,7 @@ function PlaylistViewSongs() {
     />
   ));
 
-  console.log(playlistInfo);
+
 
   return (
     <>
