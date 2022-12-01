@@ -1,5 +1,4 @@
 import * as React from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import PlayPause from "../../SongCard/PlayPause";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
@@ -32,7 +31,7 @@ function Songs({
   const [errorMsg, setErrorMsg] = React.useState("");
   const [hasServerError, hasSeverError] = React.useState(false);
 
-  const [openError, setOpenError] = React.useState(true);
+
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
@@ -117,7 +116,7 @@ function Songs({
           onClick={(e) => updateSong(e, song?._id, playlist?._id)}
         >
           <div className="addToPlaylist_img">
-            <img src={playlist?.thumbnail} />
+            <img src={playlist?.thumbnail} alt={playlist.title} />
           </div>
           <div className="addToPlaylist_list">
             <p>
@@ -150,7 +149,7 @@ function Songs({
           <p className="track-artist">{song.artist}</p>
         </div>
       </div>
-      <LikedSongs song={song} />
+      <LikedSongs song={song} key={song._id} data={data} />
       <Box sx={{ display: "flex" }}>
 
         <Typography sx={{ p: 1 }}>

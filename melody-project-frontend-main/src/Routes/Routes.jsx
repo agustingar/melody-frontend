@@ -113,7 +113,6 @@ export default function RouterApp() {
                 path="/signup"
                 element={
                   <>
-                    <SideMenu />
                     <Signup />
                   </>
                 }
@@ -128,6 +127,7 @@ export default function RouterApp() {
                 }
               />
               <Route path="/edit" element={<EditUser />} />
+              <Route path="/search" element={<Search />} />
               <Route
                 path="/songs"
                 element={

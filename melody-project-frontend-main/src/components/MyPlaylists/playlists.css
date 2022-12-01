@@ -89,6 +89,7 @@
   margin-left: 15rem;
   color: white;
   height: 100%;
+  padding-left: 1rem;
 }
 .playlist-container {
   display: flex;
@@ -209,5 +210,7 @@
 @media (max-width: 1199px) {
   .home_playlist_container {
     margin-left: 13rem;
+    padding-left: 1rem;
+
   }
 }

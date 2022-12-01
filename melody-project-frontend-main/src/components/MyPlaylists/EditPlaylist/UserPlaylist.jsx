@@ -163,8 +163,9 @@ function PlaylistViewSongs() {
               borderColor: "white",
               m: 2,
               p: 1,
-              pl: 3,
-              pr: 3,
+              pl: 1,
+              pr: 1,
+              width: "89%",
             }}
             variant="outlined"
             onClick={getRandomSongs}
@@ -180,6 +181,7 @@ function PlaylistViewSongs() {
               p: 1,
               pl: 3,
               pr: 3,
+              width: "89%",
             }}
             variant="outlined"
             onClick={getRandomSongs}

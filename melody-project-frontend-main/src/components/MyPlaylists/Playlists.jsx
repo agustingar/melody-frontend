@@ -13,13 +13,6 @@ function Playlists() {
   const [isHovering, setIsHovering] = useState(false);
   const navigate = useNavigate();
 
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
 
   const deletePlaylist = async (playlistId) => {
     const result = await fetch(
@@ -82,9 +75,10 @@ function Playlists() {
           <div
             key={playlist._id}
             className="flex flex-col w-[200px] h-[230px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer playlist-delete"
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
+            onMouseEnter={() => setIsHovering(playlist._id)} onMouseLeave={() => setIsHovering(null)}
           >
+ {isHovering === playlist._id && <DeleteIcon onClick={() => deletePlaylist(playlist._id)}
+              style={{ position: 'absolute', zIndex: 999, top: 1, right: 0 }} /> }
 
             <div className="relative w-full h-56 group">
               <img
@@ -94,9 +88,7 @@ function Playlists() {
                 onClick={() => getPlaylist(playlist._id)}
               />
             </div>
-            {isHovering ? <DeleteIcon onClick={() => deletePlaylist(playlist._id)}
-              style={{ position: 'absolute', zIndex: 999, top: 1, right: 1 }} /> : ""}
-
+           
             <div className="mt-4 flex flex-col">
               <p className="font-semibold text-sm text-white truncate">
                 {playlist.name}
