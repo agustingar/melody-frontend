@@ -13,12 +13,12 @@ import { useGetAllSongsQuery } from "../../redux/services/melodyApi";
 import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import convertDuration from "../../functions/ConvertDuration";
 
-function Classic() {
+function Techno() {
   const { data, isFetching, error } = useGetAllSongsQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [inputTrack, setInputTrack] = useState("");
 
-  const songs = data.songs.filter((music) => music.genre === "70s");
+  const songs = data.songs.filter((music) => music.genre === "Techno");
 
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
@@ -42,7 +42,7 @@ function Classic() {
             <section className="info">
               <h6>Melody</h6>
               <h1>
-                Classic Songs
+                Techno
                 <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
               </h1>
               <div className="details">
@@ -101,4 +101,4 @@ function Classic() {
   );
 }
 
-export default Classic;
+export default Techno;

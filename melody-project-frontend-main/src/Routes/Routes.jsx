@@ -22,6 +22,8 @@ import Search from "../components/SearchBar/Search";
 import Pop from "../pages/genres/Pop";
 import Classic from "../pages/genres/Classic";
 import Rock from "../pages/genres/Rock";
+import Techno from "../pages/genres/Techno";
+import Rap from "../pages/genres/Rap";
 
 export default function RouterApp() {
   const { activeSong } = useSelector((state) => state.player);
@@ -74,6 +76,24 @@ export default function RouterApp() {
                   <>
                     <SideMenu />
                     <Classic />
+                  </>
+                }
+              />
+              <Route
+                path="/techno"
+                element={
+                  <>
+                    <SideMenu />
+                    <Techno />
+                  </>
+                }
+              />
+              <Route
+                path="/rap"
+                element={
+                  <>
+                    <SideMenu />
+                    <Rap />
                   </>
                 }
               />

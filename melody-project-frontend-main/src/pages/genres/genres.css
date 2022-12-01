@@ -147,3 +147,7 @@ header .info p {
   align-items: center;
   justify-content: space-between;
 }
+
+.genre-img--grid {
+  border-radius: 1.5em;
+}

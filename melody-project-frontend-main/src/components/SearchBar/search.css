@@ -1,9 +1,8 @@
 .search_container {
-}
-
-.search_container {
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: 1fr;
+  place-items: center;
+  margin-left: 14em;
 }
 
 .search_bar {
@@ -16,12 +15,23 @@
   margin-bottom: 0px;
 }
 
-.top-result {
-  margin-bottom: 2em;
-  margin-right: 2em;
-  height: 0;
+.browser-all > h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+.genre-grid {
+  grid-template-columns: repeat(3, auto);
+  overflow-y: visible;
+  gap: 10px;
+  width: 535px;
+  height: 400px;
 }
 
-.browser-all {
-  margin-left: 20em;
+.top-result {
+  width: 70%;
+}
+
+.ImageListItemBar {
+  border-bottom-right-radius: 1.5em;
+  border-bottom-left-radius: 1.5em;
 }

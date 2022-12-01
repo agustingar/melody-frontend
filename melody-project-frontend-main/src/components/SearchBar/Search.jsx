@@ -7,7 +7,6 @@ import HeadsetIcon from "@mui/icons-material/Headset";
 //Components
 import { useGetAllSongsQuery } from "../../redux/services/melodyApi";
 import convertDuration from "../../functions/ConvertDuration";
-import DiscoverSongs from "../Home/DiscoverSong/DiscoverSongs";
 import SongCart from "../Top/SongCart";
 import BrowserAll from "./BrowserAll";
 
@@ -20,6 +19,7 @@ export default function Search() {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   //Handle Search explorer feature
+  const [hasQuery, setHasQuery] = useState(false);
   const [inputTrack, setInputTrack] = useState("");
   const [querySong, setQuerySong] = useState({
     song: "",
@@ -52,12 +52,16 @@ export default function Search() {
 
   function handleSearchClear(e) {
     setInputTrack("");
+    setHasQuery(false);
   }
+
+  console.log(inputTrack.length);
 
   const handleClick = () => {
     if (Object.keys(querySong).length === 0) {
       return;
     } else {
+      setHasQuery(true);
     }
   };
 
@@ -70,7 +74,7 @@ export default function Search() {
   const searchBar = (
     <div onKeyPress={(e) => handleEnter(e)}>
       <div className="search_input_container">
-        <SearchRounded sx={{ marginRight: 2 }} />
+        <SearchRounded sx={{ marginRight: 2 }} onClick={handleClick} />
         <input
           type="text"
           placeholder="Explorer"
@@ -95,41 +99,38 @@ export default function Search() {
 
   if (error) return <div>Error</div>;
 
-  console.log(data);
-
   return (
     <main>
       <header className="search_bar">{searchBar}</header>
       <div className="search_container">
-        <aside className="browser-all">
-          <h1 className="mb-3 not-italic font-bold font-mons text-xl text-white">
-            Browser all
-          </h1>
-          <div>
-            <BrowserAll />
-          </div>
-        </aside>
-        <div className="top-result">
-          {Object.keys(querySong.song).length > 0 ? (
-            <>
-              <h2 className="mb-3 not-italic font-bold font-mons text-xl text-white">
-                Top result <HeadsetIcon sx={{ fontSize: "2rem" }} />
-              </h2>
+        {hasQuery ? (
+          <div className="top-result">
+            <h2 className="mb-3 not-italic font-bold font-mons text-xl text-white">
+              Top result <HeadsetIcon sx={{ fontSize: "2rem" }} />
+            </h2>
 
-              <div className="top-result">
-                <SongCart
-                  key={querySong.song._id}
-                  song={querySong.song}
-                  isPlaying={isPlaying}
-                  activeSong={activeSong}
-                  data={data}
-                  i={querySong.i}
-                  convertDuration={convertDuration}
-                />
-              </div>
-            </>
-          ) : null}
-        </div>
+            <div className="top-result">
+              <SongCart
+                key={querySong.song._id}
+                song={querySong.song}
+                isPlaying={isPlaying}
+                activeSong={activeSong}
+                data={data}
+                i={querySong.i}
+                convertDuration={convertDuration}
+              />
+            </div>
+          </div>
+        ) : (
+          <aside className="browser-all">
+            <h1 className="mb-3 not-italic font-bold font-mons text-xl text-white">
+              Browser all
+            </h1>
+            <div>
+              <BrowserAll />
+            </div>
+          </aside>
+        )}
       </div>
     </main>
   );
