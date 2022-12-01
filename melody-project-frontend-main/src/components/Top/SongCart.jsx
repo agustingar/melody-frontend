@@ -6,6 +6,8 @@ import PlayPause from "../SongCard/PlayPause";
 import { playPause, setActiveSong } from "../../redux/features/playerSlice";
 import convertDuration from "../../functions/ConvertDuration";
 import { Box, Typography } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import LikedSongs from "../LikedSongs/LikedSongs";
 
 function SongCart({ song, isPlaying, activeSong, data, i }) {
   const dispatch = useDispatch();
@@ -38,7 +40,7 @@ function SongCart({ song, isPlaying, activeSong, data, i }) {
         </div>
       </div>
       <button>
-        <FavoriteIcon className="favoriteIcon" />
+      <LikedSongs key={song._id} song={song} />
       </button>
       <Box sx={{ display: "flex" }}>
         <div>

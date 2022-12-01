@@ -46,7 +46,6 @@ const SongCard = ({
   };
 
   const location = useLocation();
-
   return (
     <tr key={song._id} className="favorites_list">
       <td>

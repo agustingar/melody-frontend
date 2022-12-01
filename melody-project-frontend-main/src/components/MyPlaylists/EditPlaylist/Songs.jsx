@@ -150,7 +150,7 @@ function Songs({
           <p className="track-artist">{song.artist}</p>
         </div>
       </div>
-      <LikedSongs song={song} />
+      <LikedSongs song={song} key={song._id} data={data} />
       <Box sx={{ display: "flex" }}>
 
         <Typography sx={{ p: 1 }}>

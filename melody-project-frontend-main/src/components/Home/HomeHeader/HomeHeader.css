@@ -20,6 +20,9 @@
 .header-user--name {
   font-size: 1.6rem;
   margin-right: 2rem;
+  display: flex;
+  width: 92%;
+  justify-content: space-between;
 }
 
 .settings-container {

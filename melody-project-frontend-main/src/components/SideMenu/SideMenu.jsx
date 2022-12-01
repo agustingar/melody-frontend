@@ -23,10 +23,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 const drawerWidth = 200;
 
 function SideMenu(props) {
-  const [value, setValue] = React.useState(0);
-
+  
   const responsive = useMediaQuery({
-    query: "(max-width: 750px)",
+    query: "(max-width: 1000px)",
   });
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -77,7 +76,7 @@ function SideMenu(props) {
       <Link to="/">
         {" "}
         <List>
-          {[<><LogoutIcon/>"Logout"</>].map((text) => (
+          {[<><LogoutIcon/>Logout</>].map((text) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={logout}>
                 <ListItemText primary={text} />
@@ -100,9 +99,9 @@ function SideMenu(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{  display: { sm: 'block' },zIndex: 999}}
           >
-            <MenuIcon sx={{ zIndex: 999, color: 'grey' }} />
+            <MenuIcon sx={{ zIndex: 999, color: 'white' }} />
           </IconButton>
           <Typography
             variant="h6"
@@ -116,7 +115,7 @@ function SideMenu(props) {
               open={mobileOpen}
               onClose={handleDrawerToggle}
               ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
+                keepMounted: true,
               }}
               sx={{
                 display: { xs: '1', sm: 'block' }, zIndex: 1,
@@ -128,7 +127,6 @@ function SideMenu(props) {
           </Typography>
         </Toolbar>
         :
-
         <Box component="nav" >
           <Drawer
             className="sideMenu"
@@ -137,7 +135,7 @@ function SideMenu(props) {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true, 
             }}
             sx={{
               display: { xs: '1', sm: 'block' },

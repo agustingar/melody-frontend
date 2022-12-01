@@ -1,10 +1,8 @@
 import * as React from "react";
-
 import { useDispatch } from "react-redux";
 import PlayPause from "../../SongCard/PlayPause";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { playPause, setActiveSong } from "../../../redux/features/playerSlice";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import axios from "axios";
@@ -12,14 +10,12 @@ import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import LikedSongs from "../../LikedSongs/LikedSongs";
 
 // const { playlistData, playError } = useGetPlaylistQuery();
 
 function SuggestSong({
   song,
-  lastPlaylist,
-  userPlaylists,
   isPlaying,
   activeSong,
   data,
@@ -28,7 +24,6 @@ function SuggestSong({
   playlistId,
 }) {
   const token = localStorage.getItem("userToken") || null;
-
   const [serverMsg, setServerMsg] = React.useState("");
   const [isSongAdd, setIsSongAdd] = React.useState(false);
 
@@ -106,7 +101,7 @@ function SuggestSong({
             <p className="track-artist">{song.artist}</p>
           </div>
         </div>
-        <div>
+        
           {isSongAdd && (
             <Box sx={{ width: "100%" }}>
               <Collapse in={open}>
@@ -130,7 +125,7 @@ function SuggestSong({
               </Collapse>
             </Box>
           )}
-        </div>
+        
         {serverError && (
           <Box sx={{ width: "100%" }}>
             <Collapse in={openError}>
@@ -155,9 +150,9 @@ function SuggestSong({
             </Collapse>
           </Box>
         )}
-        <button>
-          <FavoriteBorderIcon className="favoriteIcon" />
-        </button>
+
+        <LikedSongs key={song._id} song={song}/>
+
         <Box sx={{ display: "flex" }}>
           <div>
             <Typography sx={{ p: 1 }}>

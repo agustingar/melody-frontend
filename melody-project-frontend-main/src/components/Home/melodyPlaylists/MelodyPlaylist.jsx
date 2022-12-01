@@ -1,7 +1,6 @@
 import React from "react";
 import { useGetAllPlaylistQuery } from "../../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
-import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 
 export const MelodyPlaylist = () => {
   const { data, isFetching, error } = useGetAllPlaylistQuery();
@@ -22,14 +21,14 @@ export const MelodyPlaylist = () => {
   return (
     <div className="home_playlist_container">
       <header className="flex h-44 mb-1">
-        <section className="flex flex-col justify-center grow ml-5">
+        <section className="flex flex-col justify-center  grow ">
           <h className=" not-italic text-2xl font-black whitespace-nowrap text-ellipsis leading-80">
             Melody playlists
           </h>
           <div>{playlists.length} Playlists</div>
         </section>
       </header>
-      <div className="flex flex-wrap sm:justify-start justify-center gap-5">
+      <div className="flex flex-wrap sm:justify-flex-start justify-flex-start gap-5">
         {playlists.map((playlist) => (
           <div
             key={playlist._id}

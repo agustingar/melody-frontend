@@ -1,16 +1,16 @@
-import { Favorite } from "@mui/icons-material";
+import { Error, Favorite } from "@mui/icons-material";
 import axios from "axios";
 import React from "react";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useState } from "react";
+
 
 function LikedSongs({ song }) {
   const token = localStorage.getItem("userToken");
-const [isFav, setIsFav] = useState("")
+
   const favorite = async (id) => {
     console.log(id);
     try {
-      const data = await axios.put(
+      const result = await axios.put(
         `https://melody-music-stream-production.up.railway.app/song/like/${id}`,
 
         {
@@ -22,16 +22,17 @@ const [isFav, setIsFav] = useState("")
           },
         }
       );
-      console.log(data);
-      setIsFav(data)
+      console.log(song.likedBy);
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(favorite);
 
   return (
     <button onClick={() => favorite(song._id)}>
-      {isFav ? <Favorite className="favoriteIcon" /> : <FavoriteBorderIcon className="favoriteIcon" /> }
+     {favorite  ? <FavoriteBorderIcon className="favoriteIcon" /> :<Favorite className="favoriteIcon" /> } 
     </button>
   );
 }
