@@ -12,8 +12,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
 import LikedSongs from "../../LikedSongs/LikedSongs";
 
-// const { playlistData, playError } = useGetPlaylistQuery();
-
 function SuggestSong({
   song,
   isPlaying,
@@ -24,7 +22,7 @@ function SuggestSong({
   playlistId,
 }) {
   const token = localStorage.getItem("userToken") || null;
-  const [serverMsg, setServerMsg] = React.useState("");
+  const [successMsg, setSuccessMsg] = React.useState("");
   const [isSongAdd, setIsSongAdd] = React.useState(false);
 
   const [ErrorMsg, setErrorMsg] = React.useState("");
@@ -70,8 +68,8 @@ function SuggestSong({
 
     try {
       const result = await axios(options);
-      console.log(result);
-      setServerMsg(result.data.msg);
+      console.log(result.data.msg);
+      setSuccessMsg(result.data.msg);
       setIsSongAdd(true);
     } catch (error) {
       if (error.response) {
@@ -101,31 +99,31 @@ function SuggestSong({
             <p className="track-artist">{song.artist}</p>
           </div>
         </div>
-        
-          {isSongAdd && (
-            <Box sx={{ width: "100%" }}>
-              <Collapse in={open}>
-                <Alert
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setOpen(false);
-                      }}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                  sx={{ mb: 2 }}
-                >
-                  {serverMsg}
-                </Alert>
-              </Collapse>
-            </Box>
-          )}
-        
+
+        {isSongAdd && (
+          <Box sx={{ width: "100%" }}>
+            <Collapse in={open}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2 }}
+              >
+                {successMsg}
+              </Alert>
+            </Collapse>
+          </Box>
+        )}
+
         {serverError && (
           <Box sx={{ width: "100%" }}>
             <Collapse in={openError}>
@@ -151,7 +149,7 @@ function SuggestSong({
           </Box>
         )}
 
-        <LikedSongs key={song._id} song={song}/>
+        <LikedSongs key={song._id} song={song} />
 
         <Box sx={{ display: "flex" }}>
           <div>
@@ -159,16 +157,19 @@ function SuggestSong({
               {convertDuration(song.duration)}
             </Typography>
           </div>
-          <div>
+          <Box sx={{ display: "flex" }}>
             <button
               onClick={(e) => {
                 handleClose();
                 addSuggestSong(e, song._id);
               }}
             >
-              <PlaylistAddIcon onClick={() => setOpenError(true)} />
+              <PlaylistAddIcon
+                onClick={() => setOpenError(true)}
+                sx={{ ml: "1em", mr: "0.5em" }}
+              />
             </button>
-          </div>
+          </Box>
         </Box>
       </div>
     </>

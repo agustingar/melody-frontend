@@ -7,11 +7,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { playPause, setActiveSong } from "../../../redux/features/playerSlice";
 import Box from "@mui/material/Box";
 import Popover from "@mui/material/Popover";
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import LikedSongs from "../../LikedSongs/LikedSongs";
 import axios from "axios";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Collapse from "@mui/material/Collapse";
 
 function Songs({
   song,
@@ -28,10 +37,11 @@ function Songs({
   const [successMsg, setSuccessMsg] = React.useState("");
   const [isSongAdd, setIsSongAdd] = React.useState(false);
 
-  const [errorMsg, setErrorMsg] = React.useState("");
-  const [hasServerError, hasSeverError] = React.useState(false);
+  const [ErrorMsg, setErrorMsg] = React.useState("");
+  const [serverError, setSeverError] = React.useState(false);
 
-
+  const [open, setOpen] = React.useState(true);
+  const [openError, setOpenError] = React.useState(true);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
@@ -58,8 +68,8 @@ function Songs({
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const opened = Boolean(anchorEl);
+  const id = opened ? "simple-popover" : undefined;
 
   const updateSong = async (e, songId, playlist_Id) => {
     e.preventDefault();
@@ -79,7 +89,8 @@ function Songs({
     }
 
     const options = {
-      url: `https://melody-music-stream-production.up.railway.app/playlist/${endPoint}/${playId}`,
+      url: `http://localhost:4000/playlist/${endPoint}/${playId}`,
+      // url: `https://melody-music-stream-production.up.railway.app/playlist/${endPoint}/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -87,7 +98,7 @@ function Songs({
         "Content-Type": "application/json;charset=UTF-8",
       },
       data: {
-        songsId,
+        song_id: songsId,
       },
     };
 
@@ -100,7 +111,7 @@ function Songs({
       if (error.response) {
         console.log(error.response.data.msg);
         setErrorMsg(error.response.data.msg);
-        hasSeverError(true);
+        setSeverError(true);
       }
     }
   };
@@ -149,12 +160,57 @@ function Songs({
           <p className="track-artist">{song.artist}</p>
         </div>
       </div>
+      {isSongAdd && (
+        <Box sx={{ width: "100%" }}>
+          <Collapse in={open}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+            >
+              {successMsg}
+            </Alert>
+          </Collapse>
+        </Box>
+      )}
+
+      {serverError && (
+        <Box sx={{ width: "100%" }}>
+          <Collapse in={openError}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpenError(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              severity="warning"
+              sx={{ mb: 2 }}
+            >
+              {ErrorMsg}
+            </Alert>
+          </Collapse>
+        </Box>
+      )}
       <LikedSongs song={song} key={song._id} data={data} />
       <Box sx={{ display: "flex" }}>
-
-        <Typography sx={{ p: 1 }}>
-          {convertDuration(song.duration)}
-        </Typography>
+        <Typography sx={{ p: 1 }}>{convertDuration(song.duration)}</Typography>
 
         {/* vertical dots */}
 
@@ -168,23 +224,32 @@ function Songs({
 
         <Popover
           id={"options"}
-          open={open}
+          open={opened}
           anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "center",
           }}
-
         >
-          <div style={{ width: '300px' }}>
-            <Accordion expanded={expanded === 'panel1'} onChange={handleAccordion('panel1')} >
+          <div style={{ width: "300px" }}>
+            <Accordion
+              expanded={expanded === "panel1"}
+              onChange={handleAccordion("panel1")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography>{<div style={{display:'flex'}}><PlaylistAddIcon/> <Typography>Add to playlist</Typography></div>}</Typography>
+                <Typography>
+                  {
+                    <div style={{ display: "flex" }}>
+                      <PlaylistAddIcon />{" "}
+                      <Typography>Add to playlist</Typography>
+                    </div>
+                  }
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Box sx={{ mt: 0, pt: 0 }}>
@@ -194,13 +259,23 @@ function Songs({
                 </Box>
               </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel2'} onChange={handleAccordion('panel2')}>
+            <Accordion
+              expanded={expanded === "panel2"}
+              onChange={handleAccordion("panel2")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel2a-content"
                 id="panel2a-header"
               >
-                <Typography>{<div style={{display:'flex'}}> <DeleteIcon /> <Typography>Delete song</Typography></div>} </Typography>
+                <Typography>
+                  {
+                    <div style={{ display: "flex" }}>
+                      {" "}
+                      <DeleteIcon /> <Typography>Delete song</Typography>
+                    </div>
+                  }{" "}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
@@ -220,7 +295,6 @@ function Songs({
             </Accordion>
           </div>
         </Popover>
-
       </Box>
     </div>
   );
