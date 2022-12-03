@@ -11,19 +11,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import { useMediaQuery } from "react-responsive";
 import { IconButton, Typography } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
-import logo from '../../utils/img/toolbar.png'
-import HomeIcon from '@mui/icons-material/Home';
-import SearchIcon from '@mui/icons-material/Search';
-import ListIcon from '@mui/icons-material/List';
-import AddIcon from '@mui/icons-material/Add';
-import LogoutIcon from '@mui/icons-material/Logout';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import MenuIcon from "@mui/icons-material/Menu";
+import logo from "../../utils/img/logo.png";
+import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
+import ListIcon from "@mui/icons-material/List";
+import AddIcon from "@mui/icons-material/Add";
+import LogoutIcon from "@mui/icons-material/Logout";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const drawerWidth = 200;
 
 function SideMenu(props) {
-  
   const responsive = useMediaQuery({
     query: "(max-width: 1000px)",
   });
@@ -35,48 +34,64 @@ function SideMenu(props) {
   };
   const logout = () => {
     localStorage.clear();
-  }
+  };
   const navItems = [
-  <Link to="/home">
-    <HomeIcon />Home
-  </Link>,
-  <Link to="/search">
-  <SearchIcon />Search
-</Link>,
-  <Link to="/playlists">
-    <ListIcon/>Playlists
-  </Link>,
-  <Link to="/favorites">
-    <FavoriteIcon/>Favorites
-  </Link>,
-  <Link to="/songs">
-    <AddIcon/> Upload song
-  </Link>
+    <Link to="/home">
+      <HomeIcon sx={{ mr: "0.2em" }} />
+      Home
+    </Link>,
+    <Link to="/search">
+      <SearchIcon sx={{ mr: "0.2em" }} />
+      Search
+    </Link>,
+    <Link to="/playlists">
+      <ListIcon sx={{ mr: "0.2em" }} />
+      Playlists
+    </Link>,
+    <Link to="/favorites">
+      <FavoriteIcon sx={{ mr: "0.2em" }} />
+      Favorites
+    </Link>,
+    <Link to="/songs">
+      <AddIcon sx={{ mr: "0.2em" }} /> Upload song
+    </Link>,
   ];
   const drawer = (
     <div className="sideMenu" onClick={handleDrawerToggle}>
       <Toolbar className="toolbar">
-        <img src={logo} alt="logo" width="900" height="50" />
+        <img
+          src="https://res.cloudinary.com/dzfouunnx/image/upload/ar_1:1,bo_5px_solid_rgb:0a0a0a,c_fill,g_auto,o_100,r_max,w_1000/v1669885215/melody/logo_wnoywm.png"
+          alt="logo"
+          width="90"
+          height="50"
+        />
       </Toolbar>
 
       <Divider sx={{ p: 1 }} />
-      <List >
-
-
+      <List
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding >
-            <ListItemButton sx={{ textAlign: 'start' }}>
+          <ListItem key={item} disablePadding>
+            <ListItemButton>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
         ))}
-
       </List>
       <Divider />
       <Link to="/">
         {" "}
         <List>
-          {[<><LogoutIcon/>Logout</>].map((text) => (
+          {[
+            <>
+              <LogoutIcon sx={{ mr: "0.2em" }} />
+              Logout
+            </>,
+          ].map((text) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={logout}>
                 <ListItemText primary={text} />
@@ -87,29 +102,29 @@ function SideMenu(props) {
       </Link>
     </div>
   );
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-
-      {responsive ?
+    <Box sx={{ display: "flex" }}>
+      {responsive ? (
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{  display: { sm: 'block' },zIndex: 999}}
+            sx={{ display: { sm: "block" }, zIndex: 999 }}
           >
-            <MenuIcon sx={{ zIndex: 999, color: 'white' }} />
+            <MenuIcon sx={{ zIndex: 999, color: "white" }} />
           </IconButton>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
+            sx={{ flexGrow: 1, display: { xs: "block", sm: "block" } }}
           >
             <Drawer
-            className="sideMenu"
+              className="sideMenu"
               container={container}
               variant="temporary"
               open={mobileOpen}
@@ -118,16 +133,20 @@ function SideMenu(props) {
                 keepMounted: true,
               }}
               sx={{
-                display: { xs: '1', sm: 'block' }, zIndex: 1,
-                '& .MuiDrawer-paper': { boxSizing: 'border-box' , width: drawerWidth, },
+                display: { xs: "1", sm: "block" },
+                zIndex: 1,
+                "& .MuiDrawer-paper": {
+                  boxSizing: "border-box",
+                  width: drawerWidth,
+                },
               }}
             >
               {drawer}
             </Drawer>
           </Typography>
         </Toolbar>
-        :
-        <Box component="nav" >
+      ) : (
+        <Box component="nav">
           <Drawer
             className="sideMenu"
             container={container}
@@ -135,20 +154,21 @@ function SideMenu(props) {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, 
+              keepMounted: true,
             }}
             sx={{
-              display: { xs: '1', sm: 'block' },
-              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              display: { xs: "1", sm: "block" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
             }}
           >
             {drawer}
           </Drawer>
         </Box>
-
-      }
+      )}
     </Box>
-
   );
 }
 
