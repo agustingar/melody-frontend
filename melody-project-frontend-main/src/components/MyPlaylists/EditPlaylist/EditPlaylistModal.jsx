@@ -5,7 +5,6 @@ import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Typography from "@mui/material/Typography";
 import NativeSelect from "@mui/material/NativeSelect";
 import PhotoAlbumIcon from "@mui/icons-material/PhotoAlbum";
@@ -13,6 +12,7 @@ import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 
 import "../playlists.css";
 import axios from "axios";
+import { useMediaQuery } from "react-responsive";
 
 const style = {
   position: "absolute",
@@ -33,7 +33,9 @@ export default function EditPlaylistModal(id) {
     publicAccessible: "",
     thumbnail: "",
   });
-
+  const responsive = useMediaQuery({
+    query: "(max-width: 450px)",
+  });
   console.log(playlist);
 
   const token = localStorage.getItem("userToken") || null;
@@ -118,7 +120,107 @@ export default function EditPlaylistModal(id) {
 
   return (
     <div>
+      {responsive ? <>
       <Button
+        variant="outlined"
+        startIcon={<ModeEditOutlineIcon />}
+        className="btn-newPlaylist"
+        sx={{
+          color: "white",
+          borderColor: "white",
+          m: 2,
+          p: 1,
+          pl: 3,
+          pr: 3,
+        }}
+        onClick={handleOpen}
+      >
+        Edit Playlist
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box component="form" noValidate autoComplete="off" sx={style}>
+          <Box sx={{ display: "flex",flexDirection:'column', justifyContent: "space-between" }}>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ width: "100%" ,display: "flex", }}
+            >
+              Edit Playlist
+            </Typography>
+            {hasAlbumCoverImg ? (
+              <img
+                src={playlist.thumbnail}
+                className="editModal-albumCover--img"
+                alt="album cover"
+              />
+            ): (
+              <Button variant="contained" component="label">
+                <PhotoAlbumIcon sx={{ fontSize: 40 }} />
+                Album cover
+                <input
+                  type="file"
+                  hidden
+                  onChange={(e) => handleSelectedFile(e.target.files[0])}
+                />
+              </Button>
+            )}
+          </Box>
+          <FormControl
+            variant="standard"
+            sx={{ backgroundColor: "white", width: "100%" }}
+          >
+            <Input
+              id="title"
+              aria-describedby="my-helper-text"
+              placeholder="Title"
+              value={playlist.name}
+              name="name"
+              onChange={handleChange}
+              sx={{ mt: 4, mb: 4 }}
+            />
+            <Input
+              id="description"
+              aria-describedby="my-helper-text"
+              placeholder="Description"
+              value={playlist.description}
+              name="description"
+              onChange={handleChange}
+              sx={{ mb: 4 }}
+            />
+          </FormControl>
+
+          {/* Privacy */}
+          <Box sx={{ maxWidth: 100 }}>
+            <FormControl fullWidth>
+              <NativeSelect
+                onChange={handleChange}
+                value={playlist.publicAccessible}
+                name="publicAccessible"
+              >
+                <option value={false}>Private</option>
+                <option value={true}>Public</option>
+              </NativeSelect>
+            </FormControl>
+          </Box>
+          <div className="pt-3 flex">
+            <Button onClick={handleClose} sx={{ pr: 4 }}>
+              CANCEL
+            </Button>
+            <Button
+              onClick={editPlaylist}
+              sx={{ backgroundColor: "blue", color: "white" }}
+            >
+              SAVE
+            </Button>
+          </div>
+        </Box>
+      </Modal>  </> :  <><Button
         variant="outlined"
         startIcon={<ModeEditOutlineIcon />}
         className="btn-newPlaylist"
@@ -217,7 +319,8 @@ export default function EditPlaylistModal(id) {
             </Button>
           </div>
         </Box>
-      </Modal>
+      </Modal> 
+      </>}
     </div>
   );
 }

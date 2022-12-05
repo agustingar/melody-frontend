@@ -13,12 +13,15 @@ import SongCard from "../SongCard/SongCard";
 import { useGetLikedSongsQuery } from "../../redux/services/melodyApi";
 import Loader from "../Loader/Loader";
 import Error from "../Error/Error";
+import { useMediaQuery } from "react-responsive";
 
 function Favorites() {
   const { data, isFetching, error } = useGetLikedSongsQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [inputTrack, setInputTrack] = useState("");
-
+  const responsive = useMediaQuery({
+    query: "(max-width: 450px)",
+  });
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
   };
@@ -36,7 +39,64 @@ function Favorites() {
     <>
       (
       <>
-        <div className="container-right">
+      {responsive ? 
+        <div className="container-right-responsive">
+          <header>
+            <section className="info">
+              <h6>Your songs</h6>
+              <h1>
+                Favorites <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
+              </h1>
+              <div className="details">
+                <p>{data.songs.length} Songs</p>
+                <p id="dot">&bull;</p>
+                <p>{convertDurationPlaylist(totalDuration)}</p>
+              </div>
+            
+            
+              <div className="search_input_container-responsive">
+                <IconButton>
+                  <SearchRounded />
+                </IconButton>
+                <input
+                  type="text"
+                  placeholder="Search your favorite song"
+                  name="songTitle"
+                  onChange={handleSearch}
+                  value={inputTrack}
+                />
+                <IconButton onClick={handleSearchClear}>
+                  <Clear />
+                </IconButton>
+              </div>
+            </section>
+          </header>
+          <table className="favorites-table animate-slideup ">
+            <tbody className="favorites_list-responsive">
+              {data.songs
+                .filter((song) => {
+                  if (inputTrack === "") {
+                    return song;
+                  } else if (
+                    song.title.toLowerCase().includes(inputTrack.toLowerCase())
+                  ) {
+                    return song;
+                  }
+                })
+                .map((song, i) => (
+                  <SongCard
+                    key={song._id}
+                    song={song}
+                    isPlaying={isPlaying}
+                    activeSong={activeSong}
+                    data={data}
+                    i={i}
+                    convertDuration={convertDuration}
+                  />
+                ))}
+            </tbody>
+          </table>
+        </div> : <div className="container-right">
           <header>
             <section className="info">
               <h6>Your songs</h6>
@@ -93,6 +153,7 @@ function Favorites() {
             </tbody>
           </table>
         </div>
+        }
       </>
       )
     </>

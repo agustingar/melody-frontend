@@ -2,6 +2,10 @@
   width: 80%;
   margin-left: 16rem;
 }
+.container-responsive {
+  width: 100%;
+}
+
 .head {
   display: flex;
   align-items: flex-start;
@@ -160,4 +164,21 @@ header .info p {
 .btn_icon__delete:hover {
   cursor: pointer;
   transform: scale(1.2);
+}
+.uploads-responsive tr{
+  border-bottom: 1px rgba(124, 124, 124, 0.613) solid;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.upload-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: linear-gradient(
+    153.34deg,
+    rgba(0, 0, 0, 0.3) -52.04%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  backdrop-filter: blur(21px);
+  color: #fff;
 }

@@ -8,6 +8,14 @@
   margin-left: 16%;
   font-family: "Montserrat";
 }
+.container-right-responsive {
+  grid-area: main;
+  padding: 0 20px 0 0px;
+  margin-left: 6%;
+  font-family: "Montserrat";
+  display: flex;
+  flex-direction: column;
+}
 
 header {
   display: flex;
@@ -98,7 +106,12 @@ header .info p {
 .favorites_list > td {
   padding: 0.8rem;
 }
-
+.favorites_list-responsive tr {
+  border-bottom: 1px rgba(124, 124, 124, 0.613) solid;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
 /********************* Mobile view *********************/
 
 .container-song-favorites {

@@ -7,7 +7,23 @@
   font-family: "Montserrat";
   z-index: 9999;
 }
-
+.header-container-home-responsive {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-family: "Montserrat";
+  color: white;
+}
+.hello{
+  display: flex;
+  place-content: center space-between;
+  width: 47%;
+  flex-direction: row;
+  font-size: 1rem;
+  margin: -3rem -0.6rem;
+  align-items: baseline;
+  justify-content: space-around;
+}
 .header-container-home h1 {
   margin-left: 0;
   font-style: normal;
@@ -20,6 +36,13 @@
 .header-user--name {
   font-size: 1.6rem;
   margin-right: 2rem;
+  display: flex;
+  width: 92%;
+  justify-content: space-between;
+}
+.header-user--name-responsive {
+  font-size: 1rem;
+  margin-right: 0rem;
   display: flex;
   width: 92%;
   justify-content: space-between;
