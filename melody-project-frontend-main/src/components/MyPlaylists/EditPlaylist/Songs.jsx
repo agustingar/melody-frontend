@@ -89,8 +89,7 @@ function Songs({
     }
 
     const options = {
-      url: `http://localhost:4000/playlist/${endPoint}/${playId}`,
-      // url: `https://melody-music-stream-production.up.railway.app/playlist/${endPoint}/${playId}`,
+      url: `https://melody-music-stream-production.up.railway.app/playlist/${endPoint}/${playId}`,
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -109,7 +108,7 @@ function Songs({
       setIsSongAdd(true);
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data.msg);
+        console.log(error.response.data);
         setErrorMsg(error.response.data.msg);
         setSeverError(true);
       }

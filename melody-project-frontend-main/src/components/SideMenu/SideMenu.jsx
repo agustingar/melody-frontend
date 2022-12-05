@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import { useMediaQuery } from "react-responsive";
 import { IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../../utils/img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import ListIcon from "@mui/icons-material/List";

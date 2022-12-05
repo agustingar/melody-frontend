@@ -6,7 +6,6 @@ import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 
 function AllPlaylists() {
   const { data, isFetching, error } = useGetPlaylistQuery();
-  console.log(data);
   const navigate = useNavigate();
   const playlists = data?.data;
 

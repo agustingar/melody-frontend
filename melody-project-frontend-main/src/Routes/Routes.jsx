@@ -126,8 +126,16 @@ export default function RouterApp() {
                   </>
                 }
               />
-              <Route path="/edit" element={<EditUser />} />
-              <Route path="/search" element={<Search />} />
+              <Route
+                path="/edit"
+                element={
+                  <>
+                    <SideMenu />
+                    <EditUser />
+                  </>
+                }
+              />
+
               <Route
                 path="/songs"
                 element={

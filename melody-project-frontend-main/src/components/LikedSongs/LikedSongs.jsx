@@ -1,8 +1,7 @@
-import {  Favorite } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 import axios from "axios";
 import React from "react";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 function LikedSongs({ song }) {
   const token = localStorage.getItem("userToken");
@@ -28,11 +27,14 @@ function LikedSongs({ song }) {
       console.log(error);
     }
   };
-  console.log(favorite);
 
   return (
     <button onClick={() => favorite(song._id)}>
-     {favorite  ? <FavoriteBorderIcon className="favoriteIcon" /> :<Favorite className="favoriteIcon" /> } 
+      {favorite ? (
+        <FavoriteBorderIcon className="favoriteIcon" />
+      ) : (
+        <Favorite className="favoriteIcon" />
+      )}
     </button>
   );
 }

@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 function UserAvatar() {
   //User Data with all information
   const [data, setData] = useState([]);
+
   const [isAdmin, setIsAdmin] = useState(true);
   const token = localStorage.getItem("userToken");
 
@@ -61,7 +62,7 @@ function UserAvatar() {
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar />
+            <Avatar src={data.avatar} sx={{ width: 50, height: 50 }} />
           </IconButton>
         </Tooltip>
         <Menu

@@ -1,8 +1,11 @@
-import axios from "axios";
-import React from "react";
-import { useState } from "react";
 import "./EditUser.css";
-// import { toast } from "react-toastify";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useGetUserQuery } from "../../redux/services/melodyApi";
+import LoadingBar from "react-top-loading-bar";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
 import {
   Button,
   FormControl,
@@ -14,11 +17,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Box from "@mui/material/Box";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const EditUser = () => {
-  let newYear = new Date().getFullYear();
+  const token = localStorage.getItem("userToken");
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({});
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,27 +33,64 @@ const EditUser = () => {
   const [birthday, setDate] = useState("");
   const [gender, setGender] = useState("");
   const [image, setImage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem("userToken");
-  const navigate = useNavigate();
 
-  const submitImg = async (e) => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "images");
-    setLoading(true);
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dgrk2p8p3/image/upload",
-      {
-        method: "POST",
-        body: data,
+  const [hasUserImage, setHasUserImage] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "https://melody-music-stream-production.up.railway.app/user",
+        {
+          headers: {
+            auth_token: token,
+          },
+        }
+      );
+      const result = await response.json();
+      console.log(result);
+      setUser(result.user);
+    };
+
+    fetchData().catch(console.error);
+  }, [token]);
+
+  const handleSelectedFile = (fileSelect) => {
+    submitSelectFileToCloudinary(fileSelect);
+  };
+
+  const submitSelectFileToCloudinary = async (fileUpload) => {
+    const formData = new FormData();
+    formData.append("avatar", fileUpload);
+
+    const config = {
+      onUploadProgress: (e) => {
+        const { loaded, total } = e;
+        setProgress((loaded / total) * 100);
+      },
+    };
+
+    const options = {
+      url: `https://melody-music-stream-production.up.railway.app/cloud/avatar`,
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+    };
+
+    try {
+      const result = await axios(options, config);
+      console.log(result.data);
+      setImage(result.data.image.secure_url);
+      setHasUserImage(true);
+    } catch (error) {
+      if (error.response) {
+        console.log(error);
+        setErrorMsg(error.response.data);
       }
-    );
-    const file = await res.json();
-    setImage(file.secure_url);
-    console.log(file.secure_url);
-    setLoading(false);
+    }
   };
 
   const submitHandler = async (e) => {
@@ -79,18 +121,22 @@ const EditUser = () => {
           "Access-Control-Allow-Origin": "*",
         }
       );
-
-      console.log(birthday);
       console.log(data);
-      navigate("/");
+      navigate("/home");
     } catch (data) {
       const { msg } = data.response.data;
       console.log(msg);
     }
   };
+
   return (
     <div>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main">
+        <LoadingBar
+          color="#f11946"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         <Grid className="background" item xs={false} sm={4} md={7} />
         <Grid
           item
@@ -121,19 +167,43 @@ const EditUser = () => {
                 Edit User
               </Typography>
               <div className="profile">
-                {
-                  <input
-                    type="file"
-                    onChange={submitImg}
-                    className="inputFile"
-                  />
-                }
-                {loading ? (
-                  <h3>Loading images </h3>
+                {hasUserImage ? (
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    sx={{ borderRadius: "50%", height: "5em", p: "0px" }}
+                  >
+                    <Avatar
+                      alt="Avatar"
+                      src={image}
+                      sx={{ width: 70, height: 70 }}
+                    />
+                    <input
+                      type="file"
+                      hidden
+                      onChange={(e) => handleSelectedFile(e.target.files[0])}
+                    />
+                  </Button>
                 ) : (
-                  <img src={image} alt="userAvatar" className="profileImg" />
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    sx={{ borderRadius: "50%", height: "5em", p: "0px" }}
+                  >
+                    <Avatar
+                      alt="Avatar"
+                      src={user.avatar}
+                      sx={{ width: 70, height: 70 }}
+                    />
+                    <input
+                      type="file"
+                      hidden
+                      onChange={(e) => handleSelectedFile(e.target.files[0])}
+                    />
+                  </Button>
                 )}
               </div>
+
               <TextField
                 margin="normal"
                 required
@@ -153,12 +223,14 @@ const EditUser = () => {
                     label="Name"
                     placeholder="ej: John"
                     id="name"
+                    defaultValue={user.name}
                     onChange={(e) => setName(e.target.value)}
                     required
                   ></TextField>
                 </Grid>{" "}
                 <Grid item xs={6}>
                   <TextField
+                    defaultValue={user.lastName}
                     label="Last Name"
                     placeholder="ej: Smith"
                     id="lastName"
@@ -171,6 +243,7 @@ const EditUser = () => {
                 <Grid item xs={6}>
                   <TextField
                     required
+                    defaultValue={user.birthday}
                     className="birthDate"
                     id="birthday"
                     label="Birthday"
@@ -188,6 +261,7 @@ const EditUser = () => {
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
+                      defaultValue={user.gender}
                     >
                       <FormControlLabel
                         control={<Radio />}

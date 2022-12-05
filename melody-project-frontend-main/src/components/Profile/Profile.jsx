@@ -50,6 +50,7 @@ function Profile() {
         }
       );
       const response = await data.json();
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -57,13 +58,13 @@ function Profile() {
   return (
     <div className="flex items-center justify-center h-fit ml-[18%] text-white">
       {/* List with the user information */}
-      <Container sx={{ width: 650 }}>
-        <h1 className="not-italic text-6xl font-black whitespace-nowrap text-ellipsis leading-80 font-mon">
+      <Container sx={{ width: "100%", p: 4 }}>
+        <h1 className="not-italic text-4xl font-black whitespace-nowrap text-ellipsis leading-80 font-mon">
           User Information
         </h1>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ p: 4, fontSize: "1.2em" }}>
           <Table>
-            <TableBody className="text-white">
+            <TableBody className="table_edit__profile">
               <TableRow>
                 <TableCell>Name: </TableCell>
                 <TableCell>{data.name}</TableCell>

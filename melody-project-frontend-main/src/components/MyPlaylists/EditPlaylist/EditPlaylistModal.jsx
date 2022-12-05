@@ -5,7 +5,6 @@ import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Typography from "@mui/material/Typography";
 import NativeSelect from "@mui/material/NativeSelect";
 import PhotoAlbumIcon from "@mui/icons-material/PhotoAlbum";

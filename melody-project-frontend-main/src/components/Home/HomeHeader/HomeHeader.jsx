@@ -3,6 +3,7 @@ import "../../Top/Top.css";
 import React from "react";
 import { useGetUserQuery } from "../../../redux/services/melodyApi";
 import UserAvatar from "../../AppBar/UserAvatar";
+import Greeting from "./Greeting";
 
 function HomeHeader() {
   const { data, isFetching, error } = useGetUserQuery();
@@ -20,10 +21,21 @@ function HomeHeader() {
   return (
     <div className="header-container-home">
       <div className="header-user--name">
-        <div>Buenos días</div>
-       <div style={{display:'flex',justifyContent: 'space-between',
-    width: '31%'}}> <div><b>Hello</b> <span>{data?.user.name}!</span></div>
-        <UserAvatar /></div>
+        <div>
+          <Greeting />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "31%",
+          }}
+        >
+          <div>
+            <b>Hello</b> <span>{data?.user.name}!</span>
+          </div>
+          <UserAvatar />
+        </div>
       </div>
     </div>
   );

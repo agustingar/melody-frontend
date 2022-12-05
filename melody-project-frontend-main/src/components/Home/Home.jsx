@@ -1,10 +1,10 @@
+import "./home.css";
 import React from "react";
 import Top from "../Top/Top";
+import { MelodyPlaylist } from "./melodyPlaylists/MelodyPlaylist";
+import YourPlaylists from "./YourPlaylists/YourPlaylists";
 import ExplorerSongs from "./DiscoverSong/DiscoverSongs";
 import HomeHeader from "./HomeHeader/HomeHeader";
-import YourPlaylists from "./YourPlaylists/YourPlaylists";
-import "./home.css";
-import { MelodyPlaylist } from "./melodyPlaylists/MelodyPlaylist";
 import SideMenu from "../SideMenu/SideMenu";
 
 function Home() {
