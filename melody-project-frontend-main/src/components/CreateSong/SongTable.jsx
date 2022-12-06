@@ -8,7 +8,6 @@ import { useGetUserSongsQuery } from "../../redux/services/melodyApi";
 import convertDuration from "../../functions/ConvertDuration";
 import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import SongCard from "../SongCard/SongCard";
-
 //Material UI
 import { MusicNoteOutlined } from "@mui/icons-material";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
@@ -21,7 +20,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles"
+import { useMediaQuery } from "react-responsive";
 
 const Songs = () => {
   const token = localStorage.getItem("userToken");
@@ -35,6 +35,10 @@ const Songs = () => {
   const [submitMsg, setSubmitMsg] = useState("");
   const [success, setSuccess] = useState("");
 
+ 
+  const responsive = useMediaQuery({
+    query: "(max-width: 450px)",
+  });
   const style = {
     position: "absolute",
     top: "50%",
@@ -121,7 +125,103 @@ const Songs = () => {
   const totalDuration = data.songs.map((song) => song.duration);
 
   return (
-    <div className="container">
+    <>{responsive ?
+    <div className="container-responsive">
+      <header className="head">
+        <section className="info">
+          <h2 style={{ color: "white" }}>
+            Your upload songs
+            <LibraryMusicIcon />
+          </h2>
+          <div className="details">
+            <p>{data.songs.length} Songs</p>
+            <p id="dot">&bull;</p>
+            <p>{convertDurationPlaylist(totalDuration)}</p>
+          </div>
+        </section>
+        <h3>{submitMsg}</h3>
+        <Button
+          onClick={handleOpen}
+          startIcon={<AddCircleOutlineIcon style={{ color: "white" }} />}
+          label="Add New Song"
+        />
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+        >
+          <Box sx={{ ...style, width: 400 }}>
+            <Paper>
+              <form style={{ width: "100%" }} onSubmit={handleSubmit}>
+                <div className="inputText">
+                  <TextField
+                    name="name"
+                    onChange={(e) => setName(e.target.value)}
+                    label="Enter song name"
+                    required={true}
+                  />
+                </div>
+                <div className="inputArtist">
+                  <TextField
+                    name="artist"
+                    label="Artist name"
+                    required={true}
+                    onChange={(e) => setArtist(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <div className="inputDiv">
+                    <Button
+                      variant="contained"
+                      component="label"
+                      className="buttonFile"
+                    >
+                      {<MusicNoteOutlined />}
+                      <input
+                        className="inputs"
+                        label="Choose song"
+                        type="file"
+                        accept="audio/*"
+                        name="song"
+                        onChange={(e) => handleSelectFile(e.target.files[0])}
+                        hidden
+                      />
+                      Add song
+                    </Button>
+                  </div>
+                </div>
+
+                <h3 style={{ textAlign: "center", color: "#25dc8b" }}>
+                  {success}
+                </h3>
+
+                <div className="inputSubmit">
+                  <Button variant="outlined" type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            </Paper>
+          </Box>
+        </Modal>
+      </header>
+      <table className="upload-table ">
+        <tbody className="uploads-responsive">
+          {data.songs.map((song, i) => (
+            <SongCard
+              key={song._id}
+              song={song}
+              isPlaying={isPlaying}
+              activeSong={activeSong}
+              data={data}
+              i={i}
+              convertDuration={convertDuration}
+            />
+          ))}
+        </tbody>
+      </table>
+    </div> :  <div className="container">
       <header className="head">
         <section className="info">
           <h1 style={{ color: "white" }}>
@@ -219,7 +319,8 @@ const Songs = () => {
           ))}
         </tbody>
       </table>
-    </div>
+    </div>}
+     </>
   );
 };
 

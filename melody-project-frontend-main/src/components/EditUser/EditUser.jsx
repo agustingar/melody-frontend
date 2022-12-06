@@ -2,8 +2,6 @@ import "./EditUser.css";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useGetUserQuery } from "../../redux/services/melodyApi";
-import LoadingBar from "react-top-loading-bar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import {
@@ -36,7 +34,7 @@ const EditUser = () => {
 
   const [hasUserImage, setHasUserImage] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
-  const [progress, setProgress] = useState(0);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,12 +62,6 @@ const EditUser = () => {
     const formData = new FormData();
     formData.append("avatar", fileUpload);
 
-    const config = {
-      onUploadProgress: (e) => {
-        const { loaded, total } = e;
-        setProgress((loaded / total) * 100);
-      },
-    };
 
     const options = {
       url: `https://melody-music-stream-production.up.railway.app/cloud/avatar`,
@@ -81,9 +73,9 @@ const EditUser = () => {
     };
 
     try {
-      const result = await axios(options, config);
-      console.log(result.data);
+      const result = await axios(options);
       setImage(result.data.image.secure_url);
+      console.log(result.data.image);
       setHasUserImage(true);
     } catch (error) {
       if (error.response) {
@@ -132,11 +124,6 @@ const EditUser = () => {
   return (
     <div>
       <Grid container component="main">
-        <LoadingBar
-          color="#f11946"
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
         <Grid className="background" item xs={false} sm={4} md={7} />
         <Grid
           item

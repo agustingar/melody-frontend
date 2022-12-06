@@ -14,10 +14,13 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Songs from "./Songs";
 import { useParams } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 function PlaylistViewSongs() {
   const token = localStorage.getItem("userToken") || null;
-
+  const responsive = useMediaQuery({
+    query: "(max-width: 450px)",
+  });
   const [randomSongs, setRandomSongs] = useState([]);
   const [playlistInfo, setPlaylistInfo] = React.useState({});
   console.log(playlistInfo);
@@ -120,7 +123,77 @@ function PlaylistViewSongs() {
 
   return (
     <>
-      <div className="flex flex-col ml-80 font-mons h-full">
+       {responsive ?
+      <div className=" flex flex-col  font-mons h-full">
+        <div className="flex flex-col items-center h-64 mb-1">
+          <img
+            className="w-56 h-56 rounded-lg"
+            src={playlistInfo.image}
+            alt="thumbnail"
+          />
+          <section className="flex flex-col justify-center grow text-white">
+            <h2 className=" not-italic text-3xl  font-black whitespace-nowrap text-ellipsis leading-80">
+              {playlistInfo.name}
+            </h2>
+            <p>{playlistInfo.description}</p>
+            <div className="playlist-description">
+              <p>{!playlistInfo.isPublic ? "Private" : "Public"}</p>
+              <p>{playlistInfo.tracks?.length} songs</p>
+            </div>
+          </section>
+        </div>
+        <div style={{padding:'4rem 0 0.5rem', textAlign:'center'}}>
+          <EditPlaylistModal {...playlistInfo} />
+        </div>
+        <Typography sx={{ color: "#f3f3f3", mt: 2, fontSize: 20, textAlign:'center' }}>
+          Songs
+        </Typography>
+        <Box sx={{ mb: 5 }}>{playlistSongs}</Box>
+        <Typography sx={{ color: "#f3f3f3", mt: 2, fontSize: 20,textAlign:'center' }}>
+          Suggestions
+        </Typography>
+        <div>
+          {playlistInfo.tracks?.length === 0 ? (
+            <Typography sx={{ color: "#f3f3f3", mt: 2, fontSize: 22 }}>
+              Your playlist is empty, we can suggest you some songs!
+            </Typography>
+          ) : null}
+          {randomSongs.length > 0 ? <div>{suggestionSongs}</div> : null}
+        </div>
+        {randomSongs.length > 0 ? (
+          <Button
+            sx={{
+              color: "white",
+              borderColor: "white",
+              m: 2,
+              p: 1,
+              pl: 1,
+              pr: 1,
+              width: "89%",
+            }}
+            variant="outlined"
+            onClick={getRandomSongs}
+          >
+            REFRESH
+          </Button>
+        ) : (
+          <Button
+            sx={{
+              color: "white",
+              borderColor: "white",
+              m: 2,
+              p: 1,
+              pl: 3,
+              pr: 3,
+              width: "89%",
+            }}
+            variant="outlined"
+            onClick={getRandomSongs}
+          >
+            SUGGEST SONGS
+          </Button>
+        )}
+      </div> :       <div className="flex flex-col ml-80 font-mons h-full">
         <div className="flex items-center h-64 mb-1">
           <img
             className="w-56 h-56 rounded-lg"
@@ -189,7 +262,8 @@ function PlaylistViewSongs() {
             SUGGEST SONGS
           </Button>
         )}
-      </div>
+      </div> 
+}
     </>
   );
 }
