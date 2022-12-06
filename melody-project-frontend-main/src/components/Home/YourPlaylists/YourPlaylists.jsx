@@ -11,11 +11,7 @@ function AllPlaylists() {
   const responsive = useMediaQuery({
     query: "(max-width: 450px)",
   });
-  const Item = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
+ 
   const { data, isFetching, error } = useGetPlaylistQuery();
   const navigate = useNavigate();
   const playlists = data?.data;
@@ -42,25 +38,25 @@ function AllPlaylists() {
           <Typography>{playlists.length} Playlists</Typography>
         </section>
       </header>
-      <Grid xs={6} style={{display:'flex' ,justifyContent: 'center',
+      <Grid xs={6} style={{display:'flex' ,justifyContent: 'start',
     flexWrap: 'wrap' }} >
         {playlists.map((playlist) => (
-          <Item key={playlist._id} className='flex flex-col w-[150px] h-[180px] p-4 m-2 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer'>
-            <Item className='h-40' >
+          <div key={playlist._id} className='flex flex-col w-[120px] h-[140px] p-4 m-2 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer'>
+            <div  className='h-full'>
               <img
                 alt="song_img"
                 src={playlist.thumbnail}
-                className="w-full rounded-sm"
+                className="w-full h-20  rounded-sm"
                 onClick={() => navigate(`/playlist/${playlist._id}`)}
               />
-            </Item>
+            </div>
 
             <Grid xs={6}>
-              <Typography className="font-semibold text-sm text-black truncate">
+              <Typography className="playlist-name">
                 {playlist.name}
               </Typography>
             </Grid>
-          </Item>
+          </div>
         ))}
       </Grid>
     </Grid> : <div className="home_playlist_container">
