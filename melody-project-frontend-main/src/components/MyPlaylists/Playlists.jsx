@@ -7,12 +7,11 @@ import { useNavigate } from "react-router-dom";
 import CreatePlaylistModal from "./CreatePlaylist/CreatePlaylistModal";
 
 function Playlists() {
-  const token = localStorage.getItem("userToken");
   const { data, isFetching, error } = useGetPlaylistQuery();
   const playlists = data?.data;
+  const token = localStorage.getItem("userToken");
   const [isHovering, setIsHovering] = useState(false);
   const navigate = useNavigate();
-
 
   const deletePlaylist = async (playlistId) => {
     const result = await fetch(
@@ -26,7 +25,7 @@ function Playlists() {
 
     console.log(result);
 
-    navigate('/playlists');
+    navigate("/playlists");
   };
 
   const getPlaylist = async (playlistId) => {
@@ -58,7 +57,7 @@ function Playlists() {
           <h1 className=" not-italic text-3xl font-black whitespace-nowrap text-ellipsis leading-80">
             Your Playlists <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
           </h1>
-          <div>{playlists.length} Playlists</div>
+          <div>{playlists?.length} Playlists</div>
         </section>
       </header>
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
@@ -71,14 +70,19 @@ function Playlists() {
             <CreatePlaylistModal />
           </div>
         </div>
-        {playlists.map((playlist) => (
+        {playlists?.map((playlist) => (
           <div
             key={playlist._id}
             className="flex flex-col w-[200px] h-[230px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer playlist-delete"
-            onMouseEnter={() => setIsHovering(playlist._id)} onMouseLeave={() => setIsHovering(null)}
+            onMouseEnter={() => setIsHovering(playlist._id)}
+            onMouseLeave={() => setIsHovering(null)}
           >
- {isHovering === playlist._id && <DeleteIcon onClick={() => deletePlaylist(playlist._id)}
-              style={{ position: 'absolute', zIndex: 999, top: 1, right: 0 }} /> }
+            {isHovering === playlist._id && (
+              <DeleteIcon
+                onClick={() => deletePlaylist(playlist._id)}
+                style={{ position: "absolute", zIndex: 999, top: 1, right: 0 }}
+              />
+            )}
 
             <div className="relative w-full h-56 group">
               <img
@@ -88,7 +92,7 @@ function Playlists() {
                 onClick={() => getPlaylist(playlist._id)}
               />
             </div>
-           
+
             <div className="mt-4 flex flex-col">
               <p className="font-semibold text-sm text-white truncate">
                 {playlist.name}

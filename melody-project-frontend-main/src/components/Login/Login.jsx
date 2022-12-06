@@ -29,8 +29,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        Melody Music Stream
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -71,7 +71,6 @@ export default function SignInSide() {
     } catch (error) {
       if (error.response) {
         setErrorMsg(error.response.data.msg);
-        console.log(error.response.data.msg);
       }
     }
   };

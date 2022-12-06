@@ -1,6 +1,8 @@
+import "./Profile.css";
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   Container,
@@ -12,12 +14,11 @@ import {
   Table,
   Paper,
 } from "@mui/material";
-import "./Profile.css";
-import axios from "axios";
 
 function Profile() {
   const [data, setData] = useState([]);
   const token = localStorage.getItem("userToken");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,8 +50,9 @@ function Profile() {
           },
         }
       );
-      const response = await data.json();
-      console.log(response);
+      console.log(data);
+      localStorage.clear();
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

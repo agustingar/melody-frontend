@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import "./SignIn.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   Button,
@@ -14,7 +16,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [name, setName] = useState("");
@@ -24,16 +25,19 @@ const SignIn = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [birthday, setDate] = useState("");
   const [gender, setGender] = useState("");
+
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      console.log("Passwords do not match");
+      setErrorMsg("Passwords do not match");
       return;
     }
 
     try {
-      const data = await axios.post(
+      const result = await axios.post(
         "https://melody-music-stream-production.up.railway.app/user/register",
         {
           name: name,
@@ -44,10 +48,13 @@ const SignIn = () => {
           gender: gender,
         }
       );
+      console.log(result);
+      const { token } = result.data;
+      localStorage.setItem("userToken", token);
       navigate("/home");
-      console.log(data);
     } catch (error) {
-      console.log(error);
+      setErrorMsg(error.response.data);
+      console.log(error.response.data);
     }
   };
 
@@ -194,10 +201,15 @@ const SignIn = () => {
                   />
                 </RadioGroup>
               </FormControl>
-
-              <Button className="registerButton" type="submit">
-                Register
-              </Button>
+              {<Typography sx={{ color: "red" }}>{errorMsg}</Typography>}
+              <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+                <Button className="registerButton" type="submit">
+                  Register
+                </Button>
+                <Button className="cancelButton" onClick={() => navigate("/")}>
+                  Cancel
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Grid>
