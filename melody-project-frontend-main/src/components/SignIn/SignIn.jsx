@@ -48,7 +48,6 @@ const SignIn = () => {
           gender: gender,
         }
       );
-      console.log(result);
       const { token } = result.data;
       localStorage.setItem("userToken", token);
       navigate("/home");
