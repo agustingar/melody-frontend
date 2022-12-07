@@ -5,6 +5,7 @@ import { useGetLikedSongsQuery } from "../../redux/services/melodyApi";
 import SongCart from "./SongCart";
 import { Link } from "react-router-dom";
 import convertDuration from "../../functions/ConvertDuration";
+import { Typography } from "@mui/material";
 
 function Top() {
   const { data, isFetching, error } = useGetLikedSongsQuery();
@@ -41,7 +42,9 @@ function Top() {
             );
           })
         ) : (
-          <h2>no data</h2>
+          <Typography sx={{ color: "white" }}>
+            You don't have liked songs
+          </Typography>
         )}
       </section>
       <Link
