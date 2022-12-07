@@ -8,7 +8,7 @@ import Greeting from './Greeting'
 
 function HomeHeader() {
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const { data, isFetching, error } = useGetUserQuery();
  

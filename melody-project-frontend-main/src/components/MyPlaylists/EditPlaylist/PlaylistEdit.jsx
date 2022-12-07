@@ -17,7 +17,7 @@ function PlaylistViewSongs() {
   const [lastPlaylist, setLastPlaylistCreated] = useState({});
   const [randomSongs, setRandomSongs] = useState([]);
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const [track, setTrack] = React.useState([
     {

@@ -4,12 +4,12 @@ import { useGetPlaylistQuery } from "../../../redux/services/melodyApi";
 import { useNavigate } from "react-router-dom";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import { useMediaQuery } from "react-responsive";
-import { Grid, Paper, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { Grid, Typography } from "@mui/material";
+
 
 function AllPlaylists() {
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
  
   const { data, isFetching, error } = useGetPlaylistQuery();
@@ -31,7 +31,7 @@ function AllPlaylists() {
     {responsive ?
     <Grid xs={6} >
       <header className="mt-6 ">
-        <section className="flex flex-col justify-center grow pl-4">
+        <section className="flex flex-col justify-center grow pl-11">
           <Typography >
             Your Playlists <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
           </Typography>
@@ -39,7 +39,7 @@ function AllPlaylists() {
         </section>
       </header>
       <Grid xs={6} style={{display:'flex' ,justifyContent: 'start',
-    flexWrap: 'wrap' }} >
+    flexWrap: 'wrap' ,padding:'0rem 2rem'}} >
         {playlists.map((playlist) => (
           <div key={playlist._id} className='flex flex-col w-[120px] h-[140px] p-4 m-2 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer'>
             <div  className='h-full'>
@@ -59,7 +59,8 @@ function AllPlaylists() {
           </div>
         ))}
       </Grid>
-    </Grid> : <div className="home_playlist_container">
+    </Grid> :
+     <div className="home_playlist_container">
     <header className="flex h-44 mb-1">
       <section className="flex flex-col justify-center grow ">
         <h className=" not-italic text-2xl font-black whitespace-nowrap text-ellipsis leading-80">

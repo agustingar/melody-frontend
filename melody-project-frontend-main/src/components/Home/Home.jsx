@@ -11,7 +11,7 @@ import { Grid } from "@mui/material";
 
 function Home() {
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   return (
     <>

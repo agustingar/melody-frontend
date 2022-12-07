@@ -20,7 +20,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { createTheme } from "@mui/material/styles"
 import { useMediaQuery } from "react-responsive";
 
 const Songs = () => {
@@ -37,7 +36,7 @@ const Songs = () => {
 
  
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const style = {
     position: "absolute",

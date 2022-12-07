@@ -207,7 +207,7 @@
   padding-top: 0;
 }
 
-@media (max-width: 1199px) {
+@media (min-width: 1000px) {
   .home_playlist_container {
     margin-left: 13rem;
     padding-left: 1rem;

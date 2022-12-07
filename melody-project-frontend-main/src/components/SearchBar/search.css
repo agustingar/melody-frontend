@@ -4,7 +4,12 @@
   place-items: center;
   margin-left: 14em;
 }
-
+.search_container-responsive {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  margin-left: 1em;
+}
 .search_bar {
   display: flex;
   justify-content: center;

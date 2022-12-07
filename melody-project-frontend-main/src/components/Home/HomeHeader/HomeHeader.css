@@ -12,11 +12,12 @@
   width: 100%;
   font-family: "Montserrat";
   color: white;
+  font-weight: bold;
 }
 .hello{
   display: flex;
   place-content: center space-between;
-  width: 47%;
+  width: 24%;
   flex-direction: row;
   font-size: 1rem;
   margin: -3rem -0.6rem;
@@ -45,6 +46,7 @@
   display: flex;
   width: 92%;
   justify-content: space-between;
+  font-size: 1.2rem;
 }
 
 .settings-container {
