@@ -63,6 +63,7 @@ function SideMenu(props) {
           alt="logo"
           width="90"
           height="50"
+          className="image-logo"
         />
       </Toolbar>
 

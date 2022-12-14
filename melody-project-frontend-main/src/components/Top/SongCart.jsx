@@ -1,12 +1,11 @@
+import "./Top.css";
 import React from "react";
 import { useDispatch } from "react-redux";
-import "./Top.css";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import PlayPause from "../SongCard/PlayPause";
 import { playPause, setActiveSong } from "../../redux/features/playerSlice";
 import convertDuration from "../../functions/ConvertDuration";
-import { Box, Typography } from "@mui/material";
+import PlayPause from "../SongCard/PlayPause";
 import LikedSongs from "../LikedSongs/LikedSongs";
+import { Box, Typography } from "@mui/material";
 
 function SongCart({ song, isPlaying, activeSong, data, i }) {
   const dispatch = useDispatch();

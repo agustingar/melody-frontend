@@ -1,39 +1,19 @@
-import axios from "axios";
 import React from "react";
-import Loader from "../Loader/Loader";
-import Error from "../Error/Error";
-import { useGetLikedSongsQuery } from "../../redux/services/melodyApi";
+import {
+  useGetLikedSongsQuery,
+  useEditLikedSongsMutation,
+} from "../../redux/services/melodyApi";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Favorite } from "@mui/icons-material";
 
 function LikedSongs({ song }) {
-  const token = localStorage.getItem("userToken");
-  const { data, isFetching, error } = useGetLikedSongsQuery();
+  const { data } = useGetLikedSongsQuery();
+  const [updatePost] = useEditLikedSongsMutation();
 
   const favorite = async (id) => {
-    try {
-      const result = await axios.put(
-        `https://melody-music-stream-production.up.railway.app/song/like/${id}`,
-
-        {
-          id: song._id,
-        },
-        {
-          headers: {
-            auth_token: token,
-          },
-        }
-      );
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
+    await updatePost({ id: id });
   };
-
-  if (isFetching) return <Loader title="Loading Top Charts" />;
-
-  if (error) return <Error />;
 
   // DISPLAY LIKED HEART ICON //
   //Get ids for each song object passed to player
