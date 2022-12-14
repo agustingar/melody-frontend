@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect } from "react";
+import SideMenu from "../SideMenu/SideMenu";
 
 const EditUser = () => {
   const token = localStorage.getItem("userToken");
@@ -47,7 +48,6 @@ const EditUser = () => {
         }
       );
       const result = await response.json();
-      console.log(result);
       setUser(result.user);
     };
 
@@ -75,11 +75,9 @@ const EditUser = () => {
     try {
       const result = await axios(options);
       setImage(result.data.image.secure_url);
-      console.log(result.data.image);
       setHasUserImage(true);
     } catch (error) {
       if (error.response) {
-        console.log(error);
         setErrorMsg(error.response.data);
       }
     }
@@ -113,11 +111,9 @@ const EditUser = () => {
           "Access-Control-Allow-Origin": "*",
         }
       );
-      console.log(data);
       navigate("/home");
     } catch (data) {
       const { msg } = data.response.data;
-      console.log(msg);
     }
   };
 

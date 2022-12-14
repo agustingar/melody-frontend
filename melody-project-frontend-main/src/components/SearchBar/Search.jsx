@@ -12,6 +12,7 @@ import BrowserAll from "./BrowserAll";
 
 import "./SearchBar.css";
 import "./search.css";
+import { useMediaQuery } from "react-responsive";
 
 export default function Search() {
   //Handle player
@@ -25,7 +26,9 @@ export default function Search() {
     song: "",
     i: "",
   });
-
+  const responsive = useMediaQuery({
+    query: "(max-width: 1000px)",
+  });
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
     data.songs
@@ -54,8 +57,6 @@ export default function Search() {
     setInputTrack("");
     setHasQuery(false);
   }
-
-  console.log(inputTrack.length);
 
   const handleClick = () => {
     if (Object.keys(querySong).length === 0) {
@@ -100,8 +101,38 @@ export default function Search() {
   if (error) return <div>Error</div>;
 
   return (
-    <main>
+    <main> {responsive ? <>
       <header className="search_bar">{searchBar}</header>
+      <div className="search_container_responsive">
+        {hasQuery ? (
+          <div className="top-result">
+            <h2 className="mb-3 not-italic font-bold font-mons text-xl text-white">
+              Top result <HeadsetIcon sx={{ fontSize: "2rem" }} />
+            </h2>
+
+            <div className="top-result">
+              <SongCart
+                key={querySong.song._id}
+                song={querySong.song}
+                isPlaying={isPlaying}
+                activeSong={activeSong}
+                data={data}
+                i={querySong.i}
+                convertDuration={convertDuration}
+                />
+            </div>
+          </div>
+        )  : (
+          <aside className="browser-all">
+            <h1 className="mb-3 not-italic font-bold font-mons text-xl text-white">
+              Browser all
+            </h1>
+            <div>
+              <BrowserAll />
+            </div>
+          </aside>
+        )}
+      </div> </> : <> <header className="search_bar">{searchBar}</header>
       <div className="search_container">
         {hasQuery ? (
           <div className="top-result">
@@ -131,7 +162,7 @@ export default function Search() {
             </div>
           </aside>
         )}
-      </div>
+      </div> </>}
     </main>
   );
 }

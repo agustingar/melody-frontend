@@ -27,7 +27,6 @@ export default function ForgotPassword() {
         .then((success) => {
           setSuccess(success.data.message);
         });
-      console.log(data);
     } catch (error) {
       //handle error
       setError(error.response.data.msg);

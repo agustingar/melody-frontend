@@ -17,6 +17,19 @@
   background: #fff;
   justify-content: space-between;
 }
+@media (max-width: 1000px) {
+  .container-song {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 60px;
+    border-radius: 8px;
+    margin: 10px 3rem;
+    background: #fff;
+    justify-content: space-between;
+  }
+}
 
 .container-song .cover-container {
   width: 40px;

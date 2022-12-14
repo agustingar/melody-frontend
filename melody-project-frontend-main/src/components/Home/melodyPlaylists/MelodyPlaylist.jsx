@@ -6,10 +6,9 @@ import { Grid, Typography } from "@mui/material";
 
 export const MelodyPlaylist = () => {
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const { data, isFetching, error } = useGetAllPlaylistQuery();
-  console.log(data);
   const playlists = data?.data;
   const navigate = useNavigate();
 
@@ -28,15 +27,15 @@ export const MelodyPlaylist = () => {
       {responsive ?
         <Grid>
           <Grid >
-            <Grid xs={12} style={{padding:'2rem 0rem', textAlign:'center'}} >
+            <Grid xs={12} style={{padding:'2rem 3rem'}} >
               <Typography style={{color:'white'}}>
                 Melody playlists
               </Typography>
               <Typography style={{color:'white'}}>{playlists.length} Playlists</Typography>
             </Grid>
           </Grid>
-          <Grid  xs={6} style={{display:'flex' ,justifyContent: 'center',
-    flexWrap: 'wrap'}}>
+          <Grid  xs={6} style={{display:'flex' ,justifyContent: 'start',
+    flexWrap: 'wrap', padding:'0rem 2rem'}}>
             {playlists.map((playlist) => (
               <div
                 key={playlist._id}

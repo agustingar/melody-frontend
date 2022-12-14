@@ -19,12 +19,10 @@ function UserAvatar() {
   const settingAdmin = [
     { text: "Dashboard", href: "/admin", id: "dashboard" },
     { text: "Profile", href: "/profile", id: "profile" },
-    { text: "Logout", href: "/logout", id: "logout" },
   ];
 
   const settingUser = [
     { text: "Profile", href: "/profile", id: "Profile" },
-    { text: "Logout", href: "/logout", id: "Logout" },
   ];
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);

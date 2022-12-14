@@ -31,7 +31,7 @@ export default function RouterApp() {
     <div>
       <Router>
         <AuthProvider>
-          <div className="flex-1 h-fit pb-28">
+          <div>
             <Routes>
               <Route path="/" element={<SignInSide />} />
 

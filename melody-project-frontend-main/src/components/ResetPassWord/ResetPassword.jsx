@@ -32,7 +32,6 @@ function ResetPassword() {
           "Access-Control-Allow-Origin": "*",
         }
       );
-      console.log(data);
       navigate("/");
     } catch (error) {
       console.log(error.response.data);

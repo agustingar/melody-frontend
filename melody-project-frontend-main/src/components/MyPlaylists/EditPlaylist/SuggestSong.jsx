@@ -68,7 +68,6 @@ function SuggestSong({
 
     try {
       const result = await axios(options);
-      console.log(result.data.msg);
       setSuccessMsg(result.data.msg);
       setIsSongAdd(true);
     } catch (error) {

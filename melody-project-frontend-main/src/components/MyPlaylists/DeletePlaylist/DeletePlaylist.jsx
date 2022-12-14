@@ -16,8 +16,6 @@ export const DeletePlaylist = (id) => {
       }
     );
 
-    console.log(result);
-
     navigate(`/playlists`);
   };
 

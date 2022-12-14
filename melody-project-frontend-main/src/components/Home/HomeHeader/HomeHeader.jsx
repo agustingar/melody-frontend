@@ -8,7 +8,7 @@ import Greeting from './Greeting'
 
 function HomeHeader() {
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const { data, isFetching, error } = useGetUserQuery();
  
@@ -34,7 +34,7 @@ function HomeHeader() {
       <div className="header-user--name">
       <div > <Greeting /> </div>
        <div style={{display:'flex',justifyContent: 'space-between',
-    width: '31%'}}> <div><b>Hello</b> <span>{data?.user.name}!</span></div>
+    width: '18%',alignItems:'center'}}> <div><b>Hello</b> <span>{data?.user.name}!</span></div>
         <UserAvatar /></div>
       </div>
     </div>  }

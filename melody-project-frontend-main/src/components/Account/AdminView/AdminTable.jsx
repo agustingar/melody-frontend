@@ -26,7 +26,6 @@ export const UsersTable = (props) => {
   const token = localStorage.getItem("userToken");
 
   const adminUserDelete = async (id) => {
-    console.log(id);
     try {
       const data = await axios.delete(
         `https://melody-music-stream-production.up.railway.app/admin/users/${id}`,

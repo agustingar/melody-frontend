@@ -74,7 +74,6 @@ function PublicPlaylist() {
     />
   ));
 
-  console.log(playlistInfo);
 
   return (
     <>

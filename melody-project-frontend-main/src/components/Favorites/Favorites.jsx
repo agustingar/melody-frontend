@@ -19,7 +19,7 @@ function Favorites() {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [inputTrack, setInputTrack] = useState("");
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const handleSearch = (event) => {
     setInputTrack(event.target.value);

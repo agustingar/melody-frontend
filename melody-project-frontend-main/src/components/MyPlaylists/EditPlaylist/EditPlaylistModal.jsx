@@ -34,7 +34,7 @@ export default function EditPlaylistModal(id) {
     thumbnail: "",
   });
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   console.log(playlist);
 

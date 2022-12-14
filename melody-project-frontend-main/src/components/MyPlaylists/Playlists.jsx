@@ -14,8 +14,8 @@ function Playlists() {
   const [isHovering, setIsHovering] = useState(false);
   const navigate = useNavigate();
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
-  });
+      query: "(max-width: 1000px)",
+    });
 
   const deletePlaylist = async (playlistId) => {
     const result = await fetch(
@@ -27,7 +27,6 @@ function Playlists() {
       }
     );
 
-    console.log(result);
 
     navigate("/playlists");
   };

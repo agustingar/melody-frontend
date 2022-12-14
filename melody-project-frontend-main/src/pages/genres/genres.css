@@ -151,3 +151,7 @@ header .info p {
 .genre-img--grid {
   border-radius: 1.5em;
 }
+.grid-responsive{
+  display: flex;
+  border-radius: 1.5em;
+}

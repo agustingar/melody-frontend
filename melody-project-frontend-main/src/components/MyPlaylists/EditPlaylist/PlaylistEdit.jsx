@@ -17,7 +17,7 @@ function PlaylistViewSongs() {
   const [lastPlaylist, setLastPlaylistCreated] = useState({});
   const [randomSongs, setRandomSongs] = useState([]);
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const [track, setTrack] = React.useState([
     {
@@ -49,7 +49,6 @@ function PlaylistViewSongs() {
         const lastPlaylistCreated = Object.values(data.data).pop();
         setUserPlaylists(data.data);
         setLastPlaylistCreated(lastPlaylistCreated);
-        // console.log(lastPlaylistCreated._id);
         getPlaylistById(lastPlaylistCreated._id);
       } catch (error) {
         console.log(error);
@@ -70,7 +69,6 @@ function PlaylistViewSongs() {
 
       try {
         const data = await response.json();
-        console.log(data);
         setTrack(data.songs);
       } catch (error) {
         console.log(error);
@@ -118,7 +116,6 @@ function PlaylistViewSongs() {
       convertDuration={convertDuration}
     />
   ));
-  console.log(playlistSongs);
 
   const suggestionSongs = randomSongs.map((song, i) => (
     <SuggestSong

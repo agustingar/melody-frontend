@@ -9,12 +9,14 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import { useNavigate } from "react-router-dom";
 
 import "./search.css";
+import { useMediaQuery } from "react-responsive";
 
 export default function GenreImageList() {
   const navigate = useNavigate();
-
+  const responsive = useMediaQuery({
+    query: "(max-width: 1000px)",
+  });
   const handleNavigate = (e) => {
-    console.log(e.currentTarget.dataset);
     const map = e.currentTarget.dataset;
     const obj = { ...map };
 
@@ -71,9 +73,39 @@ export default function GenreImageList() {
       },
     },
   });
-  return (
+  return ( 
+  <>
+  {responsive ?
     <ThemeProvider theme={theme}>
-      <ImageList cols={4} rowHeight={263} gap={40}>
+      <ImageList cols={4} rowHeight={200} gap={40}>
+        {itemData.map((item) => (
+          <ImageListItem key={item.img}>
+            <img
+              className="genre-img--grid"
+              src={`${item.img}?w=248&fit=crop&auto=format`}
+              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={item.title}
+              loading="lazy"
+            />
+            <ImageListItemBar
+              className="ImageListItemBar"
+              title={item.title}
+              actionIcon={
+                <IconButton
+                  sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                  aria-label={`info about ${item.title}`}
+                  data-test-id={item.title}
+                  onClick={(e) => handleNavigate(e)}
+                >
+                  <PlayCircleIcon sx={{ fontSize: "1.5em" }} />
+                </IconButton>
+              }
+            />
+          </ImageListItem>
+        ))}
+      </ImageList> 
+      </ThemeProvider>  :
+      <ThemeProvider theme={theme}> <ImageList cols={4} rowHeight={263} gap={40}>
         {itemData.map((item) => (
           <ImageListItem key={item.img}>
             <img
@@ -100,7 +132,8 @@ export default function GenreImageList() {
           </ImageListItem>
         ))}
       </ImageList>
-    </ThemeProvider>
+    </ThemeProvider> }
+    </>
   );
 }
 

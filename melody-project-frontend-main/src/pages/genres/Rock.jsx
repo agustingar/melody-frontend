@@ -19,8 +19,6 @@ function Rock() {
   const [inputTrack, setInputTrack] = useState("");
 
   const songs = data.songs.filter((music) => music.genre === "Rock");
-  console.log(songs);
-
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
   };

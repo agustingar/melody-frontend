@@ -19,11 +19,10 @@ import { useMediaQuery } from "react-responsive";
 function PlaylistViewSongs() {
   const token = localStorage.getItem("userToken") || null;
   const responsive = useMediaQuery({
-    query: "(max-width: 450px)",
+    query: "(max-width: 1000px)",
   });
   const [randomSongs, setRandomSongs] = useState([]);
   const [playlistInfo, setPlaylistInfo] = React.useState({});
-  console.log(playlistInfo);
   const [track, setTrack] = React.useState([
     {
       title: "",
@@ -165,7 +164,7 @@ function PlaylistViewSongs() {
             sx={{
               color: "white",
               borderColor: "white",
-              m: 2,
+              m: 6,
               p: 1,
               pl: 1,
               pr: 1,
@@ -181,7 +180,7 @@ function PlaylistViewSongs() {
             sx={{
               color: "white",
               borderColor: "white",
-              m: 2,
+              m: 6,
               p: 1,
               pl: 3,
               pr: 3,

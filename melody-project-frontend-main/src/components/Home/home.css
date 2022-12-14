@@ -59,5 +59,6 @@
 
 @media (max-width: 1199px) {
   .home_container {
+    margin-left: 0;
   }
 }

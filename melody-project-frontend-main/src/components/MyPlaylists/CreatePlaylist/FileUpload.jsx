@@ -8,7 +8,7 @@ export default function FileUpload(image) {
   const [hasImage, setHasImage] = React.useState(false);
   const [thumbnail, setThumbnail] = React.useState(image);
 
-  console.log(image);
+
 
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -28,7 +28,6 @@ export default function FileUpload(image) {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log("Success:", result);
         setThumbnail(result);
         setHasImage(true);
       })
