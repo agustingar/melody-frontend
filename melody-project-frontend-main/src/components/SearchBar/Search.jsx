@@ -105,7 +105,7 @@ export default function Search() {
   return (
     <main> {responsive ? <>
       <header className="search_bar">{searchBar}</header>
-      <div className="search_container-responsive">
+      <div className="search_container_responsive">
         {hasQuery ? (
           <div className="top-result">
             <h2 className="mb-3 not-italic font-bold font-mons text-xl text-white">
@@ -125,7 +125,6 @@ export default function Search() {
             </div>
           </div>
         )  : (
-         
           <aside className="browser-all">
             <h1 className="mb-3 not-italic font-bold font-mons text-xl text-white">
               Browser all
@@ -135,7 +134,7 @@ export default function Search() {
             </div>
           </aside>
         )}
-      </div> </> : <><header className="search_bar">{searchBar}</header>
+      </div> </> : <> <header className="search_bar">{searchBar}</header>
       <div className="search_container">
         {hasQuery ? (
           <div className="top-result">
