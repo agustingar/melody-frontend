@@ -27,7 +27,7 @@ export const melodyApi = createApi({
     }),
     editLikedSongs: builder.mutation({
       query: (post) => ({
-        url: `http://localhost:4000/song/like/${post.id}`,
+        url: `https://melody-music-stream-production.up.railway.app/song/like/${post.id}`,
         method: "PUT",
         body: post,
       }),
