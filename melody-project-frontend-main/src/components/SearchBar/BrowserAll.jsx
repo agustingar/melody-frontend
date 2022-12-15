@@ -3,11 +3,10 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { createTheme, ThemeProvider } from "@mui/material";
-
 import IconButton from "@mui/material/IconButton";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import { useNavigate } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
 import "./search.css";
 import { useMediaQuery } from "react-responsive";
 
@@ -30,8 +29,11 @@ export default function GenreImageList() {
       case "Rock":
         navigate("/rock");
         break;
-      case "Samba":
-        navigate("/samba");
+      case "Reggaeton":
+        navigate("/reggaeton");
+        break;
+      case "Latina":
+        navigate("/latina");
         break;
       case "Alternative":
         navigate("/alternative");
@@ -73,66 +75,70 @@ export default function GenreImageList() {
       },
     },
   });
-  return ( 
-  <>
-  {responsive ?
-    <ThemeProvider theme={theme}>
-      <ImageList cols={4} rowHeight={200} gap={40}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              className="genre-img--grid"
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              className="ImageListItemBar"
-              title={item.title}
-              actionIcon={
-                <IconButton
-                  sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                  aria-label={`info about ${item.title}`}
-                  data-test-id={item.title}
-                  onClick={(e) => handleNavigate(e)}
-                >
-                  <PlayCircleIcon sx={{ fontSize: "1.5em" }} />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
-        ))}
-      </ImageList> 
-      </ThemeProvider>  :
-      <ThemeProvider theme={theme}> <ImageList cols={4} rowHeight={263} gap={40}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              className="genre-img--grid"
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              className="ImageListItemBar"
-              title={item.title}
-              actionIcon={
-                <IconButton
-                  sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                  aria-label={`info about ${item.title}`}
-                  data-test-id={item.title}
-                  onClick={(e) => handleNavigate(e)}
-                >
-                  <PlayCircleIcon sx={{ fontSize: "1.5em" }} />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </ThemeProvider> }
+  return (
+    <>
+      {responsive ? (
+        <ThemeProvider theme={theme}>
+          <ImageList cols={4} rowHeight={200} gap={40}>
+            {itemData.map((item) => (
+              <ImageListItem key={item.img}>
+                <img
+                  className="genre-img--grid"
+                  src={`${item.img}?w=248&fit=crop&auto=format`}
+                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.title}
+                  loading="lazy"
+                />
+                <ImageListItemBar
+                  className="ImageListItemBar"
+                  title={item.title}
+                  actionIcon={
+                    <IconButton
+                      sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                      aria-label={`info about ${item.title}`}
+                      data-test-id={item.title}
+                      onClick={(e) => handleNavigate(e)}
+                    >
+                      <PlayCircleIcon sx={{ fontSize: "1.5em" }} />
+                    </IconButton>
+                  }
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </ThemeProvider>
+      ) : (
+        <ThemeProvider theme={theme}>
+          {" "}
+          <ImageList cols={4} rowHeight={263} gap={40}>
+            {itemData.map((item) => (
+              <ImageListItem key={item.img}>
+                <img
+                  className="genre-img--grid"
+                  src={`${item.img}?w=248&fit=crop&auto=format`}
+                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.title}
+                  loading="lazy"
+                />
+                <ImageListItemBar
+                  className="ImageListItemBar"
+                  title={item.title}
+                  actionIcon={
+                    <IconButton
+                      sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                      aria-label={`info about ${item.title}`}
+                      data-test-id={item.title}
+                      onClick={(e) => handleNavigate(e)}
+                    >
+                      <PlayCircleIcon sx={{ fontSize: "1.5em" }} />
+                    </IconButton>
+                  }
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </ThemeProvider>
+      )}
     </>
   );
 }
@@ -164,7 +170,7 @@ const itemData = [
   },
   {
     img: "https://res.cloudinary.com/dzfouunnx/image/upload/v1669771793/melody/genders/Samba_ivuiw0.png",
-    title: "Samba",
+    title: "Latina",
     author: "@arwinneil",
     rows: 2,
     cols: 2,
@@ -184,7 +190,7 @@ const itemData = [
   },
   {
     img: "https://res.cloudinary.com/dzfouunnx/image/upload/v1669800617/melody/genders/latino_i4e1ld.png",
-    title: "Latino",
+    title: "Reggaeton",
     author: "@katie_wasserman",
   },
   {

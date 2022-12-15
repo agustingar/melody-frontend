@@ -43,22 +43,18 @@
   align-items: center;
   margin: 1rem;
 }
-.inputText {
+.inputText,
+.inputArtist,
+.inputGenre,
+.inputSubmit {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem 0 0 0;
 }
-.inputArtist {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .inputSubmit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 0rem;
+  padding-bottom: 2rem;
 }
 .inputImg {
   display: flex;
@@ -165,7 +161,7 @@ header .info p {
   cursor: pointer;
   transform: scale(1.2);
 }
-.uploads-responsive tr{
+.uploads-responsive tr {
   border-bottom: 1px rgba(124, 124, 124, 0.613) solid;
   display: flex;
   justify-content: flex-start;

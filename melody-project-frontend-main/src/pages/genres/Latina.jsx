@@ -13,12 +13,12 @@ import { useGetAllSongsQuery } from "../../redux/services/melodyApi";
 import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import convertDuration from "../../functions/ConvertDuration";
 
-function Pop() {
+function Latina() {
   const { data, isFetching, error } = useGetAllSongsQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [inputTrack, setInputTrack] = useState("");
 
-  const popSongs = data.songs.filter((music) => music.genre === "Pop");
+  const songs = data.songs.filter((music) => music.genre === "Latina");
 
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
@@ -31,7 +31,7 @@ function Pop() {
 
   if (error) return <Error />;
 
-  const totalDuration = popSongs.map((song) => song.duration);
+  const totalDuration = songs.map((song) => song.duration);
 
   return (
     <>
@@ -42,10 +42,11 @@ function Pop() {
             <section className="info">
               <h6>Melody</h6>
               <h1>
-                POP <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
+                Latina
+                <LibraryMusicIcon sx={{ fontSize: "3rem" }} />
               </h1>
               <div className="details">
-                <p>{popSongs.length} Songs</p>
+                <p>{songs.length} Songs</p>
                 <p id="dot">&bull;</p>
                 <p>{convertDurationPlaylist(totalDuration)}</p>
               </div>
@@ -70,7 +71,7 @@ function Pop() {
           </header>
           <table className="favorites-table animate-slideup ">
             <tbody className="favorites_line__bottom">
-              {popSongs
+              {songs
                 .filter((song) => {
                   if (inputTrack === "") {
                     return song;
@@ -100,4 +101,4 @@ function Pop() {
   );
 }
 
-export default Pop;
+export default Latina;

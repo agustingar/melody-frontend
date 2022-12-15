@@ -24,6 +24,8 @@ import Classic from "../pages/genres/Classic";
 import Rock from "../pages/genres/Rock";
 import Techno from "../pages/genres/Techno";
 import Rap from "../pages/genres/Rap";
+import Reggaeton from "../pages/genres/Reggaeton";
+import Latina from "../pages/genres/Latina";
 
 export default function RouterApp() {
   const { activeSong } = useSelector((state) => state.player);
@@ -49,6 +51,24 @@ export default function RouterApp() {
                   <>
                     <SideMenu />
                     <Favorites />
+                  </>
+                }
+              />
+              <Route
+                path="/reggaeton"
+                element={
+                  <>
+                    <SideMenu />
+                    <Reggaeton />
+                  </>
+                }
+              />
+              <Route
+                path="/latina"
+                element={
+                  <>
+                    <SideMenu />
+                    <Latina />
                   </>
                 }
               />

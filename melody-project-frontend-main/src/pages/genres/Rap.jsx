@@ -18,9 +18,7 @@ function Rap() {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [inputTrack, setInputTrack] = useState("");
 
-  const songs = data.songs.filter(
-    (music) => music.genre === "Rap (USA)" || music.genre === "Rap (Esp)"
-  );
+  const songs = data.songs.filter((music) => music.genre === "Rap");
 
   const handleSearch = (event) => {
     setInputTrack(event.target.value);
