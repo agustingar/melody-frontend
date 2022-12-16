@@ -41,6 +41,9 @@ export default function GenreImageList() {
       case "Rap":
         navigate("/rap");
         break;
+      case "Acoustic":
+        navigate("/acoustic");
+        break;
       case "Classic songs":
         navigate("/classic");
         break;
