@@ -25,7 +25,9 @@ export const melodyApi = createApi({
       query: () => "/song/like",
       providesTags: ["Post"],
     }),
-    editLikedSongs: builder.mutation({
+    getUserSongs: builder.query({ query: () => "/song/all-user-songs" }),
+    getUser: builder.query({ query: () => "/user" }),
+    putLikedSongs: builder.mutation({
       query: (post) => ({
         url: `https://melody-music-stream-production.up.railway.app/song/like/${post.id}`,
         method: "PUT",
@@ -33,8 +35,14 @@ export const melodyApi = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
-    getUserSongs: builder.query({ query: () => "/song/all-user-songs" }),
-    getUser: builder.query({ query: () => "/user" }),
+    postAddSongs: builder.mutation({
+      query: (post) => ({
+        url: `https://melody-music-stream-production.up.railway.app/song`,
+        method: "POST",
+        body: post,
+      }),
+      invalidatesTags: ["Post"],
+    }),
   }),
 });
 
@@ -46,5 +54,6 @@ export const {
   useGetSongQuery,
   useGetUserSongsQuery,
   useGetUserQuery,
-  useEditLikedSongsMutation,
+  usePutLikedSongsMutation,
+  usePostAddSongsMutation,
 } = melodyApi;

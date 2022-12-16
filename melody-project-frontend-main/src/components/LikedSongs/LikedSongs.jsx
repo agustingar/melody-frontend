@@ -1,7 +1,7 @@
 import React from "react";
 import {
   useGetLikedSongsQuery,
-  useEditLikedSongsMutation,
+  usePutLikedSongsMutation,
 } from "../../redux/services/melodyApi";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -9,7 +9,7 @@ import { Favorite } from "@mui/icons-material";
 
 function LikedSongs({ song }) {
   const { data } = useGetLikedSongsQuery();
-  const [updatePost] = useEditLikedSongsMutation();
+  const [updatePost] = usePutLikedSongsMutation();
 
   const favorite = async (id) => {
     await updatePost({ id: id });
@@ -19,9 +19,9 @@ function LikedSongs({ song }) {
   //Get ids for each song object passed to player
   let songIdPassToPlayer = Object.values(song)[0];
   //Get ids for each song liked by the user
-  const allLikedSongsIds = data.songs.map((id) => id._id);
+  const allLikedSongsIds = data?.songs.map((id) => id._id);
   // Check in every heart button if song is liked or not
-  let isSongLiked = allLikedSongsIds.includes(songIdPassToPlayer);
+  let isSongLiked = allLikedSongsIds?.includes(songIdPassToPlayer);
 
   return (
     <>
