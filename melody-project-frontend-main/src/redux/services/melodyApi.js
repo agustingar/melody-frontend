@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const melodyApi = createApi({
   reducerPath: "melodyApi",
   baseQuery: fetchBaseQuery({
+    //baseUrl: "http://localhost:4000",
     baseUrl: "https://melody-music-stream-production.up.railway.app",
     prepareHeaders: (headers) => {
       headers.set(
@@ -30,6 +31,7 @@ export const melodyApi = createApi({
     putLikedSongs: builder.mutation({
       query: (post) => ({
         url: `https://melody-music-stream-production.up.railway.app/song/like/${post.id}`,
+        //url: `http://localhost:4000/song/like/${post.id}`,
         method: "PUT",
         body: post,
       }),
@@ -37,6 +39,7 @@ export const melodyApi = createApi({
     }),
     postAddSongs: builder.mutation({
       query: (post) => ({
+        //url: `http://localhost:4000/song`,
         url: `https://melody-music-stream-production.up.railway.app/song`,
         method: "POST",
         body: post,

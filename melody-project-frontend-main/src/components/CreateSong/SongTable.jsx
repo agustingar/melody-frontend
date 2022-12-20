@@ -1,13 +1,11 @@
 import "./createSong.css";
 import "../Favorites/Favorites.css";
+import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 
-import {
-  useGetUserSongsQuery,
-  usePostAddSongsMutation,
-} from "../../redux/services/melodyApi";
+import { useGetUserSongsQuery } from "../../redux/services/melodyApi";
 import convertDuration from "../../functions/ConvertDuration";
 import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import SongCard from "../SongCard/SongCard";
@@ -32,8 +30,7 @@ import {
 const Songs = () => {
   const [open, setOpen] = useState(false);
   const { data, isFetching, error } = useGetUserSongsQuery();
-  const [updatePost] = usePostAddSongsMutation();
-
+  const token = localStorage.getItem("userToken");
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   const [name, setName] = useState("");
@@ -41,6 +38,12 @@ const Songs = () => {
   const [genre, setGenre] = useState("");
   const [songUrl, setSongUrl] = useState("");
   const [success, setSuccess] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isDataInputCorrect, setIsDataInputCorrect] = useState("");
+
+  const handleErrorMessage = (message) => {
+    setErrorMsg(message.split(":")[1].replace("url", "Song"));
+  };
 
   const responsive = useMediaQuery({
     query: "(max-width: 1000px)",
@@ -63,6 +66,7 @@ const Songs = () => {
   };
   const handleClose = () => {
     setOpen(false);
+    setErrorMsg("");
   };
 
   const handleSelectFile = (fileSelect) => {
@@ -70,34 +74,61 @@ const Songs = () => {
   };
 
   const submitSelectFileToCloudinary = async (fileUpload) => {
-    const formData = new FormData();
-    formData.append("song", fileUpload);
+    console.log("file upload: ", fileUpload);
+    if (fileUpload === undefined) {
+      return;
+    } else {
+      const formData = new FormData();
+      formData.append("song", fileUpload);
 
-    await fetch(
-      "https://melody-music-stream-production.up.railway.app/cloud/uploadsong",
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        setSongUrl(result);
-        setSuccess("File successfully upload");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      await fetch(
+        // "https://melody-music-stream-production.up.railway.app/cloud/uploadsong",
+        "http://localhost:4000/cloud/uploadsong",
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          setSongUrl(result);
+          setSuccess("File successfully upload");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
 
-  const handleSubmit = async () => {
-    updatePost({
-      title: name,
-      artist: artist,
-      genre: genre,
-      url: songUrl.url,
-      duration: songUrl.duration,
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await axios.post(
+        "http://localhost:4000/song",
+        // "https://melody-music-stream-production.up.railway.app/song",
+        {
+          title: name,
+          artist: artist,
+          genre: genre,
+          url: songUrl.url,
+          duration: songUrl.duration,
+        },
+        {
+          headers: {
+            auth_token: token,
+          },
+        }
+      );
+
+      handleClose();
+      console.log(data);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      setIsDataInputCorrect(false);
+      // setErrorMsg(error?.response.data.msg);
+      handleErrorMessage(error?.response.data.msg);
+    }
   };
 
   if (isFetching)
@@ -213,6 +244,12 @@ const Songs = () => {
                     <h3 style={{ textAlign: "center", color: "#25dc8b" }}>
                       {success}
                     </h3>
+
+                    {isDataInputCorrect && (
+                      <h3 style={{ textAlign: "center", color: "red" }}>
+                        {errorMsg}
+                      </h3>
+                    )}
 
                     <div className="inputSubmit">
                       <Button variant="outlined" type="submit">
@@ -339,6 +376,10 @@ const Songs = () => {
 
                     <h3 style={{ textAlign: "center", color: "#25dc8b" }}>
                       {success}
+                    </h3>
+
+                    <h3 style={{ textAlign: "center", color: "red" }}>
+                      {errorMsg}
                     </h3>
 
                     <div className="inputSubmit">
