@@ -82,8 +82,8 @@ const Songs = () => {
       formData.append("song", fileUpload);
 
       await fetch(
-        // "https://melody-music-stream-production.up.railway.app/cloud/uploadsong",
-        "http://localhost:4000/cloud/uploadsong",
+        "https://melody-music-stream-production.up.railway.app/cloud/uploadsong",
+        // "http://localhost:4000/cloud/uploadsong",
         {
           method: "POST",
           body: formData,
@@ -104,8 +104,8 @@ const Songs = () => {
     e.preventDefault();
     try {
       const data = await axios.post(
-        "http://localhost:4000/song",
-        // "https://melody-music-stream-production.up.railway.app/song",
+        // "http://localhost:4000/song",
+        "https://melody-music-stream-production.up.railway.app/song",
         {
           title: name,
           artist: artist,
@@ -125,8 +125,8 @@ const Songs = () => {
       window.location.reload();
     } catch (error) {
       console.log(error);
-      setIsDataInputCorrect(false);
-      // setErrorMsg(error?.response.data.msg);
+      
+      setErrorMsg(error?.response.data.msg);
       handleErrorMessage(error?.response.data.msg);
     }
   };
@@ -245,11 +245,12 @@ const Songs = () => {
                       {success}
                     </h3>
 
-                    {isDataInputCorrect && (
+                    {setIsDataInputCorrect ? (
                       <h3 style={{ textAlign: "center", color: "red" }}>
                         {errorMsg}
                       </h3>
-                    )}
+                    ) : null}
+                    
 
                     <div className="inputSubmit">
                       <Button variant="outlined" type="submit">

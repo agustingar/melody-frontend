@@ -161,6 +161,7 @@ function SideMenu(props) {
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: drawerWidth,
+                zIndex: 1,
               },
             }}
           >
