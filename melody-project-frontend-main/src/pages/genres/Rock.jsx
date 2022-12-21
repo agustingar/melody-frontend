@@ -74,7 +74,12 @@ function Rock() {
                   if (inputTrack === "") {
                     return song;
                   } else if (
-                    song.title.toLowerCase().includes(inputTrack.toLowerCase())
+                    song.artist
+                      .toLowerCase()
+                      .includes(inputTrack.toLowerCase()) ||
+                    song.title
+                      .toLowerCase()
+                      .includes(inputTrack.toLocaleLowerCase())
                   ) {
                     return song;
                   }
