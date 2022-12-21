@@ -5,12 +5,16 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 
-import { useGetUserSongsQuery } from "../../redux/services/melodyApi";
+import {
+  useGetUserSongsQuery,
+  usePostAddSongsMutation,
+} from "../../redux/services/melodyApi";
 import convertDuration from "../../functions/ConvertDuration";
 import convertDurationPlaylist from "../../functions/ConvertDurationPlaylist";
 import SongCard from "../SongCard/SongCard";
 
 //Material UI
+import LinearProgress from "@mui/material/LinearProgress";
 import { MusicNoteOutlined } from "@mui/icons-material";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -30,16 +34,19 @@ import {
 const Songs = () => {
   const [open, setOpen] = useState(false);
   const { data, isFetching, error } = useGetUserSongsQuery();
+  const [updatePost] = usePostAddSongsMutation();
   const token = localStorage.getItem("userToken");
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   const [name, setName] = useState("");
   const [artist, setArtist] = useState("");
   const [genre, setGenre] = useState("");
-  const [songUrl, setSongUrl] = useState("");
+  const [song, setSong] = useState("");
   const [success, setSuccess] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [isDataInputCorrect, setIsDataInputCorrect] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const handleErrorMessage = (message) => {
     setErrorMsg(message.split(":")[1].replace("url", "Song"));
@@ -67,69 +74,97 @@ const Songs = () => {
   const handleClose = () => {
     setOpen(false);
     setErrorMsg("");
+    setIsSuccess(false);
   };
 
-  const handleSelectFile = (fileSelect) => {
-    submitSelectFileToCloudinary(fileSelect);
+  const handleSelectFile = async (fileUpload) => {
+    const formData = new FormData();
+    formData.append("song", fileUpload);
+    return await uploadForm(formData);
   };
 
-  const submitSelectFileToCloudinary = async (fileUpload) => {
-    console.log("file upload: ", fileUpload);
-    if (fileUpload === undefined) {
-      return;
-    } else {
-      const formData = new FormData();
-      formData.append("song", fileUpload);
-
-      await fetch(
-        "https://melody-music-stream-production.up.railway.app/cloud/uploadsong",
-        // "http://localhost:4000/cloud/uploadsong",
-        {
-          method: "POST",
-          body: formData,
-        }
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          setSongUrl(result);
-          setSuccess("File successfully upload");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const uploadForm = async (formData) => {
+    setIsLoading(true);
     try {
-      const data = await axios.post(
-        // "http://localhost:4000/song",
-        "https://melody-music-stream-production.up.railway.app/song",
-        {
-          title: name,
-          artist: artist,
-          genre: genre,
-          url: songUrl.url,
-          duration: songUrl.duration,
-        },
+      const res = await axios.post(
+        // "http://localhost:4000/cloud/uploadsong",
+        "https://melody-music-stream-production.up.railway.app/cloud/uploadsong",
+        formData,
         {
           headers: {
-            auth_token: token,
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            const progress = Math.floor((loaded * 100) / total);
+            setProgress(progress);
           },
         }
       );
-
-      handleClose();
-      console.log(data);
-      window.location.reload();
+      let song = res.data;
+      setSong(song);
+      setIsSuccess(true);
+      setIsLoading(false);
+      setSuccess("File successfully upload");
     } catch (error) {
       console.log(error);
-      
       setErrorMsg(error?.response.data.msg);
       handleErrorMessage(error?.response.data.msg);
     }
   };
+
+  // * Post with RTK
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      updatePost({
+        title: name,
+        artist: artist,
+        genre: genre,
+        url: song.url,
+        duration: song.duration,
+      });
+      handleClose();
+    } catch (error) {
+      setIsSuccess(false);
+      console.log(error);
+
+      setErrorMsg(error?.response.data.msg);
+      handleErrorMessage(error?.response.data.msg);
+    }
+  };
+
+  // * Post with AXIOS
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = await axios.post(
+  //       "http://localhost:4000/song",
+  //       // "https://melody-music-stream-production.up.railway.app/song",
+  //       {
+  //         title: name,
+  //         artist: artist,
+  //         genre: genre,
+  //         url: song.url,
+  //         duration: song.duration,
+  //       },
+  //       {
+  //         headers: {
+  //           auth_token: token,
+  //         },
+  //       }
+  //     );
+
+  //     handleClose();
+  //     // window.location.reload();
+  //   } catch (error) {
+  //     setIsSuccess(false);
+  //     console.log(error);
+
+  //     setErrorMsg(error?.response.data.msg);
+  //     handleErrorMessage(error?.response.data.msg);
+  //   }
+  // };
 
   if (isFetching)
     return (
@@ -238,19 +273,25 @@ const Songs = () => {
                           />
                           Add song
                         </Button>
+                        {isLoading && (
+                          <LinearProgress
+                            variant="determinate"
+                            value={progress}
+                            sx={{ mr: "3.5rem", ml: "3.5rem" }}
+                          />
+                        )}
                       </div>
                     </div>
 
-                    <h3 style={{ textAlign: "center", color: "#25dc8b" }}>
-                      {success}
-                    </h3>
-
-                    {setIsDataInputCorrect ? (
-                      <h3 style={{ textAlign: "center", color: "red" }}>
-                        {errorMsg}
+                    {isSuccess && (
+                      <h3 style={{ textAlign: "center", color: "#25dc8b" }}>
+                        {success}
                       </h3>
-                    ) : null}
-                    
+                    )}
+
+                    <h3 style={{ textAlign: "center", color: "red" }}>
+                      {errorMsg}
+                    </h3>
 
                     <div className="inputSubmit">
                       <Button variant="outlined" type="submit">
@@ -351,7 +392,7 @@ const Songs = () => {
                       </Box>
                     </div>
 
-                    <div>
+                    <Box>
                       <div className="inputDiv">
                         <Button
                           variant="contained"
@@ -373,11 +414,20 @@ const Songs = () => {
                           Add song
                         </Button>
                       </div>
-                    </div>
+                      {isLoading && (
+                        <LinearProgress
+                          variant="determinate"
+                          value={progress}
+                          sx={{ mr: "3.5rem", ml: "3.5rem" }}
+                        />
+                      )}
+                    </Box>
 
-                    <h3 style={{ textAlign: "center", color: "#25dc8b" }}>
-                      {success}
-                    </h3>
+                    {isSuccess && (
+                      <h3 style={{ textAlign: "center", color: "#25dc8b" }}>
+                        {success}
+                      </h3>
+                    )}
 
                     <h3 style={{ textAlign: "center", color: "red" }}>
                       {errorMsg}

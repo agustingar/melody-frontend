@@ -24,9 +24,12 @@ export const melodyApi = createApi({
     getSong: builder.query({ query: (id) => `/song/${id}` }),
     getLikedSongs: builder.query({
       query: () => "/song/like",
+      providesTags: ["Put"],
+    }),
+    getUserSongs: builder.query({
+      query: () => "/song/all-user-songs",
       providesTags: ["Post"],
     }),
-    getUserSongs: builder.query({ query: () => "/song/all-user-songs" }),
     getUser: builder.query({ query: () => "/user" }),
     putLikedSongs: builder.mutation({
       query: (post) => ({
@@ -35,7 +38,7 @@ export const melodyApi = createApi({
         method: "PUT",
         body: post,
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Put"],
     }),
     postAddSongs: builder.mutation({
       query: (post) => ({
