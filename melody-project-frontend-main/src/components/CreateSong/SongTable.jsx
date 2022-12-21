@@ -35,7 +35,6 @@ const Songs = () => {
   const [open, setOpen] = useState(false);
   const { data, isFetching, error } = useGetUserSongsQuery();
   const [updatePost] = usePostAddSongsMutation();
-  const token = localStorage.getItem("userToken");
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   const [name, setName] = useState("");
@@ -133,38 +132,6 @@ const Songs = () => {
       handleErrorMessage(error?.response.data.msg);
     }
   };
-
-  // * Post with AXIOS
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = await axios.post(
-  //       "http://localhost:4000/song",
-  //       // "https://melody-music-stream-production.up.railway.app/song",
-  //       {
-  //         title: name,
-  //         artist: artist,
-  //         genre: genre,
-  //         url: song.url,
-  //         duration: song.duration,
-  //       },
-  //       {
-  //         headers: {
-  //           auth_token: token,
-  //         },
-  //       }
-  //     );
-
-  //     handleClose();
-  //     // window.location.reload();
-  //   } catch (error) {
-  //     setIsSuccess(false);
-  //     console.log(error);
-
-  //     setErrorMsg(error?.response.data.msg);
-  //     handleErrorMessage(error?.response.data.msg);
-  //   }
-  // };
 
   if (isFetching)
     return (
